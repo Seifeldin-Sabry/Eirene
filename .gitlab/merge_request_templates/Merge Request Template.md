@@ -1,0 +1,13 @@
+# [ *Feat | Fix | Chore* ]
+
+Fixes ticket number [*ticket # here*]
+
+### Description and implementation details
+- ...
+- ...
+
+### How to test
+- ...
+- ...
+
+### [ Screenshots ]
