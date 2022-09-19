@@ -1,6 +1,6 @@
-# [ *Feat | Fix | Chore* ]
+# *Feat | Fix | Chore*
 
-Fixes ticket number [*ticket # here*]
+Fixes ticket number *ticket # here*
 
 ### Description and implementation details
 - ...
