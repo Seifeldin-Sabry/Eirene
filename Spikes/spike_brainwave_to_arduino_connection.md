@@ -6,36 +6,33 @@ How to connect the brainwave headset to the Arduino
 
 ### 2) Possible solution:
 
-[Brain-hack](https://frontiernerds.com/brain-hack)
+Headset >> PC connection via bluetooth
 
 ### 2.1) Is this solution feasible?
 
--   we'll see for now (to be filled in by Filip)
+- Current progress:
+- Headset >> PC connection seems possible, the next step is polishing up the checksum method and figuring out what the numbers mean
+- Benefit of directly connecting to the PC instead of using an arduino as the MITM
 
 ### 2.2) How much effort does this solution need?
 
--   _Give a time estimation of the solution_
--   _Is there enough knowledge in the team?_
--   ...
+- _Give a time estimation of the solution_: By the end of the week this should be figured out
+- _Is there enough knowledge in the team?_: We're trying our best!
 
 ### 2.3) Complete documentation of this solution
 
--   _document all the technical steps to be taken_
--   _what do you need? (hardware, software, ...)_
--   _..._
--   _This documentation should be as complete as possible,
-    it should be usable afterwards during development!_
--   _Using this documentation it should be possible to perform a demonstration to the team_
-
+-   By using the JSSC library we're connecting to the COM port of the headset and reading the data from it. The data is then parsed and the checksum is calculated.
 ### 3) Alternative solution...
 
-_Maybe there are other solutions to the problem?_
-_If so: document them in the same way..._
+[Brain-hack](https://frontiernerds.com/brain-hack)
 
 ### 3.1) Is this solution feasible?
+TBD
 
 ### 3.2) How much effort does this solution need?
+TBD
 
 ### 3.3) Complete documentation of this solution
+TBD
 
 And so on...
