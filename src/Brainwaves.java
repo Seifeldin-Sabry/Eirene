@@ -3,6 +3,7 @@ import jssc.SerialPortException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Brainwaves {
     public static void main(String[] args) throws SerialPortException {
@@ -24,7 +25,8 @@ public class Brainwaves {
                 packet.add(intBuffer1[0]);
                 //check if packet is complete
                 if(parser.isDataByte(packet)){
-                    System.out.println(parser.parse(packet,false));
+                    Map<String,Integer> data = parser.parse(packet);
+                    System.out.println("SIGNAl: "+data.get("SIGNAL VALUE")+" ATTENTION VALUE: "+data.get("ATTENTION VALUE")+" MEDITATION VALUE: "+data.get("MEDITATION VALUE"));
                     packet.clear();
                     packet.add(170);
                     packet.add(170);
