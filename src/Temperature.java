@@ -1,4 +1,5 @@
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Temperature {
 
@@ -16,12 +17,15 @@ public class Temperature {
         return temperature;
     }
 
-    public double getHumidity() {
-        return humidity;
-    }
 
     public Timestamp getTempTime() {
         return tempTime;
+    }
+
+    public static Temperature parse(String s){
+        //[SH], [47.00], [T], [24.34], [E]
+        String[] data = s.split(" ");
+        return new Temperature(1.0, 1.0);
     }
 
     @Override

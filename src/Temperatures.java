@@ -17,4 +17,11 @@ public class Temperatures {
     public void addTemperature(Temperature temp) {
         temperatures.add(temp);
     }
+
+    @Override
+    public String toString() {
+        return "Temperatures{" +
+                "temperatures=" + temperatures +
+                '}';
+    }
 }

@@ -16,7 +16,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/JSSC/jssc-2.9.4-sources.jar!/" />
@@ -30,5 +30,8 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="jssc-2.9.4-javadoc" level="project" />
+    <orderEntry type="library" exported="" name="slf4j-simple-1.6.1" level="project" />
+    <orderEntry type="library" exported="" name="jSerialComm-2.9.1" level="project" />
   </component>
 </module>
