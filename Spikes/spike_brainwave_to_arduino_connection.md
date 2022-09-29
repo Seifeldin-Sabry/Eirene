@@ -26,6 +26,8 @@ Headset >> PC connection via bluetooth << WHAT WE'RE GOING WITH
 
 - By using the JSSC library we're connecting to the COM port of the headset and reading the data from it. The data is then parsed and SIGNAL/ATTENTION/MEDITATION is returned.
 - The checksum is not necessary for the attention/meditation values - so we decided to skip that part.
+- Code for this can be found [here](https://gitlab.com/kdg-ti/integration-2.1/22-23/team-3/project-planning/-/blob/main/src/Brainwaves.java)
+
 ### 3) Alternative solution...
 
 [Brain-hack](https://frontiernerds.com/brain-hack)
