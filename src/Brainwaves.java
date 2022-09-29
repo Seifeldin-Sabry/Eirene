@@ -14,15 +14,12 @@ public class Brainwaves {
         serialPort.setParams(9600, 8, 0, 0);//Set params
         int counter = 0;
         while (true) {
-                byte[] buffer1 = serialPort.readBytes(1);//Read 10 bytes from serial port
+                int[] buffer1 = serialPort.readIntArray(1);//Read 10 bytes from serial port
                 // convert bytes to int
-                int[] intBuffer1 = new int[buffer1.length];
-                for (int i = 0; i < buffer1.length; i++) {
-                    intBuffer1[i] = buffer1[i] & 0xFF;
-                }
-
                 // add bytes to a packet
-                packet.add(intBuffer1[0]);
+            System.out.println();
+            System.out.println(buffer1[0]);
+                //packet.add(intBuffer1[0]);
                 //check if packet is complete
                 if(parser.isDataByte(packet)){
                     Map<String,Integer> data = parser.parse(packet);
