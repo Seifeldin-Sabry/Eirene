@@ -1,3 +1,3 @@
 public enum Unit {
-    C, BPM, PERCENT
+    C, BPM, PERCENT, HZ
 }

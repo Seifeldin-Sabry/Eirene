@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
-        //        final HashSet<String> ports = new HashSet<>(Arrays.asList(SerialPortList.getPortNames()));
+//        final HashSet<String> ports = new HashSet<>(Arrays.asList(SerialPortList.getPortNames()));
 //        System.out.println(ports);
 
 
