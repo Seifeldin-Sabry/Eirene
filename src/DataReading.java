@@ -13,6 +13,6 @@ public final class DataReading {
 
     @Override
     public String toString() {
-        return String.format("Time: %s\t\tValue: %.2f\t\tUnit: %s",timestamp, value, unit);
+        return String.format("Time: %s\nValue: %.2f\nUnit: %s\n",timestamp, value, unit);
     }
 }

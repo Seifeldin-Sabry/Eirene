@@ -2,6 +2,7 @@ import jssc.SerialPort;
 import jssc.SerialPortException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -10,10 +11,10 @@ public class ArduinoDataReader {
 
     private final String portName = "/dev/tty.usbmodem11101";
     private HashMap<Sensor, List<DataReading>> sensorToData;
-    private final String temperatureMatching = "-?\\d{1,2}\\.\\d{0,2}C";
-    private final String humidityMatching = "\\d{1,2}\\.\\d{0,2}%";
-    private final String heartMatching = "\\d{2,3}bpm";
-    private final String soundMatching = "\\d{2,3}hz";
+    private final String temperatureMatching = String.format("-?\\d{1,2}\\.\\d{0,2}%s",Unit.C.getUnit());
+    private final String humidityMatching = String.format("\\d{1,2}\\.\\d{0,2}%s",Unit.PERCENT.getUnit());
+    private final String heartMatching = String.format("\\d{2,3}%s",Unit.BPM.getUnit());
+    private final String soundMatching = String.format("\\d{2,3}%s",Unit.HZ.getUnit());
     StringBuilder currentReading = new StringBuilder();
 
     public ArduinoDataReader() {
@@ -46,34 +47,35 @@ public class ArduinoDataReader {
                         //if the data ends in a %, our packet is full
                         //example: 105bpm 83db 21.70C 37.00%
                         if(s.contains("%")){
+                            System.out.println(currentReading.toString());
                             if("%".equals(s)) {
-                                processDataAndAddToMap(currentReading.append("%").toString().split(" "));
+                                String[] data = currentReading.append("%").toString().split(" ");
+                                System.out.println(Arrays.toString(data) + "equals");
+                                processDataAndAddToMap(data);
+                                currentReading = new StringBuilder();
+                                printData();
                                 return;
                             }
-                            String[] data = s.split("%");
-                            processDataAndAddToMap(currentReading.append(data[0]).append("%").toString().split(" "));
-                            if(data.length == 1) return;
-                            currentReading = new StringBuilder(data[1]);
-                            System.out.println(sensorToData);
+                            if(s.endsWith("%") && s.length() > 1) {
+                                String[] data = currentReading.append(s).toString().split(" ");
+                                System.out.println(Arrays.toString(data) + "ends");
+                                processDataAndAddToMap(data);
+                                currentReading = new StringBuilder();
+                                printData();
+                                return;
+                            }
+                            int percentIdx = s.indexOf("%");
+                            String beforePercent = s.substring(0, percentIdx);
+                            String[] data = currentReading.append(beforePercent).append("%").toString().split(" ");
+                            System.out.println(Arrays.toString(data) + " last if");
+                            processDataAndAddToMap(data);
+                            String afterPercent = s.substring(percentIdx+1);
+                            currentReading = new StringBuilder(afterPercent);
+                            printData();
                             return;
                         }
                         currentReading.append(s);
-                        System.out.println("Sound Readings");
-                        System.out.println(sensorToData.get(Sensor.SOUND));
-                        System.out.println("=".repeat(25));
-                        System.out.println("=".repeat(25));
-                        System.out.println("Heart Readings");
-                        System.out.println(sensorToData.get(Sensor.HR));
-                        System.out.println("=".repeat(25));
-                        System.out.println("=".repeat(25));
-                        System.out.println("Temp Readings");
-                        System.out.println(sensorToData.get(Sensor.TEMPERATURE));
-                        System.out.println("=".repeat(25));
-                        System.out.println("=".repeat(25));
-                        System.out.println("Humidity Readings");
-                        System.out.println(sensorToData.get(Sensor.HUMIDITY));
-                        System.out.println("=".repeat(25));
-                        System.out.println("=".repeat(25));
+                        printData();
 
                     } catch (SerialPortException e) {
                         throw new RuntimeException(e);
@@ -87,6 +89,21 @@ public class ArduinoDataReader {
 
     }
 
+    private void printData() {
+        System.out.println("Sound Readings");
+        System.out.println(sensorToData.get(Sensor.SOUND));
+        System.out.println("=".repeat(25));
+        System.out.println("Heart Readings");
+        System.out.println(sensorToData.get(Sensor.HR));
+        System.out.println("=".repeat(25));
+        System.out.println("Temp Readings");
+        System.out.println(sensorToData.get(Sensor.TEMPERATURE));
+        System.out.println("=".repeat(25));
+        System.out.println("Humidity Readings");
+        System.out.println(sensorToData.get(Sensor.HUMIDITY));
+        System.out.println("=".repeat(25));
+    }
+
     private void processDataAndAddToMap(String[] data) {
         for (String s: data) {
             if(Pattern.matches(temperatureMatching, s)) addTemperatureReading(s);
@@ -98,7 +115,7 @@ public class ArduinoDataReader {
 
     private void addSoundReading(String s) {
         List<DataReading> list = sensorToData.get(Sensor.SOUND);
-        String[] data = s.split("bpm");
+        String[] data = s.split(Sensor.SOUND.getUnit().getUnit());
         DataReading dataReading = new DataReading(Float.parseFloat(data[0]), Unit.HZ);
         if (list == null) {
             list = new ArrayList<>();
@@ -111,7 +128,7 @@ public class ArduinoDataReader {
 
     private void addHeartReading(String s) {
         List<DataReading> list = sensorToData.get(Sensor.HR);
-        String[] data = s.split("bpm");
+        String[] data = s.split(Sensor.HR.getUnit().getUnit());
         DataReading dataReading = new DataReading(Float.parseFloat(data[0]), Unit.BPM);
         if (list == null) {
             list = new ArrayList<>();
@@ -124,7 +141,7 @@ public class ArduinoDataReader {
 
     private void addHumidityReading(String s) {
         List<DataReading> list = sensorToData.get(Sensor.HUMIDITY);
-        String[] data = s.split("%");
+        String[] data = s.split(Sensor.HUMIDITY.getUnit().getUnit());
         DataReading dataReading = new DataReading(Float.parseFloat(data[0]), Unit.PERCENT);
         if (list == null) {
             list = new ArrayList<>();
@@ -137,7 +154,7 @@ public class ArduinoDataReader {
 
     private void addTemperatureReading(String s) {
         List<DataReading> list = sensorToData.get(Sensor.TEMPERATURE);
-        String[] data = s.split("C");
+        String[] data = s.split(Sensor.TEMPERATURE.getUnit().getUnit());
         DataReading dataReading = new DataReading(Float.parseFloat(data[0]), Unit.C);
         if (list == null) {
             list = new ArrayList<>();
