@@ -8,9 +8,6 @@ import java.util.Map;
 
 public class MindflexDataReader {
 
-    //How are we planning on doing this??
-
-
     private final SerialPort serialPort;
 
     public MindflexDataReader(String portName) {
@@ -19,7 +16,6 @@ public class MindflexDataReader {
 
     public void connect() throws SerialPortException {
         PacketParser parser = new PacketParser();
-        SerialPort serialPort = new SerialPort("COM4");
         serialPort.openPort();//Open serial port
         serialPort.setParams(9600, 8, 0, 0);//Set params
         serialPort.addEventListener(event -> {
