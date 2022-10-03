@@ -10,7 +10,7 @@ Bread board >> Arduino connection
 
 ### 2.1) Is this solution feasible?
 
-Yes, although setting up the breadboard is a bit of a hassle
+Yes, although setting up the breadboard is a bit of a hassle, need to find a more permanent solution (e.g. a 3D-printed box to fit the arduino & sensors)
 
 ### 2.2) How much effort does this solution need?
 
@@ -20,4 +20,3 @@ Yes, although setting up the breadboard is a bit of a hassle
 ### 2.3) Complete documentation of this solution
 
 ![img.png](img.png)
-
