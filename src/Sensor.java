@@ -1,5 +1,5 @@
 public enum Sensor {
-    HR(Unit.BPM), TEMPERATURE(Unit.C), HUMIDITY(Unit.PERCENT), PHOTOTRANSISTOR(Unit.L), SOUND(Unit.HZ), BRAINWAVE(Unit.PERCENT);
+    HR(Unit.BPM), TEMPERATURE(Unit.C), HUMIDITY(Unit.PERCENT), PHOTOTRANSISTOR(Unit.L), SOUND(Unit.DB), BRAINWAVE(Unit.PERCENT);
 
     private Unit unit;
 

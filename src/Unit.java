@@ -1,5 +1,5 @@
 public enum Unit {
-    C("C"), BPM("bpm"), PERCENT("%"), HZ("hz"), L("l");
+    C("C"), BPM("bpm"), PERCENT("%"), DB("db"), L("l");
 
     private String unit;
 
