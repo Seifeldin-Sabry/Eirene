@@ -1,7 +1,9 @@
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<a name="readme-top"></a>
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/othneildrew/Best-README-Template" name="readme-top">
     <img src="resources/eirene.png" alt="Logo" width="150" height="150">
   </a>
 
@@ -42,14 +44,17 @@
 
 [//]: # (      </ul>)
 
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+[//]: # (    </li>)
+
+[//]: # (    <li><a href="#usage">Usage</a></li>)
+
+[//]: # (    <li><a href="#roadmap">Roadmap</a></li>)
 
 [//]: # (    <li><a href="#contributing">Contributing</a></li>)
 
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+[//]: # (    <li><a href="#license">License</a></li>)
+
+[//]: # (    <li><a href="#contact">Contact</a></li>)
 
 [//]: # (    <li><a href="#acknowledgments">Acknowledgments</a></li>)
   </ol>
@@ -218,9 +223,6 @@ Link: [https://gitlab.com/kdg-ti/integration-2.1/22-23/team-3/project-planning](
 <!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites
-to kick things off!
 
 * [Img Shields](https://shields.io)
 * [Font Awesome](https://fontawesome.com)
