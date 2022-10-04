@@ -81,8 +81,6 @@ Here's why:
 
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
-
 ### Prerequisites
 
 To run this project you need to have the following hardware:
@@ -99,9 +97,6 @@ Arduino Sensors:
 * Light Sensor
 * Sound Sensor
 * Accelerometer
-
-This is an example of how to list things you need to use the software and how to install them.
-
 
 [//]: # (### Installation)
 
