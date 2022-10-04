@@ -33,30 +33,11 @@
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
-
-[//]: # (        PLEASE UNCOMMENT THIS LATER)
-
-[//]: # (      <ul>)
-
-[//]: # (        <li><a href="#prerequisites">Prerequisites</a></li>)
-
-[//]: # (        <li><a href="#installation">Installation</a></li>)
-
-[//]: # (      </ul>)
-
-[//]: # (    </li>)
-
-[//]: # (    <li><a href="#usage">Usage</a></li>)
-
-[//]: # (    <li><a href="#roadmap">Roadmap</a></li>)
-
-[//]: # (    <li><a href="#contributing">Contributing</a></li>)
-
-[//]: # (    <li><a href="#license">License</a></li>)
-
-[//]: # (    <li><a href="#contact">Contact</a></li>)
-
-[//]: # (    <li><a href="#acknowledgments">Acknowledgments</a></li>)
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -106,7 +87,7 @@ To get a local copy up and running follow these simple steps.
 
 To run this project you need to have the following hardware:
 
-* Arduino Uno
+* Arduino Uno / Genuino 101
 * A modified Mindflex EEG headset
 * A computer with a bluetooth adapter
 * A computer with a USB port
@@ -117,6 +98,7 @@ Arduino Sensors:
 * Temperature/Humidity Sensor
 * Light Sensor
 * Sound Sensor
+* Accelerometer
 
 This is an example of how to list things you need to use the software and how to install them.
 
@@ -205,13 +187,13 @@ Distributed under the MIT License.
 
 ## Contact
 
-Elina van der Taelen - elina.vandertaelen@student.kdg.be
+Elina Van der Taelen - elina.vandertaelen@student.kdg.be
 
 Filip Nowak - filip.nowak@student.kdg.be
 
 Peter Buschenreiter - peter.buschenreiter@student.kdg.be
 
-Seifeldin Sabry seifeldin.sabry@student.kdg.be
+Seifeldin Sabry - seifeldin.sabry@student.kdg.be
 
 Project
 Link: [https://gitlab.com/kdg-ti/integration-2.1/22-23/team-3/project-planning](https://gitlab.com/kdg-ti/integration-2.1/22-23/team-3/project-planning)
