@@ -33,5 +33,6 @@
     <orderEntry type="library" exported="" name="jssc-2.9.4-javadoc" level="project" />
     <orderEntry type="library" exported="" name="slf4j-simple-1.6.1" level="project" />
     <orderEntry type="library" exported="" name="jSerialComm-2.9.1" level="project" />
+    <orderEntry type="library" name="jSerialComm-2.9.1" level="project" />
   </component>
 </module>
