@@ -1,6 +1,10 @@
 # *Feat | Fix | Chore*
 
-Fixes ticket number *ticket # here*
+- [ ] Ref #*ticket number*
+- [ ] Assigned to a developer
+- [ ] Time is tracked
+- [ ] Attached a label
+
 
 ### Description and implementation details
 - ...
