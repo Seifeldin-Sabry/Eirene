@@ -1,7 +1,7 @@
 public enum Sensor {
     HR(Unit.BPM), TEMPERATURE(Unit.C), HUMIDITY(Unit.PERCENT), PHOTOTRANSISTOR(Unit.L), SOUND(Unit.DB), BRAINWAVE(Unit.PERCENT);
 
-    private Unit unit;
+    private final Unit unit;
 
     Sensor(Unit unit) {
         this.unit = unit;

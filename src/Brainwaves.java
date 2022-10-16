@@ -21,10 +21,8 @@ public class Brainwaves {
             //check if packet is complete
             if (parser.isDataByte(packet)) {
                 Map<String, Integer> data = parser.parse(packet);
-                System.out.println("SIGNAl: " + data.get("SIGNAL VALUE") + " ATTENTION VALUE: " + data.get("ATTENTION VALUE") + " MEDITATION VALUE: " + data.get("MEDITATION VALUE"));
+//                System.out.println("SIGNAl: " + data.get("SIGNAL VALUE") + " ATTENTION VALUE: " + data.get("ATTENTION VALUE") + " MEDITATION VALUE: " + data.get("MEDITATION VALUE"));
                 packet.clear();
-                packet.add(170);
-                packet.add(170);
             }
 
             counter++;
