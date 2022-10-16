@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/brainwaves.iml" filepath="$PROJECT_DIR$/brainwaves.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Eirene-spring.iml" filepath="$PROJECT_DIR$/.idea/modules/Eirene-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Eirene-spring.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Eirene-spring.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Eirene-spring.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Eirene-spring.test.iml" />
     </modules>
   </component>
 </project>
