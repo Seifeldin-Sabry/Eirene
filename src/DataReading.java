@@ -17,8 +17,12 @@ public final class DataReading {
         this.unit = unit;
     }
 
+    public float getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
-        return String.format("Time: %s\nValue: %.2f\nUnit: %s\n",timestamp, value, unit);
+        return String.format("Time: %s\nValue: %.2f\nUnit: %s\n", timestamp, value, unit);
     }
 }

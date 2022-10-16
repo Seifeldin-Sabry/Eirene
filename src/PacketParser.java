@@ -5,7 +5,7 @@ import java.util.Map;
 public class PacketParser {
 
     boolean isDataByte(List<Integer> packet) {
-        return packet.size() > 3 && packet.get(packet.size() - 2) == 170 && packet.get(packet.size() - 1) == 170;
+        return packet.size() == 36 && packet.get(0) == 170 && packet.get(1) == 170;
     }
 
     /**
@@ -23,7 +23,12 @@ public class PacketParser {
                 "ATTENTION VALUE", "MEDITATION CODE", "MEDITATION VALUE", "CHECKSUM"};
         Map<String, Integer> parsedData = new LinkedHashMap<>();
         for (int i = 0; i < headers.length; i++) {
-            parsedData.put(headers[i], packet.get(i));
+            try {
+                parsedData.put(headers[i], packet.get(i));
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("ERROR IN PACKET PARSER: " + e);
+                parsedData.put(headers[i], null);
+            }
         }
         return parsedData;
     }
