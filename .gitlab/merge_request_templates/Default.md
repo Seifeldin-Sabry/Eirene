@@ -1,9 +1,10 @@
-# *Feat | Fix | Chore*
+# *Feat | Fix | Chore* *title*
 
-- [ ] Ref #*ticket number*
+- [ ] References/Closes #*ticket number*
 - [ ] Assigned to a developer
 - [ ] Time is tracked
 - [ ] Attached a label
+- [ ] Added milestone
 
 
 ### Description and implementation details
