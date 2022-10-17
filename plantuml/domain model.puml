@@ -3,21 +3,29 @@
 hide circle
 skinparam classAttributeIconSize 0
 ' skinparam linetype polyline
-skinparam linetype ortho
+' skinparam linetype ortho
 ' skinparam Handwritten true
 ' hide empty methods
 hide methods
-' left to right direction
+left to right direction
 ' skinparam groupInheritance 2
 
-User "1" --> "-currentSession 0..1" Session
-User --> SessionHistory
-User ..> Sex
-Session "0..*" <--o "1" SessionHistory
-Session "1" o--> "0..*" Reading
-Reading --> BrainWave
-Reading --> SensorData
-Session ..> "-type" SessionType
+package Data {
+	Reading --> BrainWave
+	Reading --> SensorData
+}
+package User {
+	class "Session::Session" as userSession
+	User "1" --> "-currentSession 0..1" userSession
+	userSession "0..*" <--o "1" SessionHistory
+	User --> SessionHistory
+	User ..> Sex
+}
+package Session {
+	class "Data::Reading" as sessionReading
+	Session "1" o--> "0..*" sessionReading
+	Session ..> "-type" SessionType
+}
 
 class User {
 	- id: long
