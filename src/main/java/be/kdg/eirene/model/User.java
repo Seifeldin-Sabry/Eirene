@@ -1,18 +1,28 @@
 package be.kdg.eirene.model;
 
-public class User {
-    private final String name;
-    private final String email;
-    private final String password;
-    private final SessionHistory sessionHistory;
-    private final Session session;
-    private long id;
+import lombok.Getter;
+import lombok.Setter;
 
-    public User(String name, String email, String password, SessionHistory sessionHistory, Session session) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.sessionHistory = sessionHistory;
-        this.session = session;
-    }
+import java.util.Random;
+
+@Getter
+@Setter
+public class User {
+	private final SessionHistory sessionHistory;
+	private final long id;
+	private final Sex sex;
+	private String name;
+	private String email;
+	private String password;
+	private Session session;
+	
+	public User(String name, String email, String password, Sex sex) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.sessionHistory = new SessionHistory();
+		this.session = null;
+		this.sex = sex;
+		id = new Random().nextLong(); // will change in the future
+	}
 }
