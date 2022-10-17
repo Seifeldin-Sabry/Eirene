@@ -1,0 +1,67 @@
+@startuml domain model
+
+hide circle
+skinparam classAttributeIconSize 0
+' skinparam linetype polyline
+' skinparam linetype ortho
+' skinparam Handwritten true
+' hide empty methods
+hide methods
+left to right direction
+' skinparam groupInheritance 2
+
+package Data {
+	Reading --> BrainWave
+	Reading --> SensorData
+}
+package User {
+	class "Session::Session" as userSession
+	User "1" --> "-currentSession 0..1" userSession
+	userSession "0..*" <--o "1" SessionHistory
+	User --> SessionHistory
+	User ..> Sex
+}
+package Session {
+	class "Data::Reading" as sessionReading
+	Session "1" o--> "0..*" sessionReading
+	Session ..> "-type" SessionType
+}
+
+class User {
+	- id: long
+	- name: String
+	- email: String
+	- password: String
+}
+class Session {
+	- id: long
+	- startTime: Timestamp
+	- endTime: Timestamp
+	- /duration: Timestamp { endTime - startTime }
+}
+class Reading {
+	- readTime: Timestamp
+}
+class SessionHistory
+class BrainWave {
+	- signal: int
+	- level: int
+}
+class SensorData {
+	- heartRate: int
+	- temperature: float
+	- light: int
+	- sound: int
+	- humidity: float
+}
+enum SessionType <<enumeration>> {
+	FOCUS
+	MEDITATION
+}
+enum Sex <<enumeration>> {
+	MALE
+	FEMALE
+	INTERSEX
+}
+
+@enduml
