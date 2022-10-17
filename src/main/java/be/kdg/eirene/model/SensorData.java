@@ -1,4 +1,4 @@
-package main.java.be.kdg.eirene.model;
+package be.kdg.eirene.model;
 
 public class SensorData {
     private int heartRate;
