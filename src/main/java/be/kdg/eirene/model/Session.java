@@ -14,4 +14,11 @@ public class Session {
         this.startTime = LocalDateTime.now();
         this.isFocus = isFocus;
     }
+
+    /**
+     * Stops the session and sets the end time.
+     */
+    public void stop() {
+        this.endTime = LocalDateTime.now();
+    }
 }
