@@ -23,9 +23,27 @@ public class Session {
 	}
 
 	/**
-	 Stops the session and sets the end time.
+	 * Stops the session and sets the end time.
 	 */
 	public void stop() {
 		this.endTime = new Timestamp(System.currentTimeMillis());
+	}
+
+	/**
+	 * Calculates and returns the total duration of the session.
+	 *
+	 * @return the total duration of the session
+	 */
+	public long getDuration() {
+		return this.endTime.getTime() - this.startTime.getTime();
+	}
+
+	/**
+	 * Calculates and returns the duration of the session from the start until now.
+	 *
+	 * @return the duration of the session until now
+	 */
+	public long getCurrentDuration() {
+		return System.currentTimeMillis() - this.startTime.getTime();
 	}
 }
