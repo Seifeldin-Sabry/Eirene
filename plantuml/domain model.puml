@@ -10,6 +10,11 @@ hide methods
 left to right direction
 ' skinparam groupInheritance 2
 
+package Session {
+	class "Data::Reading" as sessionReading
+	Session "1" o--> "0..*" sessionReading
+	Session ..> "-type" SessionType
+}
 package Data {
 	Reading --> BrainWave
 	Reading --> SensorData
@@ -20,11 +25,6 @@ package User {
 	userSession "0..*" <--o "1" SessionHistory
 	User --> SessionHistory
 	User ..> Sex
-}
-package Session {
-	class "Data::Reading" as sessionReading
-	Session "1" o--> "0..*" sessionReading
-	Session ..> "-type" SessionType
 }
 
 class User {
@@ -43,11 +43,11 @@ class Reading {
 	- readTime: Timestamp
 }
 class SessionHistory
-class BrainWave {
+class BrainWave <<dataType>> {
 	- signal: int
 	- level: int
 }
-class SensorData {
+class SensorData <<dataType>> {
 	- heartRate: int
 	- temperature: float
 	- light: int
