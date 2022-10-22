@@ -1,3 +1,5 @@
+package be.kdg.eirene.model.readers;
+
 public enum Unit {
     C("C"), BPM("bpm"), PERCENT("%"), DB("db"), L("l");
 

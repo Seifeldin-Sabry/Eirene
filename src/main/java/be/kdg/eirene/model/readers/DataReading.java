@@ -1,3 +1,5 @@
+package be.kdg.eirene.model.readers;
+
 import java.sql.Timestamp;
 
 public final class DataReading {

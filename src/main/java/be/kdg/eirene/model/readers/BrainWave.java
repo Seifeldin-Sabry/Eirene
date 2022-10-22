@@ -1,4 +1,4 @@
-package be.kdg.eirene.model;
+package be.kdg.eirene.model.readers;
 
 import lombok.Getter;
 import lombok.Setter;
