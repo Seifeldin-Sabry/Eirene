@@ -1,0 +1,51 @@
+@startuml
+entity Users {
+  * user_id: int <<generated>>
+  --
+  * name: varchar(50)
+  * sex: char
+  * email: varchar(255)
+  * password: char(60)
+}
+
+entity Sessions {
+  * session_id: int <<generated>>
+  --
+  * user_id: int <<FK>>
+  * is_focus: boolean
+  * start_time: datetime
+  * end_time: datetime
+}
+
+entity Brainwaves {
+  * brainwave_id: int <<generated>>
+  --
+  * signal: int
+  * level: int
+}
+
+entity SensorData {
+  * sensor_data_id: int <<generated>>
+  --
+  * heart_rate: int
+  * temperature: int
+  * light: int
+  * sound: int
+  * humidity: int
+}
+
+entity Readings {
+  * reading_id: int <<generated>>
+  --
+  * brainwave_id: int <<FK>>
+  * sensor_data_id: int <<FK>>
+  * timestamp: datetime
+}
+
+Users ||--o{ Sessions
+Sessions ||--o{ Readings
+Readings ||--|| Brainwaves
+Readings ||--|| SensorData
+
+User ||--Session: has many
+@enduml
