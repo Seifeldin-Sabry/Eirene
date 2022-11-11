@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class SessionHistory {
-	private final List<Session> sessions;
+	private List<Session> sessions;
 
 	public SessionHistory() {
 		this.sessions = new ArrayList<>();

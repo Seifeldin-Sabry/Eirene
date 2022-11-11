@@ -1,4 +1,4 @@
-package be.kdg.eirene.model.readers;
+package be.kdg.eirene.model;
 
 public enum Sensor {
     HR(Unit.BPM), TEMPERATURE(Unit.C), HUMIDITY(Unit.PERCENT), PHOTOTRANSISTOR(Unit.L), SOUND(Unit.DB), BRAINWAVE(Unit.PERCENT);

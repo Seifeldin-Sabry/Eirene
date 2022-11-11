@@ -1,15 +1,43 @@
-package be.kdg.eirene.model.readers;
+package be.kdg.eirene.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
+
+//@Entity
+//@Table(name = "SENSORDATA")
+//@Immutable
 @Getter
 @Setter
 public class SensorData {
+//	@Setter(AccessLevel.NONE)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Column(name = "sensor_data_id", nullable = false)
+	private Long id;
+
+//	@Column(name = "heart_rate", nullable = false)
+//	@Type(type = "org.hibernate.type.IntegerType")
 	private SensorReading heartRate;
+
+//	@Column(name = "temperature", nullable = false)
+//	@Type(type = "org.hibernate.type.FloatType")
 	private SensorReading temperature;
+
+//	@Column(name = "sound", nullable = false)
+//	@Type(type = "org.hibernate.type.IntegerType")
 	private SensorReading sound;
+
+//	@Column(name = "humidity", nullable = false)
+//	@Type(type = "org.hibernate.type.FloatType")
 	private SensorReading humidity;
+
+//	@Column(name = "light", nullable = false)
+//	@Type(type = "org.hibernate.type.IntegerType")
 	private SensorReading light;
 
 	public SensorData() {

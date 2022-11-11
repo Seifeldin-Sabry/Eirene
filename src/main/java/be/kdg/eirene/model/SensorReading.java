@@ -1,17 +1,30 @@
-package be.kdg.eirene.model.readers;
+package be.kdg.eirene.model;
 
 import lombok.Getter;
+import org.hibernate.annotations.Immutable;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Immutable
+@Entity
+@Table(name = "SENSORDATA")
 @Getter
 public final class SensorReading {
-	private final float value;
-	private final Unit unit;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "sensor_data_id", nullable = false)
+	private Long id;
+	private float value;
+	private Unit unit;
 
 	public SensorReading(float value, Unit unit) {
 		this.value = value;
 		this.unit = unit;
+	}
+
+	public SensorReading() {
+
 	}
 
 	@Override
