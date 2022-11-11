@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        integrator_provider: be.kdg.eirene.config.IntegratorProvider
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      additional-exclude: WEB-INF/**
+  thymeleaf:
+    cache: false
+  messages:
+    basename: templates/messages
+server:
+  port: 8081
+logging:
+  level:
+    #    web: debug
+    be.kdg.eirene: debug
