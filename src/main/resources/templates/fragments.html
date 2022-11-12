@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Templates</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:fragment="navbar(index)">
+	<div class="container-fluid">
+		<a class="navbar-brand" th:href="@{/}">
+			<img alt="Logo" th:height="50" th:src="@{/images/icon.png}">
+			Eirene
+		</a>
+		<button aria-controls="navbarSupportedContent"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+				class="navbar-toggler border-warning"
+				data-bs-target="#navbarSupportedContent"
+				data-bs-toggle="collapse"
+				type="button">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ms-auto mb-2 gap-3">
+				<li th:if="${index != 0}">
+					<a class="nav-item btn btn-warning" th:href="@{/login}">Login</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+</body>
+</html>
