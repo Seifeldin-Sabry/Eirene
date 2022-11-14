@@ -3,9 +3,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template" name="readme-top">
-    <img src="src/main/resources/static/eirene.png" alt="Logo" width="150" height="150">
-  </a>
+
+![LOGO](src/main/resources/static/images/icon.png)
 
 <h3 align="center">Project Eirene</h3>
 
@@ -69,8 +68,8 @@ Here's why:
 
 * [![Java][Java]][Java-url]
 * [![Spring][spring.io]][Spring-url]
-* [![TS][TS]][TS-url]
 * [![Hibernate][hibernate]][hibernate-url]
+* [![TS][TS]][TS-url]
 * [![C++][C++]][C++-url]
 * [![Arduino][Arduino]][Arduino-url]
 * [![PostgreSQL][PostgreSQL]][PostgreSQL-url]
@@ -190,8 +189,7 @@ Peter Buschenreiter - peter.buschenreiter@student.kdg.be
 
 Seifeldin Sabry - seifeldin.sabry@student.kdg.be
 
-Project
-Link: [https://gitlab.com/kdg-ti/integration-2.1/22-23/team-3/project-planning](https://gitlab.com/kdg-ti/integration-2.1/22-23/team-3/project-planning)
+[Project Link](https://gitlab.com/kdg-ti/integration-2.1/22-23/team-3/project-planning)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
