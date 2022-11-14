@@ -1,21 +1,33 @@
 package be.kdg.eirene.model;
 
+import be.kdg.eirene.util.PostgreSQLEnumType;
 import lombok.Getter;
-import org.hibernate.annotations.Immutable;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Immutable
 @Entity
-@Table(name = "SENSORDATA")
+@Table(name = "sensor_readings")
+@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@NoArgsConstructor
+@Setter
 @Getter
 public final class SensorReading {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "sensor_data_id", nullable = false)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "sensor_reading_id", nullable = false)
+	private Long sensor_reading_id;
+
+	@Column(name = "value", nullable = false)
 	private float value;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "unit", nullable = false)
+	@Type(type = "pgsql_enum")
 	private Unit unit;
 
 	public SensorReading(float value, Unit unit) {
@@ -23,18 +35,10 @@ public final class SensorReading {
 		this.unit = unit;
 	}
 
-	public SensorReading() {
-
-	}
-
 	@Override
 	public String toString() {
 		return String.format("Value: %.2f\nUnit: %s\n", value, unit);
 	}
-
-	public float value() {return value;}
-
-	public Unit unit() {return unit;}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -45,9 +49,18 @@ public final class SensorReading {
 				Objects.equals(this.unit, that.unit);
 	}
 
+	public float value() {
+		return value;
+	}
+
+	public Unit unit() {
+		return unit;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(value, unit);
 	}
+
 
 }

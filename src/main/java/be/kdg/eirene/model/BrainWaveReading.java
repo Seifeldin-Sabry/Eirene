@@ -15,9 +15,9 @@ import javax.persistence.*;
 @Setter
 public class BrainWaveReading {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "brainwave_id", nullable = false)
-	private Long id;
+	private Long brainwave_id;
 	@Column(name = "signal", nullable = false)
 	private int signal;
 	@Column(name = "focus", nullable = false)
