@@ -2,46 +2,44 @@ package be.kdg.eirene.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
-//@Entity
-//@Table(name = "SENSORDATA")
-//@Immutable
+@Entity
+@Table(name = "SENSOR_DATA")
+@NoArgsConstructor
+@Immutable
 @Getter
 @Setter
 public class SensorData {
-//	@Setter(AccessLevel.NONE)
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@Column(name = "sensor_data_id", nullable = false)
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "sensor_data_id", nullable = false)
+	private Long sensor_data_id;
 
-//	@Column(name = "heart_rate", nullable = false)
-//	@Type(type = "org.hibernate.type.IntegerType")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "heart_rate_id", nullable = false)
 	private SensorReading heartRate;
 
-//	@Column(name = "temperature", nullable = false)
-//	@Type(type = "org.hibernate.type.FloatType")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "temperature_id", nullable = false)
 	private SensorReading temperature;
 
-//	@Column(name = "sound", nullable = false)
-//	@Type(type = "org.hibernate.type.IntegerType")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "sound_id", nullable = false)
 	private SensorReading sound;
 
-//	@Column(name = "humidity", nullable = false)
-//	@Type(type = "org.hibernate.type.FloatType")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "humidity_id", nullable = false)
 	private SensorReading humidity;
 
-//	@Column(name = "light", nullable = false)
-//	@Type(type = "org.hibernate.type.IntegerType")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "light_id", nullable = false)
 	private SensorReading light;
-
-	public SensorData() {
-	}
 
 	public SensorData(float heartRate, float temperature, float sound, float humidity, float light) {
 		this.heartRate = new SensorReading(heartRate, Unit.BPM);

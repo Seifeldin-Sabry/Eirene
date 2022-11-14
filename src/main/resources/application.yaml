@@ -1,8 +1,17 @@
 spring:
   jpa:
+    hibernate:
+      ddl-auto: create-drop
     properties:
       hibernate:
-        integrator_provider: be.kdg.eirene.config.IntegratorProvider
+        integrator_provider: be.kdg.eirene.config.HibernateIntegratorProvider
+    database: POSTGRESQL
+    show-sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/Eirene
+    username: postgres
+    password: ${POSTGRES_PASSWORD}
   devtools:
     restart:
       enabled: true

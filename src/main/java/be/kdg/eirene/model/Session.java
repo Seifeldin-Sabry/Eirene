@@ -1,31 +1,31 @@
 package be.kdg.eirene.model;
 
-import lombok.AccessLevel;
+import be.kdg.eirene.util.PostgreSQLEnumType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sessions")
+@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 public class Session {
-	@Setter(AccessLevel.NONE)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "session_id", nullable = false)
 	private Long id;
-
-	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
-	private User user_id;
 
 	@Column(name = "start_time", nullable = false)
 	private Timestamp startTime;
@@ -33,43 +33,62 @@ public class Session {
 	@Column(name = "end_time", nullable = false)
 	private Timestamp endTime;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "session_type", nullable = false)
+	@Type(type = "pgsql_enum")
 	private SessionType type;
 
-	//TODO: fix Reading and SensorData
-	@Transient
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "session_id")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "session_id")
+	@ToString.Exclude
 	private List<Reading> readings;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", nullable = false)
+	@ToString.Exclude
+	private User user;
 
 	public Session(SessionType type) {
 		this.startTime = new Timestamp(System.currentTimeMillis());
 		this.type = type;
-		id = new Random().nextLong(); // will be changed in the future
 		readings = new ArrayList<>();
 	}
 
 	/**
-	 Stops the session and sets the end time.
+	 * Stops the session and sets the end time
 	 */
 	public void stop() {
 		this.endTime = new Timestamp(System.currentTimeMillis());
 	}
 
 	/**
-	 Calculates and returns the total duration of the session.
-
-	 @return the total duration of the session
+	 * Calculates the duration of the session in seconds.
+	 * @return The duration of the session in seconds.
 	 */
 	public long getDuration() {
 		return this.endTime.getTime() - this.startTime.getTime();
 	}
 
 	/**
-	 Calculates and returns the duration of the session from the start until now.
-
-	 @return the duration of the session until now
+	 * Calculates and returns the duration of the session from the start until time of invocation.
+	 * @return the duration of the session from the start until time of invocation.
 	 */
 	public long getCurrentDuration() {
 		return System.currentTimeMillis() - this.startTime.getTime();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Session session = (Session) o;
+
+		return Objects.equals(id, session.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 }
