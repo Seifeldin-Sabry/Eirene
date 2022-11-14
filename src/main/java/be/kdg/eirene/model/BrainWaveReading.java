@@ -8,21 +8,21 @@ import org.hibernate.annotations.Immutable;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "brainwaves")
+@Table (name = "brainwaves")
 @NoArgsConstructor
 @Immutable
 @Getter
 @Setter
 public class BrainWaveReading {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "brainwave_id", nullable = false)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column (name = "brainwave_id", nullable = false)
 	private Long brainwave_id;
-	@Column(name = "signal", nullable = false)
+	@Column (name = "signal", nullable = false)
 	private int signal;
-	@Column(name = "focus", nullable = false)
+	@Column (name = "focus", nullable = false)
 	private int focus;
-	@Column(name = "meditation", nullable = false)
+	@Column (name = "meditation", nullable = false)
 	private int meditation;
 
 	public BrainWaveReading(int signal, int focus, int meditation) {

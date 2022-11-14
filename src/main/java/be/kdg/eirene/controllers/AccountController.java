@@ -10,15 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping ("/account")
-public class LoginController {
+public class AccountController {
 	private final Logger logger;
 
 	@Autowired
-	public LoginController() {
+	public AccountController() {
 		this.logger = LoggerFactory.getLogger(this.getClass());
 	}
 
-	@GetMapping
+	@GetMapping("/login")
 	public ModelAndView showLogin() {
 		logger.info("Controller is running showLogin");
 		return new ModelAndView("login");
