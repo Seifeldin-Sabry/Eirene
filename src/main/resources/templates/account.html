@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="icon" th:href="@{/images/icon.png}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-dark text-light m-3">
+<th:block th:insert="~{fragments::navbar(0)}"></th:block>
+<main>
+    <h1><span class="badge badge-secondary"> Eirene </span></h1>
+</main>
+<form action="/" enctype="utf8" method="POST" th:object="${user}">
+    <div class="alert-warning" th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div class="alert-warning" th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 w-25">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" name="username" placeholder="Username" required type="text">
+        </div>
+    </div>
+
+
+    <div class="form-group w-25">
+        <label for="password">Password</label>
+        <input class="form-control" id="password" name="password" placeholder="Password" required type="password">
+    </div>
+    <div class="form-check">
+        <label class="form-check-label" for="remember"> Remember me</label>
+        <input class="form-check-input" id="remember" name="remember" type="checkbox">
+    </div>
+    <button class="btn btn-primary m-2" type="submit">Login</button>
+    <a class="btn btn-primary" th:href="@{/account/register}">Register</a>
+</form>
+
+</body>
+</html>
