@@ -22,9 +22,8 @@ package Data {
 package User {
 	class "Session::Session" as userSession
 	User "1" --> "-currentSession 0..1" userSession
-	userSession "0..*" <--o "1" SessionHistory
-	User --> SessionHistory
 	User ..> Sex
+	User "1" --> "- sessionHistory 0..*" userSession
 }
 
 class User {
@@ -42,7 +41,6 @@ class Session {
 class Reading {
 	- readTime: Timestamp
 }
-class SessionHistory
 class BrainWave <<dataType>> {
 	- signal: int
 	- level: int
