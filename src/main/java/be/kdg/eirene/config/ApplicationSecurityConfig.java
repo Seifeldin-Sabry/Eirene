@@ -12,7 +12,7 @@ public class ApplicationSecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		    .antMatchers("/", "/resources/**", "/webjars/**", "/css/**", "/js/**", "/images/*")
+		    .antMatchers("/", "/resources/**", "/webjars/**", "/css/**", "/js/**", "/images/*", "/fonts/**")
 		    .permitAll()
 		    .anyRequest()
 		    .authenticated()

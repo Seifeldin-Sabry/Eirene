@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="icon" th:href="@{/images/icon.png}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-dark text-light m-3">
+<th:block th:insert="~{fragments::navbar(0)}"></th:block>
+<main>
+    <h1><span class="badge badge-secondary"> Eirene </span></h1>
+</main>
+<form class="my-5 d-flex flex-column align-items-start gap-3"
+      method="post"
+      th:action="@{/account/register}"
+      th:object="${userViewModel}">
+    <div class="input-group has-validation">
+        <div th:class="${#fields.hasErrors('name')?'form-floating is-invalid':'form-floating'}">
+            <input placeholder="Name" th:class="${#fields.hasErrors('name')?
+    				   'form-control form-control-lg is-invalid bg-black text-light':
+    				   'form-control form-control-lg border-0 bg-black text-light'}"
+                   th:field="*{name}"
+                   type="text"/>
+            <label class="form-label" th:for="name">Username</label>
+        </div>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('name')}"
+             th:text="${#fields.errors('name').get(0).toString()}"></div>
+    </div>
+
+
+    <div class="input-group has-validation">
+        <div th:class="${#fields.hasErrors('email')?'form-floating is-invalid':'form-floating'}">
+            <input placeholder="E-mail" th:class="${#fields.hasErrors('email')?
+    				   'form-control form-control-lg is-invalid bg-black text-light':
+    				   'form-control form-control-lg border-0 bg-black text-light'}"
+                   th:field="*{email}"
+                   type="email"/>
+            <label class="form-label" th:for="name">Email</label>
+        </div>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('email')}"
+             th:text="${#fields.errors('email').get(0).toString()}"></div>
+    </div>
+
+    <div class="input-group has-validation">
+        <div th:class="${#fields.hasErrors('sex')?'form-floating is-invalid':'form-floating'}">
+            <select th:class="${#fields.hasErrors('sex')?
+    			'form-control form-control-lg is-invalid bg-black text-light form-select':
+    			'form-control form-control-lg border-0 bg-black text-light form-select'}"
+                    th:field="*{sex}">
+                <option th:each="sex: ${sexes}"
+                        th:text="${sex}"
+                        th:value="${sex}"></option>
+            </select>
+            <label class="form-label" th:for="@{sex}">Sex</label>
+        </div>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('sex')}"
+             th:text="${#fields.errors('sex').get(0).toString()}">
+        </div>
+    </div>
+
+    <div class="input-group has-validation">
+        <div th:class="${#fields.hasErrors('password')?'form-floating is-invalid':'form-floating'}">
+            <input placeholder="Password" th:class="${#fields.hasErrors('password')?
+    				   'form-control form-control-lg is-invalid bg-black text-light':
+    				   'form-control form-control-lg border-0 bg-black text-light'}"
+                   th:field="*{password}"
+                   type="password"/>
+            <label class="form-label" th:for="password">Password</label>
+        </div>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('password')}"
+             th:text="${#fields.errors('password').get(0).toString()}"></div>
+    </div>
+
+    <div class="input-group has-validation">
+        <div th:class="${#fields.hasErrors('confirmPassword')?'form-floating is-invalid':'form-floating'}">
+            <input placeholder="Confirm Password" th:class="${#fields.hasErrors('confirmPassword')?
+    				   'form-control form-control-lg is-invalid bg-black text-light':
+    				   'form-control form-control-lg border-0 bg-black text-light'}"
+                   th:field="*{confirmPassword}"
+                   type="password"/>
+            <label class="form-label" th:for="confirmPassword">Confirm Password</label>
+        </div>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('confirmPassword')}"
+             th:text="${#fields.errors('confirmPassword').get(0).toString()}"></div>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+        </label>
+    </div>
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>
+</body>
+</html>
