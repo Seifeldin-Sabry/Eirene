@@ -1,10 +1,7 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    properties:
-      hibernate:
-        integrator_provider: be.kdg.eirene.config.HibernateIntegratorProvider
+      ddl-auto: none
     database: POSTGRESQL
     show-sql: true
   datasource:
@@ -21,6 +18,11 @@ spring:
     cache: false
   messages:
     basename: templates/messages
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      schema-locations: classpath:schema.sql
 server:
   port: 8081
 logging:

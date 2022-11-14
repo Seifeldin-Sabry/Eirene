@@ -29,7 +29,6 @@ class HibernateFunctionalityTest {
 	}
 
 
-
 	@Test
 	void userSaves() {
 		User user = new User("Seifeldin Sabry", "is@gmail.com", "password", Sex.MALE);
@@ -42,14 +41,14 @@ class HibernateFunctionalityTest {
 	}
 
 	@Test
-	void passwordSuccessfullyEncrypted(){
+	void passwordSuccessfullyEncrypted() {
 		User user = new User("Peter Buschenreiter", "p@hotmail.com", "verysecurepassword", Sex.MALE);
 		//It throws an exception if the password is not encrypted (2nd parameter)
 		Assertions.assertTrue(BcryptPasswordUtil.checkPassword("verysecurepassword", user.getPassword()));
 	}
 
 	@Test
-	void sessionSavesAndSessionHistoryCorrectlyLoads(){
+	void sessionSavesAndSessionHistoryCorrectlyLoads() {
 		User user = new User("Peter Buschenreiter", "p@hotmail.com", "verysecurepassword", Sex.MALE);
 		Session session = new Session(SessionType.FOCUS);
 		userRepository.save(user);

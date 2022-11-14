@@ -1,44 +1,42 @@
 package be.kdg.eirene.model;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "SENSOR_DATA")
+@Table (name = "SENSOR_DATA")
 @NoArgsConstructor
 @Immutable
 @Getter
 @Setter
 public class SensorData {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "sensor_data_id", nullable = false)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column (name = "sensor_data_id", nullable = false)
 	private Long sensor_data_id;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "heart_rate_id", nullable = false)
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn (name = "heart_rate_id", nullable = false)
 	private SensorReading heartRate;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "temperature_id", nullable = false)
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn (name = "temperature_id", nullable = false)
 	private SensorReading temperature;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "sound_id", nullable = false)
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn (name = "sound_id", nullable = false)
 	private SensorReading sound;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "humidity_id", nullable = false)
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn (name = "humidity_id", nullable = false)
 	private SensorReading humidity;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "light_id", nullable = false)
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn (name = "light_id", nullable = false)
 	private SensorReading light;
 
 	public SensorData(float heartRate, float temperature, float sound, float humidity, float light) {

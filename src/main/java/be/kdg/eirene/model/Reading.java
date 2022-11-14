@@ -9,26 +9,26 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "readings")
+@Table (name = "readings")
 @Immutable
 @NoArgsConstructor
 @Getter
 @Setter
 public class Reading {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reading_id", nullable = false)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column (name = "reading_id", nullable = false)
 	private Long reading_id;
 
-	@Column(name = "time_stamp", nullable = false)
+	@Column (name = "time_stamp", nullable = false)
 	private Timestamp timestamp;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "brainwave_id", nullable = false)
+	@OneToOne (cascade = CascadeType.ALL)
+	@JoinColumn (name = "brainwave_id", nullable = false)
 	private BrainWaveReading brainWave;
 
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "sensor_data_id", nullable = false)
+	@OneToOne (cascade = {CascadeType.ALL})
+	@JoinColumn (name = "sensor_data_id", nullable = false)
 	private SensorData sensorData;
 
 	@ManyToOne
