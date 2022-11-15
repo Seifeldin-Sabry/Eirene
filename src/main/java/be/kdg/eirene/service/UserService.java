@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
 	List<User> getUsers();
 
-	User getUser(Long id);
+	User getUser(String email);
 
 	User addUser(String name, String email, String password, Sex sex);
 }

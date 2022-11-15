@@ -8,7 +8,7 @@ import java.util.List;
 public interface SessionService {
 	List<Session> getSessions();
 
-	Session getSession(long id);
+	Session getSession(Long id);
 
 	Session addSession(SessionType type);
 }
