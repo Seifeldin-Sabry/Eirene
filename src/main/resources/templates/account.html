@@ -6,40 +6,59 @@
     <link rel="icon" th:href="@{/images/icon.png}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer th:src="@{/js/signup.js}" type="text/javascript"></script>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body class="bg-dark text-light m-3">
 <th:block th:insert="~{fragments::navbar(0)}"></th:block>
 <main>
-    <h1><span class="badge badge-secondary"> Eirene </span></h1>
+    <h1><span class="badge badge-secondary">Eirene</span></h1>
 </main>
-<form action="/" enctype="utf8" method="POST" th:object="${user}">
+<form class="my-5 d-flex flex-column align-items-start gap-3" enctype="utf8" method="post" th:object="${user}">
     <div class="alert-warning" th:if="${param.error}">
         Invalid username and password.
     </div>
     <div class="alert-warning" th:if="${param.logout}">
         You have been logged out.
     </div>
-    <div class="form-row">
-        <div class="form-group col-md-6 w-25">
-            <label for="username">Username</label>
-            <input class="form-control" id="username" name="username" placeholder="Username" required type="text">
+    <div class="input-group has-validation">
+        <div th:class="${#fields.hasErrors('email')?'form-floating is-invalid':'form-floating'}">
+            <input placeholder="Email" th:class="${#fields.hasErrors('email')?
+    				   'form-control form-control-lg is-invalid bg-black text-light':
+    				   'form-control form-control-lg border-0 bg-black text-light'}"
+                   th:field="*{email}"/>
+            <label class="form-label" th:for="password">Email</label>
+        </div>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('email')}"
+             th:text="${#fields.errors('email').get(0).toString()}">
         </div>
     </div>
-
-
-    <div class="form-group w-25">
-        <label for="password">Password</label>
-        <input class="form-control" id="password" name="password" placeholder="Password" required type="password">
+    <div class="input-group has-validation">
+        <div th:class="${#fields.hasErrors('password')?'form-floating is-invalid':'form-floating'}">
+            <input placeholder="Password" th:class="${#fields.hasErrors('password')?
+    				   'form-control form-control-lg is-invalid bg-black text-light':
+    				   'form-control form-control-lg border-0 bg-black text-light'}"
+                   th:field="*{password}"
+                   type="password"/>
+            <label class="form-label" th:for="password">Password</label>
+        </div>
+        <button class="btn btn-outline-secondary" id="button-show-password" type="button">
+            <i class="bi bi-eye"></i>
+        </button>
+        <div class="invalid-feedback"
+             th:if="${#fields.hasErrors('password')}"
+             th:text="${#fields.errors('password').get(0).toString()}">
+        </div>
     </div>
     <div class="form-check">
         <label class="form-check-label" for="remember"> Remember me</label>
         <input class="form-check-input" id="remember" name="remember" type="checkbox">
     </div>
     <button class="btn btn-primary m-2" type="submit">Login</button>
-    <a class="btn btn-primary" th:href="@{/account/register}">Register</a>
 </form>
+<div>If you don't have an account yet, <a class="link-info" th:href="@{/account/register}">register here</a>!</div>
 
 </body>
 </html>

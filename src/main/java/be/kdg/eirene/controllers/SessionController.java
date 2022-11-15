@@ -8,12 +8,12 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class SessionController {
-//	private final Logger logger;
-//	private final SessionService sessionService;
-//
-//	@Autowired
-//	public SessionController(SessionService sessionService) {
-//		this.logger = LoggerFactory.getLogger(this.getClass());
-//		this.sessionService = sessionService;
-//	}
+	private final Logger logger;
+	private final SessionService sessionService;
+
+	@Autowired
+	public SessionController(SessionService sessionService) {
+		this.logger = LoggerFactory.getLogger(this.getClass());
+		this.sessionService = sessionService;
+	}
 }
