@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
-@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@Table (name = "users")
+@TypeDef (name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 @NoArgsConstructor
 @Getter
 @Setter
@@ -23,38 +23,38 @@ import java.util.List;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id", nullable = false)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column (name = "user_id", nullable = false)
 	private Long user_id;
 
-	@Column(name = "name", nullable = false)
+	@Column (name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "email", nullable = false, length = 50)
+	@Column (name = "email", nullable = false, length = 50)
 	private String email;
 
 
-	@Column(name = "password", nullable = false, length = 60)
+	@Column (name = "password", nullable = false, length = 60)
 	private String password;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "sex", nullable = false)
-	@Type(type = "pgsql_enum")
-	private Sex sex;
+	@Enumerated (EnumType.STRING)
+	@Column (name = "gender", nullable = false)
+	@Type (type = "pgsql_enum")
+	private Gender gender;
 
 	@Transient
 	private Session session;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany (mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@ToString.Exclude
 	private List<Session> sessionHistory;
-	
-	public User(String name, String email, String password, Sex sex) {
+
+	public User(String name, String email, String password, Gender gender) {
 		this.name = name;
 		this.email = email;
 		this.password = BcryptPasswordUtil.hashPassword(password);
 		this.sessionHistory = new ArrayList<>();
 		this.session = null;
-		this.sex = sex;
+		this.gender = gender;
 	}
 }

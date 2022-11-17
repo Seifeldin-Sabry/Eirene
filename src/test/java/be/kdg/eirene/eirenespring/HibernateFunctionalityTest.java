@@ -1,8 +1,8 @@
 package be.kdg.eirene.eirenespring;
 
+import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.Session;
 import be.kdg.eirene.model.SessionType;
-import be.kdg.eirene.model.Sex;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.repository.SessionRepository;
 import be.kdg.eirene.repository.UserRepository;
@@ -31,7 +31,7 @@ class HibernateFunctionalityTest {
 
 	@Test
 	void userSaves() {
-		User user = new User("Seifeldin Sabry", "is@gmail.com", "password", Sex.MALE);
+		User user = new User("Seifeldin Sabry", "is@gmail.com", "password", Gender.MALE);
 		logger.info("User before saving: " + user);
 		userRepository.save(user);
 		logger.info("User after saving: " + user);
@@ -42,14 +42,14 @@ class HibernateFunctionalityTest {
 
 	@Test
 	void passwordSuccessfullyEncrypted() {
-		User user = new User("Peter Buschenreiter", "p@hotmail.com", "verysecurepassword", Sex.MALE);
+		User user = new User("Peter Buschenreiter", "p@hotmail.com", "verysecurepassword", Gender.MALE);
 		//It throws an exception if the password is not encrypted (2nd parameter)
 		Assertions.assertTrue(BcryptPasswordUtil.checkPassword("verysecurepassword", user.getPassword()));
 	}
 
 	@Test
 	void sessionSavesAndSessionHistoryCorrectlyLoads() {
-		User user = new User("Peter Buschenreiter", "p@hotmail.com", "verysecurepassword", Sex.MALE);
+		User user = new User("Peter Buschenreiter", "p@hotmail.com", "verysecurepassword", Gender.MALE);
 		Session session = new Session(SessionType.FOCUS);
 		userRepository.save(user);
 		session.setUser(user);

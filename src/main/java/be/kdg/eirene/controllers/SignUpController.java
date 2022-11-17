@@ -1,6 +1,6 @@
 package be.kdg.eirene.controllers;
 
-import be.kdg.eirene.model.Sex;
+import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.presenter.viewmodel.UserSignUpViewModel;
 import be.kdg.eirene.service.UserService;
 import org.slf4j.Logger;
@@ -32,7 +32,7 @@ public class SignUpController {
 	@GetMapping
 	public ModelAndView loadSignUpForm() {
 		logger.info("signup called");
-		return new ModelAndView("signup", "sexes", Sex.values())
+		return new ModelAndView("signup", "genders", Gender.values())
 				.addObject("user", new UserSignUpViewModel());
 	}
 
@@ -45,9 +45,9 @@ public class SignUpController {
 						errors.getGlobalError().getDefaultMessage());
 			errors.getAllErrors().forEach(error -> logger.error(error.toString()));
 			return new ModelAndView("signup")
-					.addObject("sexes", Sex.values());
+					.addObject("genders", Gender.values());
 		}
-		//		userService.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getSex());
+		//		userService.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getGender());
 		//TODO: using spring security we should be able to login the user here
 		return new ModelAndView("redirect:user");
 	}

@@ -3,7 +3,7 @@ entity Users {
   * user_id: int <<generated>>
   --
   * name: varchar(50)
-  * sex: char
+  * gender: char
   * email: varchar(255)
   * password: char(60)
 }

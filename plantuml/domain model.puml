@@ -22,7 +22,7 @@ package Data {
 package User {
 	class "Session::Session" as userSession
 	User "1" --> "-currentSession 0..1" userSession
-	User ..> Sex
+	User ..> Gender
 	User "1" --> "- sessionHistory 0..*" userSession
 }
 
@@ -56,10 +56,10 @@ enum SessionType <<enumeration>> {
 	FOCUS
 	MEDITATION
 }
-enum Sex <<enumeration>> {
+enum Gender <<enumeration>> {
 	MALE
 	FEMALE
-	INTERSEX
+	OTHER
 }
 
 @enduml
