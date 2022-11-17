@@ -1,7 +1,6 @@
 package be.kdg.eirene.service;
 
-import be.kdg.eirene.exceptions.UserNotFoundException;
-import be.kdg.eirene.model.Sex;
+import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.repository.UserRepository;
 import com.google.common.collect.Lists;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User addUser(String name, String email, String password, Sex sex) {
-		return userRepository.save(new User(name, email, password, sex));
+	public User addUser(String name, String email, String password, Gender gender) {
+		return userRepository.save(new User(name, email, password, gender));
 	}
 }

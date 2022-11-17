@@ -1,12 +1,14 @@
 package be.kdg.eirene.presenter.viewmodel;
 
+import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.presenter.viewmodel.constraints.PasswordMatchConstraint;
 import be.kdg.eirene.presenter.viewmodel.constraints.UniqueEmailConstraint;
-import be.kdg.eirene.model.Sex;
-import be.kdg.eirene.presenter.viewmodel.validators.password.*;
+import be.kdg.eirene.presenter.viewmodel.validators.password.LetterCheck;
+import be.kdg.eirene.presenter.viewmodel.validators.password.NumberCheck;
+import be.kdg.eirene.presenter.viewmodel.validators.password.SizeCheck;
+import be.kdg.eirene.presenter.viewmodel.validators.password.SpecialCharacterCheck;
 import lombok.Getter;
 import lombok.Setter;
-
 
 import javax.validation.GroupSequence;
 import javax.validation.constraints.*;
@@ -39,7 +41,7 @@ public class UserSignUpViewModel {
 	@NotBlank (message = "Please confirm your password")
 	private String confirmPassword;
 
-	private Sex sex;
+	private Gender gender;
 
 	@AssertTrue (message = "You must accept the terms and conditions")
 	private boolean termsAccepted;
