@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Log in</title>
     <link rel="icon" th:href="@{/images/icon.png}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -58,7 +58,6 @@
     </div>
     <button class="btn btn-primary m-2" type="submit">Login</button>
 </form>
-<div>If you don't have an account yet, <a class="link-info" th:href="@{/account/register}">register here</a>!</div>
-
+<div>If you don't have an account yet, <a th:href="@{/signup}">sign up here</a>!</div>
 </body>
 </html>

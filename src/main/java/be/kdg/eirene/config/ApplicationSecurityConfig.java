@@ -12,14 +12,20 @@
 //	@Bean
 //	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //		http.authorizeRequests()
-//		    .antMatchers("/", "/resources/**", "/webjars/**", "/css/**", "/js/**", "/images/*", "/fonts/**")
+//		    .antMatchers("/", "/webjars/**", "/css/**", "/js/**", "/images/*", "/fonts/**")
 //		    .permitAll()
 //		    .anyRequest()
 //		    .authenticated()
 //		    .and()
 //		    .formLogin()
-//		    .disable();
-//		//		    .loginPage("/account/login").permitAll();
+//		    .loginPage("/login")
+//		    .loginPage("/signup")
+//		    .usernameParameter("email")
+//		    .permitAll()
+//		    .and()
+//		    .logout()
+//		    .logoutSuccessUrl("/")
+//		    .permitAll();
 //		return http.build();
 //	}
 //}
