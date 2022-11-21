@@ -6,3 +6,8 @@
 * {
     font-family: comfortana, serif;
 }
+
+::selection {
+    background: #FEB50D;
+    color: #191C1F;
+}
