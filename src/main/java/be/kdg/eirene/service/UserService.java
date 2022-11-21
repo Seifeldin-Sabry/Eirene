@@ -10,5 +10,9 @@ public interface UserService {
 
 	User getUser(String email);
 
+	User getUser(Long id);
+
 	User addUser(String name, String email, String password, Gender gender);
+
+	String redirectUnauthorized();
 }

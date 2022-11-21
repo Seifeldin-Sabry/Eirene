@@ -15,36 +15,42 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "sessions")
-@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@Table (name = "sessions")
+@TypeDef (name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 @NoArgsConstructor
 @Setter
 @Getter
 @ToString
 public class Session {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "session_id", nullable = false)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column (name = "session_id", nullable = false)
 	private Long id;
 
-	@Column(name = "start_time", nullable = false)
+	@Column (name = "session_name", nullable = false)
+	private String name;
+
+	@Column (name = "satisfaction")
+	private Integer satisfaction;
+
+	@Column (name = "start_time", nullable = false)
 	private Timestamp startTime;
 
-	@Column(name = "end_time", nullable = false)
+	@Column (name = "end_time")
 	private Timestamp endTime;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "session_type", nullable = false)
-	@Type(type = "pgsql_enum")
+	@Enumerated (EnumType.STRING)
+	@Column (name = "session_type", nullable = false)
+	@Type (type = "pgsql_enum")
 	private SessionType type;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "session_id")
+	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn (name = "session_id")
 	@ToString.Exclude
 	private List<Reading> readings;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", nullable = false)
+	@ManyToOne (fetch = FetchType.EAGER)
+	@JoinColumn (name = "user_id", nullable = false)
 	@ToString.Exclude
 	private User user;
 
@@ -63,6 +69,7 @@ public class Session {
 
 	/**
 	 * Calculates the duration of the session in seconds.
+	 *
 	 * @return The duration of the session in seconds.
 	 */
 	public long getDuration() {
@@ -71,6 +78,7 @@ public class Session {
 
 	/**
 	 * Calculates and returns the duration of the session from the start until time of invocation.
+	 *
 	 * @return the duration of the session from the start until time of invocation.
 	 */
 	public long getCurrentDuration() {

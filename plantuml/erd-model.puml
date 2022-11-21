@@ -11,6 +11,7 @@ entity Users {
 entity Sessions {
   * session_id: int <<generated>>
   --
+  * session_name: varchar
   * user_id: int <<FK>>
   * is_focus: boolean
   * start_time: datetime

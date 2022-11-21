@@ -1,6 +1,7 @@
 package be.kdg.eirene.controllers;
 
 import be.kdg.eirene.model.Gender;
+import be.kdg.eirene.model.User;
 import be.kdg.eirene.presenter.viewmodel.UserSignUpViewModel;
 import be.kdg.eirene.service.UserService;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -30,15 +32,18 @@ public class SignUpController {
 	}
 
 	@GetMapping
-	public ModelAndView loadSignUpForm() {
-		logger.info("signup called");
+	public ModelAndView loadSignUpForm(HttpSession session) {
+		logger.info("get loadSignUpForm called");
+		logger.info("session: " + session.getAttribute("user_id"));
+		if (session.getAttribute("user_id") != null) {
+			return new ModelAndView("redirect:/profile/" + session.getAttribute("user_id"));
+		}
 		return new ModelAndView("signup", "genders", Gender.values())
 				.addObject("user", new UserSignUpViewModel());
 	}
 
 	@PostMapping
-	public ModelAndView signUpUser(@ModelAttribute ("user") @Valid UserSignUpViewModel user, BindingResult errors) {
-		logger.info("post signup called");
+	public ModelAndView signUpUser(@ModelAttribute ("user") @Valid UserSignUpViewModel user, BindingResult errors, HttpSession session) {
 		if (errors.hasErrors()) {
 			if (errors.hasGlobalErrors())
 				errors.rejectValue("confirmPassword", "error.passwords.do.not.match",
@@ -47,8 +52,8 @@ public class SignUpController {
 			return new ModelAndView("signup")
 					.addObject("genders", Gender.values());
 		}
-		//		userService.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getGender());
-		//TODO: using spring security we should be able to login the user here
-		return new ModelAndView("redirect:user");
+		User userDB = userService.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getGender());
+		session.setAttribute("user_id", userDB.getUser_id());
+		return new ModelAndView("redirect:/profile/" + session.getAttribute("user_id"));
 	}
 }
