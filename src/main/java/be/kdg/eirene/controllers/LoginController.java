@@ -12,13 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping ("/login")
 public class LoginController {
 
 	private final Logger logger;
@@ -30,15 +29,17 @@ public class LoginController {
 		this.userService = userService;
 	}
 
-	@GetMapping
-	public ModelAndView loadLoginForm() {
-		logger.info("login called");
+	@GetMapping ("/login")
+	public ModelAndView loadLoginForm(HttpSession session) {
+		if (session.getAttribute("user_id") != null) {
+			return new ModelAndView("redirect:/profile/" + session.getAttribute("user_id"));
+		}
 		return new ModelAndView("login")
 				.addObject("user", new UserLoginViewModel());
 	}
 
-	@PostMapping
-	public ModelAndView loginUser(@ModelAttribute ("user") @Valid UserLoginViewModel user, BindingResult errors) {
+	@PostMapping ("/login")
+	public ModelAndView loginUser(@ModelAttribute ("user") @Valid UserLoginViewModel user, BindingResult errors, HttpSession session) {
 		logger.info("post loginUser called");
 		if (errors.hasErrors()) {
 			errors.getAllErrors().forEach(error -> logger.error(error.toString()));
@@ -60,8 +61,13 @@ public class LoginController {
 			return new ModelAndView("login");
 		}
 		logger.info("login succesful");
-		//TODO: using spring security we should be able to login the user here
-		return new ModelAndView("redirect:/user");
+		session.setAttribute("user_id", retrievedUser.getUser_id());
+		return new ModelAndView("redirect:/profile/" + retrievedUser.getUser_id());
 	}
 
+	@GetMapping ("/logout")
+	public ModelAndView logoutUser(HttpSession session) {
+		session.invalidate();
+		return new ModelAndView("redirect:/");
+	}
 }

@@ -1,5 +1,6 @@
 package be.kdg.eirene.service;
 
+import be.kdg.eirene.exceptions.UserNotFoundException;
 import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.repository.UserRepository;
@@ -26,6 +27,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(String email) {
 		return userRepository.findByEmailIgnoreCase(email);
+	}
+
+	@Override
+	public User getUser(Long id) {
+		return userRepository.findById(id)
+		                     .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+	}
+
+	@Override
+	public String redirectUnauthorized() {
+		return "redirect:/login";
 	}
 
 	@Override
