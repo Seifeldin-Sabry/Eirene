@@ -20,8 +20,8 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public List<Session> getSessions() {
-		return Lists.newArrayList(sessionRepository.findAll());
+	public List<Session> getSessions(Long userId) {
+		return Lists.newArrayList(sessionRepository.getSessionsByUserID(userId));
 	}
 
 	@Override

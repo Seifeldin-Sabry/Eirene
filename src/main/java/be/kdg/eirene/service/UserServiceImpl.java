@@ -4,19 +4,25 @@ import be.kdg.eirene.exceptions.UserNotFoundException;
 import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.repository.UserRepository;
+import be.kdg.eirene.util.BcryptPasswordUtil;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
+	private final Logger logger;
 
 	@Autowired
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
+		this.logger = LoggerFactory.getLogger(this.getClass());
 	}
 
 	@Override
@@ -29,6 +35,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByEmailIgnoreCase(email);
 	}
 
+
+	@Override
+	public boolean passwordMatches(User user, String passwordToCheck) {
+		return BcryptPasswordUtil.checkPassword(passwordToCheck, user.getPassword());
+	}
+
 	@Override
 	public User getUser(Long id) {
 		return userRepository.findById(id)
@@ -38,6 +50,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String redirectUnauthorized() {
 		return "redirect:/login";
+	}
+
+	@Override
+	public Long getTotalDuration(Long user_id) {
+		Optional<Long> totalDurationSessionsByUserID = userRepository.getTotalDurationSessionsByUserID(user_id);
+		logger.info("Total duration of sessions for user with id " + user_id + " is " + totalDurationSessionsByUserID);
+		return totalDurationSessionsByUserID.orElse(0L);
+	}
+
+	@Override
+	public Long getAverageDuration(Long user_id) {
+		return userRepository.getAverageDurationSessionsByUserID(user_id).orElse(0L);
 	}
 
 	@Override

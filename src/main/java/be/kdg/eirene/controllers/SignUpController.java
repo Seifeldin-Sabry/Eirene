@@ -3,6 +3,7 @@ package be.kdg.eirene.controllers;
 import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.presenter.viewmodel.UserSignUpViewModel;
+import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,19 +25,21 @@ public class SignUpController {
 
 	private final Logger logger;
 	private final UserService userService;
+	private final CookieService cookieService;
 
 	@Autowired
-	public SignUpController(UserService userService) {
+	public SignUpController(UserService userService, CookieService cookieService) {
 		this.logger = LoggerFactory.getLogger(this.getClass());
 		this.userService = userService;
+		this.cookieService = cookieService;
 	}
 
 	@GetMapping
 	public ModelAndView loadSignUpForm(HttpSession session) {
 		logger.info("get loadSignUpForm called");
 		logger.info("session: " + session.getAttribute("user_id"));
-		if (session.getAttribute("user_id") != null) {
-			return new ModelAndView("redirect:/profile/" + session.getAttribute("user_id"));
+		if (!cookieService.cookieInvalid(session)) {
+			return new ModelAndView("redirect:/profile");
 		}
 		return new ModelAndView("signup", "genders", Gender.values())
 				.addObject("user", new UserSignUpViewModel());
@@ -53,7 +56,7 @@ public class SignUpController {
 					.addObject("genders", Gender.values());
 		}
 		User userDB = userService.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getGender());
-		session.setAttribute("user_id", userDB.getUser_id());
-		return new ModelAndView("redirect:/profile/" + session.getAttribute("user_id"));
+		cookieService.setCookie(session, userDB.getUser_id());
+		return new ModelAndView("redirect:/profile");
 	}
 }

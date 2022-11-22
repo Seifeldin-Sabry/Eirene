@@ -5,7 +5,6 @@
 	<title>Profile</title>
 	<link rel="icon" th:href="@{/images/icon.png}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
@@ -20,12 +19,14 @@
 		<div>
 			<h3>Total session time</h3>
 			<p class="fs-1 text-center"
-			   th:text="${totalDuration.toHours()}+':'+${#numbers.formatInteger(totalDuration.toMinutes(), 2)}"
+			   th:text="${totalDuration.toHours()}+':'+${#numbers.formatInteger(totalDuration.toMinutes() % 60, 2)}"
 			></p>
 		</div>
 		<div>
 			<h3>Average session time</h3>
-			<p class="fs-1 text-center">XX:XX</p>
+			<p class="fs-1 text-center"
+			   th:text="${averageDuration.toHours()}+':'+${#numbers.formatInteger(averageDuration.toMinutes() % 60, 2)}"
+			>XX:XX</p>
 		</div>
 		<div>
 			<h3>Total sessions</h3>
