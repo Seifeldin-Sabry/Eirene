@@ -2,8 +2,8 @@ package be.kdg.eirene.controllers;
 
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.presenter.viewmodel.UserLoginViewModel;
+import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.UserService;
-import be.kdg.eirene.util.BcryptPasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +23,19 @@ public class LoginController {
 	private final Logger logger;
 	private final UserService userService;
 
+	private final CookieService cookieService;
+
 	@Autowired
-	public LoginController(UserService userService) {
+	public LoginController(UserService userService, CookieService cookieService) {
 		this.logger = LoggerFactory.getLogger(this.getClass());
 		this.userService = userService;
+		this.cookieService = cookieService;
 	}
 
 	@GetMapping ("/login")
 	public ModelAndView loadLoginForm(HttpSession session) {
-		if (session.getAttribute("user_id") != null) {
-			return new ModelAndView("redirect:/profile/" + session.getAttribute("user_id"));
+		if (!cookieService.cookieInvalid(session)) {
+			return new ModelAndView("redirect:/profile");
 		}
 		return new ModelAndView("login")
 				.addObject("user", new UserLoginViewModel());
@@ -54,15 +57,15 @@ public class LoginController {
 			return new ModelAndView("login");
 		}
 		// 2. Check if password is correct
-		if (!BcryptPasswordUtil.checkPassword(user.getPassword(), retrievedUser.getPassword())) {
+		if (!userService.passwordMatches(retrievedUser, user.getPassword())) {
 			logger.error("password incorrect");
 			errors.rejectValue("password", "email.or.password.incorrect");
 			errors.rejectValue("email", "email.or.password.incorrect");
 			return new ModelAndView("login");
 		}
 		logger.info("login succesful");
-		session.setAttribute("user_id", retrievedUser.getUser_id());
-		return new ModelAndView("redirect:/profile/" + retrievedUser.getUser_id());
+		cookieService.setCookie(session, retrievedUser.getUser_id());
+		return new ModelAndView("redirect:/profile/");
 	}
 
 	@GetMapping ("/logout")

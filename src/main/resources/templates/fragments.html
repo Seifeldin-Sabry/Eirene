@@ -26,7 +26,7 @@
 			<ul class="navbar-nav ms-auto mb-2 gap-3">
 				<li th:if="${#httpSession.getAttribute('user_id')!=null}">
 					<a class="nav-item btn btn-warning"
-					   th:href="@{/profile/{userID}(userID=${#httpSession.getAttribute('user_id')})}"
+					   th:href="@{/profile}"
 					>
 						My profile
 					</a>

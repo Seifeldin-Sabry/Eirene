@@ -10,6 +10,8 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -73,7 +75,7 @@ public class Session {
 	 * @return The duration of the session in seconds.
 	 */
 	public long getDuration() {
-		return this.endTime.getTime() - this.startTime.getTime();
+		return Duration.of(this.endTime.getTime() - this.startTime.getTime(), ChronoUnit.MILLIS).toSeconds();
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class Session {
 	 * @return the duration of the session from the start until time of invocation.
 	 */
 	public long getCurrentDuration() {
-		return System.currentTimeMillis() - this.startTime.getTime();
+		return Duration.of(System.currentTimeMillis() - this.startTime.getTime(), ChronoUnit.MILLIS).toSeconds();
 	}
 
 	@Override

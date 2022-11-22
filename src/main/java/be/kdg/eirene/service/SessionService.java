@@ -6,7 +6,7 @@ import be.kdg.eirene.model.SessionType;
 import java.util.List;
 
 public interface SessionService {
-	List<Session> getSessions();
+	List<Session> getSessions(Long userId);
 
 	Session getSession(Long id);
 
