@@ -1,0 +1,62 @@
+@startuml creating an account
+
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+autoactivate on
+'skinparam maxMessageSize 150
+
+
+participant ":SignUpController" as signup <<Controller>>
+participant "viewModel:\nUserSignUpViewModel" as viewmodel
+participant "br:BindingResult" as br
+participant "error:ObjectError" as error
+participant "errors:ObjectError[*]" as errors <<Stream>>
+participant "logger:Logger" as logger
+participant "userService:UserService" as service
+participant ":User" as user
+participant "userRepository:UserRepository" as repo
+
+[o-> signup : loadSignUpForm():ModelAndView
+create viewmodel
+signup -->> viewmodel : <<create>>
+[-> signup : signUpUser(viewModel:UserSignUpViewModel,\nbr:BindingResult):ModelAndView
+signup -> br : hasErrors():boolean
+deactivate
+alt br.hasErrors()
+    signup -> br : hasGlobalErrors():boolean
+    deactivate
+    opt br.hasGlobalErrors()
+        signup -> br : error = getGlobalError():ObjectError
+        deactivate
+        signup -> error : defaultMessage = getDefaultMessage():String
+        deactivate
+        signup -> br : rejectValue("confirmPassword",\n"error.passwords.do.not.match",\ndefaultMessage)
+        deactivate
+    end
+    signup -> br : errors = getAllErrors():ObjectError[*]
+    deactivate
+    signup -> errors : forEach(error->logger.error(error.toString()))
+    errors -> logger : error(error.toString())
+    deactivate
+    deactivate
+    [<<-- signup : new ModelAndView("signup")
+else else
+    [-[#white]> signup
+    signup -> viewmodel : name = getName():String
+    deactivate
+    signup -> viewmodel : email = getEmail():String
+    deactivate
+    signup -> viewmodel : pw = getPassword():String
+    deactivate
+    signup -> viewmodel : gender = getGender():Gender
+    deactivate
+    signup -> service : addUser(name, email, pw, gender):User
+    service -> user : user = new User(name,\nemail, pw, gender)
+    deactivate
+    service -> repo : save(user):User
+    deactivate
+    deactivate
+    [<<-- signup : new ModelAndView("redirect:user")
+end
+
+@enduml
