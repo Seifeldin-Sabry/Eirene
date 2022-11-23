@@ -5,13 +5,11 @@ import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.repository.UserRepository;
 import be.kdg.eirene.util.BcryptPasswordUtil;
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,11 +21,6 @@ public class UserServiceImpl implements UserService {
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 		this.logger = LoggerFactory.getLogger(this.getClass());
-	}
-
-	@Override
-	public List<User> getUsers() {
-		return Lists.newArrayList(userRepository.findAll());
 	}
 
 	@Override

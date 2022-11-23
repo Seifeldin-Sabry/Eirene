@@ -1,5 +1,6 @@
 package be.kdg.eirene.controllers;
 
+import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.UserService;
@@ -35,7 +36,9 @@ public class UserController {
 		final ModelAndView modelAndView = new ModelAndView("profile").addObject(user);
 		modelAndView
 				.addObject("totalDuration", Duration.ofSeconds(userService.getTotalDuration(user.getUser_id())))
-				.addObject("averageDuration", Duration.ofSeconds(userService.getAverageDuration(user.getUser_id())));
+				.addObject("averageDuration", Duration.ofSeconds(userService.getAverageDuration(user.getUser_id())))
+				.addObject("focus", SessionType.FOCUS)
+				.addObject("meditation", SessionType.MEDITATION);
 		return modelAndView;
 	}
 }

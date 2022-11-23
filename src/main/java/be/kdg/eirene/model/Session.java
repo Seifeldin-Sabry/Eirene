@@ -29,7 +29,7 @@ public class Session {
 	@Column (name = "session_id", nullable = false)
 	private Long id;
 
-	@Column (name = "session_name", nullable = false)
+	@Column (name = "session_name")
 	private String name;
 
 	@Column (name = "satisfaction")
@@ -62,26 +62,31 @@ public class Session {
 		readings = new ArrayList<>();
 	}
 
+	public Session(SessionType type, User user) {
+		this(type);
+		this.user = user;
+	}
+
 	/**
-	 * Stops the session and sets the end time
+	 Stops the session and sets the end time
 	 */
 	public void stop() {
 		this.endTime = new Timestamp(System.currentTimeMillis());
 	}
 
 	/**
-	 * Calculates the duration of the session in seconds.
-	 *
-	 * @return The duration of the session in seconds.
+	 Calculates the duration of the session in seconds.
+
+	 @return The duration of the session in seconds.
 	 */
 	public long getDuration() {
 		return Duration.of(this.endTime.getTime() - this.startTime.getTime(), ChronoUnit.MILLIS).toSeconds();
 	}
 
 	/**
-	 * Calculates and returns the duration of the session from the start until time of invocation.
-	 *
-	 * @return the duration of the session from the start until time of invocation.
+	 Calculates and returns the duration of the session from the start until time of invocation.
+
+	 @return the duration of the session from the start until time of invocation.
 	 */
 	public long getCurrentDuration() {
 		return Duration.of(System.currentTimeMillis() - this.startTime.getTime(), ChronoUnit.MILLIS).toSeconds();
