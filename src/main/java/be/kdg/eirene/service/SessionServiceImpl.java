@@ -3,6 +3,7 @@ package be.kdg.eirene.service;
 import be.kdg.eirene.exceptions.SessionNotFoundException;
 import be.kdg.eirene.model.Session;
 import be.kdg.eirene.model.SessionType;
+import be.kdg.eirene.model.User;
 import be.kdg.eirene.repository.SessionRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public Session addSession(SessionType type) {
-		return sessionRepository.save(new Session(type));
+	public Session save(SessionType type, User user) {
+		return sessionRepository.save(new Session(type, user));
 	}
 }
