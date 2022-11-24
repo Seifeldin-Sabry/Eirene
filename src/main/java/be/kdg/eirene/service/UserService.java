@@ -12,8 +12,6 @@ public interface UserService {
 
 	User addUser(String name, String email, String password, Gender gender);
 
-	String redirectUnauthorized();
-
 	Long getTotalDuration(Long user_id);
 
 	Long getAverageDuration(Long user_id);

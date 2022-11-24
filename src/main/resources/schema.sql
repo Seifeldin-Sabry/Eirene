@@ -29,14 +29,13 @@ CREATE TABLE IF NOT EXISTS sessions
     session_id   BIGSERIAL
         PRIMARY KEY,
     user_id      BIGINT       NOT NULL
-        REFERENCES users ( user_id ),
-    session_name VARCHAR,
+        REFERENCES users (user_id),
+    session_name VARCHAR(255),
     satisfaction INT
-        CONSTRAINT satisfaction_check
-            CHECK ( satisfaction >= 0 AND satisfaction <= 10 ),
+        CONSTRAINT satisfaction_check CHECK ( satisfaction >= 0 AND satisfaction <= 10 ),
     session_type SESSION_TYPE NOT NULL,
-    start_time   TIMESTAMP    NOT NULL DEFAULT NOW( ),
-    end_time     TIMESTAMP             DEFAULT NULL
+    start_time   TIMESTAMP    NOT NULL,
+    end_time     TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS brainwaves
@@ -64,15 +63,15 @@ CREATE TABLE IF NOT EXISTS sensor_data
     sensor_data_id BIGSERIAL
         PRIMARY KEY,
     heart_rate_id  BIGINT NOT NULL
-        REFERENCES sensor_readings ( sensor_reading_id ),
+        REFERENCES sensor_readings (sensor_reading_id),
     temperature_id BIGINT NOT NULL
-        REFERENCES sensor_readings ( sensor_reading_id ),
+        REFERENCES sensor_readings (sensor_reading_id),
     light_id       BIGINT NOT NULL
-        REFERENCES sensor_readings ( sensor_reading_id ),
+        REFERENCES sensor_readings (sensor_reading_id),
     sound_id       BIGINT NOT NULL
-        REFERENCES sensor_readings ( sensor_reading_id ),
+        REFERENCES sensor_readings (sensor_reading_id),
     humidity_id    BIGINT NOT NULL
-        REFERENCES sensor_readings ( sensor_reading_id )
+        REFERENCES sensor_readings (sensor_reading_id)
 );
 
 CREATE TABLE IF NOT EXISTS readings
@@ -80,10 +79,10 @@ CREATE TABLE IF NOT EXISTS readings
     reading_id     BIGSERIAL
         PRIMARY KEY,
     session_id     BIGINT    NOT NULL
-        REFERENCES sessions ( session_id ),
+        REFERENCES sessions (session_id),
     brainwave_id   BIGINT    NOT NULL
-        REFERENCES brainwaves ( brainwave_id ),
+        REFERENCES brainwaves (brainwave_id),
     sensor_data_id BIGINT    NOT NULL
-        REFERENCES sensor_data ( sensor_data_id ),
-    time_stamp     TIMESTAMP NOT NULL DEFAULT NOW( )
+        REFERENCES sensor_data (sensor_data_id),
+    time_stamp     TIMESTAMP NOT NULL DEFAULT NOW()
 );

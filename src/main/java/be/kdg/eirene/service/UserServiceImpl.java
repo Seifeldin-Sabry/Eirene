@@ -37,13 +37,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(Long id) {
 		return userRepository.findById(id)
-		                     .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+		                     .orElseThrow(() -> new UserNotFoundException("User not found"));
 	}
 
-	@Override
-	public String redirectUnauthorized() {
-		return "redirect:/login";
-	}
 
 	@Override
 	public Long getTotalDuration(Long user_id) {
