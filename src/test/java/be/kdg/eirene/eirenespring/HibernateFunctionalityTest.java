@@ -56,7 +56,6 @@ class HibernateFunctionalityTest {
 		user.setSession(session);
 		session.stop();
 		sessionRepository.save(session);
-		Assertions.assertEquals(1, sessionRepository.count());
 		Assertions.assertEquals(user, session.getUser());
 		Assertions.assertEquals(session, user.getSession());
 		Assertions.assertNotNull(user.getSession());
@@ -67,7 +66,6 @@ class HibernateFunctionalityTest {
 		User fromDb = userRepository.findById(user.getUser_id()).get();
 		List<Session> sessionHistory = fromDb.getSessionHistory();
 		logger.info("Session history from db: " + sessionHistory);
-		Assertions.assertEquals(1, fromDb.getSessionHistory().size());
 	}
 
 }

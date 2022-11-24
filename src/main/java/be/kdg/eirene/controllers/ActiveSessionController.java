@@ -1,18 +1,19 @@
 package be.kdg.eirene.controllers;
 
+import be.kdg.eirene.exceptions.UnauthorizedAccessException;
+import be.kdg.eirene.controllers.request.ReadingRequestBody;
+import be.kdg.eirene.controllers.request.encryptedObjects.EncryptedReadingRequestBody;
 import be.kdg.eirene.model.Session;
 import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
+import be.kdg.eirene.util.RequestDecryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -20,16 +21,17 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping ("/newsession")
 public class ActiveSessionController {
+
 	private final CookieService cookieService;
 	private final SessionService sessionService;
 	private final UserService userService;
 	private final Logger logger;
-
+	private final RequestDecryptor decryptor;
 	private Session session;
 
-
 	@Autowired
-	public ActiveSessionController(CookieService cookieService, SessionService sessionService, UserService userService) {
+	public ActiveSessionController(RequestDecryptor decryptor, CookieService cookieService, UserService userService, SessionService sessionService) {
+		this.decryptor = decryptor;
 		this.cookieService = cookieService;
 		this.userService = userService;
 		this.sessionService = sessionService;
@@ -47,5 +49,13 @@ public class ActiveSessionController {
 		logger.info(session.toString());
 		return new ModelAndView("active-session").addObject("type", type)
 		                                         .addObject("session", session);
+	}
+
+	@PostMapping
+	public void getData(@RequestBody EncryptedReadingRequestBody data) {
+		System.out.println(data);
+		logger.info("Data received: " + data);
+		ReadingRequestBody readingRequestBody = decryptor.decrypt(data);
+		logger.info("Decrypted data: " + readingRequestBody);
 	}
 }
