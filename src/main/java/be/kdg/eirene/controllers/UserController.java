@@ -3,6 +3,7 @@ package be.kdg.eirene.controllers;
 import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.service.CookieService;
+import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +20,14 @@ import java.time.Duration;
 public class UserController {
 	private final Logger logger;
 	private final UserService userService;
+	private final SessionService sessionService;
 	private final CookieService cookieService;
 
-	public UserController(UserService userService, CookieService cookieService) {
+	public UserController(UserService userService, CookieService cookieService, SessionService sessionService) {
 		this.logger = LoggerFactory.getLogger(this.getClass());
 		this.userService = userService;
 		this.cookieService = cookieService;
+		this.sessionService = sessionService;
 	}
 
 	@GetMapping
@@ -38,7 +41,8 @@ public class UserController {
 				.addObject("totalDuration", Duration.ofSeconds(userService.getTotalDuration(user.getUser_id())))
 				.addObject("averageDuration", Duration.ofSeconds(userService.getAverageDuration(user.getUser_id())))
 				.addObject("focus", SessionType.FOCUS)
-				.addObject("meditation", SessionType.MEDITATION);
+				.addObject("meditation", SessionType.MEDITATION)
+				.addObject("sessionCount", sessionService.getSessionsCount(user.getUser_id()));
 		return modelAndView;
 	}
 }
