@@ -1,8 +1,6 @@
 package be.kdg.eirene.controllers;
 
-import be.kdg.eirene.exceptions.UnauthorizedAccessException;
-import be.kdg.eirene.controllers.request.ReadingRequestBody;
-import be.kdg.eirene.controllers.request.encryptedObjects.EncryptedReadingRequestBody;
+import be.kdg.eirene.model.Reading;
 import be.kdg.eirene.model.Session;
 import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.model.User;
@@ -19,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping ("/newsession")
+@RequestMapping("/newsession")
 public class ActiveSessionController {
 
 	private final CookieService cookieService;
@@ -51,11 +49,8 @@ public class ActiveSessionController {
 		                                         .addObject("session", session);
 	}
 
-	@PostMapping
-	public void getData(@RequestBody EncryptedReadingRequestBody data) {
-		System.out.println(data);
-		logger.info("Data received: " + data);
-		ReadingRequestBody readingRequestBody = decryptor.decrypt(data);
-		logger.info("Decrypted data: " + readingRequestBody);
-	}
+    @PostMapping
+    public void getData(@RequestBody Reading data) {
+        logger.info("Data received: " + data);
+    }
 }
