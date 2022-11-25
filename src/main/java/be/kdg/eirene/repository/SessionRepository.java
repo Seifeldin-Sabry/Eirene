@@ -13,8 +13,11 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
 	@Query ("select s from Session s where s.id = ?1")
 	List<Reading> getReadingsBySessionID(Long id);
 
-	@Query ("select s from Session s where s.user.user_id = ?1")
+	@Query ("select s from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL")
 	List<Session> getSessionsByUserID(Long id);
+
+	@Query ("select COUNT(s) from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL")
+	Long getSessionsCountByUserID(Long id);
 
 	//
 	//	List<Session> readSessions();

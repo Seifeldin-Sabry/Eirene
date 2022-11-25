@@ -12,4 +12,6 @@ public interface SessionService {
 	Session getSession(Long id);
 
 	Session save(SessionType type, User user);
+
+	Long getSessionsCount(Long userId);
 }

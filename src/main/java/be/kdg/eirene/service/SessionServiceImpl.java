@@ -35,4 +35,9 @@ public class SessionServiceImpl implements SessionService {
 	public Session save(SessionType type, User user) {
 		return sessionRepository.save(new Session(type, user));
 	}
+
+	@Override
+	public Long getSessionsCount(Long userId) {
+		return sessionRepository.getSessionsCountByUserID(userId);
+	}
 }

@@ -53,14 +53,15 @@ public class LoginController {
 		User retrievedUser = userService.getUser(user.getEmail());
 		if (retrievedUser == null) {
 			logger.error("user not found");
-			errors.rejectValue("email", "user.not.found");
+			errors.rejectValue("password", "404", "Invalid email or password");
+			errors.rejectValue("email", "404", "Invalid email or password");
 			return new ModelAndView("login");
 		}
 		// 2. Check if password is correct
 		if (!userService.passwordMatches(retrievedUser, user.getPassword())) {
 			logger.error("password incorrect");
-			errors.rejectValue("password", "email.or.password.incorrect");
-			errors.rejectValue("email", "email.or.password.incorrect");
+			errors.rejectValue("password", "404", "Invalid email or password");
+			errors.rejectValue("email", "404", "Invalid email or password");
 			return new ModelAndView("login");
 		}
 		logger.info("login succesful");
