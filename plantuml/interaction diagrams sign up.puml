@@ -12,14 +12,20 @@ participant "br:BindingResult" as br
 participant "error:ObjectError" as error
 participant "errors:ObjectError[*]" as errors <<Stream>>
 participant "logger:Logger" as logger
-participant "userService:UserService" as service
+participant "userService:UserService" as service <<Service>>
 participant ":User" as user
-participant "userRepository:UserRepository" as repo
+participant "userRepository:UserRepository" as repo <<Repository>>
 
 [o-> signup : loadSignUpForm():ModelAndView
 create viewmodel
 signup -->> viewmodel : <<create>>
 [-> signup : signUpUser(viewModel:UserSignUpViewModel,\nbr:BindingResult):ModelAndView
+note right
+the viewModel has an @Valid annotation.
+this triggers two custom made annotations
+@UniqueEmailConstraint and @PasswordMatchConstraint.
+these are modeled in different diagrams.
+end note
 signup -> br : hasErrors():boolean
 deactivate
 alt br.hasErrors()
@@ -57,6 +63,58 @@ else else
     deactivate
     deactivate
     [<<-- signup : new ModelAndView("redirect:user")
+end
+
+@enduml
+
+
+
+@startuml @UniqueEmailConstraint
+
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+autoactivate on
+'skinparam maxMessageSize 150
+
+participant ":UniqueEmailConstraint" as constraint <<@interface>>
+participant ":UniqueEmailValidator" as validator
+participant "userRepository:UserRepository" as repo <<Repository>>
+
+activate constraint
+constraint -> validator: isValid(email:String, context:\nConstraintValidatorContext):boolean
+validator -> repo: exists = existsByEmailIgnoreCase(\nemail:String):boolean
+deactivate
+validator -->> constraint: !exists
+opt !exists
+    constraint -> constraint: message():String
+    deactivate
+end
+
+@enduml
+
+
+
+@startuml @PasswordMatchConstraint
+
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+autoactivate on
+'skinparam maxMessageSize 150
+
+participant ":PasswordMatchConstraint" as constraint <<@interface>>
+participant ":PasswordMatchValidator" as validator
+participant "viewModel:\nUserSignUpViewModel" as viewmodel
+
+activate constraint
+constraint -> validator: isValid(viewModel:UserSignUpViewModel,\ncontext:ConstraintValidatorContext):boolean
+validator -> viewmodel: pw = getPassword():String
+deactivate
+validator -> viewmodel: confirmPw = \ngetConfirmPassword():String
+deactivate
+validator -->> constraint: isMatching = pw.equals(confirmPw)
+opt !isMatching
+    constraint -> constraint: message():String
+    deactivate
 end
 
 @enduml
