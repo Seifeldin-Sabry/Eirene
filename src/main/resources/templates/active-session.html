@@ -11,8 +11,12 @@
 <body class="bg-dark text-light m-3">
 
 <th:block th:insert="~{fragments::navbar(2)}"></th:block>
-
-<h1 class="text-center" th:text="${type.toString().toLowerCase()} + ' '+ session "></h1>
+<!--TODO: ask peter to move this to the left slightly :)-->
+<div class="d-flex justify-content-center align-items-center m-2y">
+	<a class="btn btn-outline-warning fs-2" th:href="@{/newsession/stopsession}"> Stop session
+	</a>
+	<h1 class="text-center" th:text="${type.toString().toLowerCase()} + ' '+ session "></h1>
+</div>
 <hr>
 
 </body>

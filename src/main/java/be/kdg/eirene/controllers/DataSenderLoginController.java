@@ -18,29 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping ("/api/login")
 public class DataSenderLoginController {
 
-    private final AEService aes;
-    private final UserService userService;
-    private final Logger logger;
+	private final AEService aes;
+	private final UserService userService;
+	private final Logger logger;
 
-    @Autowired
-    public DataSenderLoginController(UserService userService, AEService aes) {
-        this.userService = userService;
-        this.aes = aes;
-        this.logger = LoggerFactory.getLogger(this.getClass());
-    }
+	@Autowired
+	public DataSenderLoginController(UserService userService, AEService aes) {
+		this.userService = userService;
+		this.aes = aes;
+		this.logger = LoggerFactory.getLogger(this.getClass());
+	}
 
-    @PostMapping
-    public String login(@RequestHeader("email") String email, @RequestHeader("password") String password) {
-        User retrievedUser = userService.getUser(email);
-        if (retrievedUser == null || !userService.passwordMatches(retrievedUser, password)) {
-            throw new UnauthorizedAccessException("Invalid email or password");
-        }
-        logger.info("user " + retrievedUser.getEmail() + " has connected with the DataSender");
-        List<String> info = List.of(retrievedUser.getUser_id().toString(), aes.getSecret());
-        return new GsonBuilder().create()
-                .toJson(new ResponseEntity<>(info, HttpStatus.OK));
-    }
+	@PostMapping
+	public String login(@RequestHeader ("email") String email, @RequestHeader ("password") String password) {
+		User retrievedUser = userService.getUser(email);
+		if (retrievedUser == null || !userService.passwordMatches(retrievedUser, password)) {
+			throw new UnauthorizedAccessException("Invalid email or password");
+		}
+		logger.info("user " + retrievedUser.getEmail() + " has connected with the DataSender");
+		List<String> info = List.of(retrievedUser.getUser_id().toString(), aes.getSecret());
+		return new GsonBuilder().create()
+		                        .toJson(new ResponseEntity<>(info, HttpStatus.OK));
+
+	}
 }

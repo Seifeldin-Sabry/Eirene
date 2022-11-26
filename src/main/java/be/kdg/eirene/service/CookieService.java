@@ -11,4 +11,8 @@ public interface CookieService {
 	void setCookie(HttpSession session, Long userId);
 
 	Long getAttribute(HttpSession session);
+
+	Boolean isSessionActive(HttpSession session);
+
+	void setSessionCookie(HttpSession session, Boolean isActiveSession);
 }
