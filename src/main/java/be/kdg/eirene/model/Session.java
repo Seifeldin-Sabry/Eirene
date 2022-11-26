@@ -92,6 +92,10 @@ public class Session {
 		return Duration.of(System.currentTimeMillis() - this.startTime.getTime(), ChronoUnit.MILLIS).toSeconds();
 	}
 
+	public boolean addReading(Reading reading) {
+		return readings.add(reading);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

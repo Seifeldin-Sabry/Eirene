@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Session Feedback</title>
+	<link rel="icon" th:href="@{/images/icon.png}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-dark text-light m-3">
+
+<th:block th:insert="~{fragments::navbar(2)}"></th:block>
+
+<h1 class="text-center">Feedback</h1>
+<hr>
+<div class="pt-5 m-2 m-auto d-flex justify-content-center align-items-center">
+
+	<form method="post" th:action="@{/newsession/submit-feedback}" th:object="${sessionFeedback}">
+		<label>
+			<input id="sad" name="feedback" type="radio" value="1">
+			<img alt="Option 1" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
+		</label>
+		<label>
+			<input id="halfsad" name="feedback" type="radio" value="2">
+			<img alt="Option 2" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
+		</label>
+		<label>
+			<input id="neutral" name="feedback" type="radio" value="3">
+			<img alt="Option 3" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
+		</label>
+		<label>
+			<input id="halfhappy" name="feedback" type="radio" value="4">
+			<img alt="Option 4" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
+		</label>
+		<label>
+			<input id="happy" name="feedback" type="radio" value="5">
+			<img alt="Option 5" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
+		</label>
+		<label class="form-label w-100 mt-2" for="session">Would you like to name your session?</label>
+		<input class="form-control form-control-lg border-0 bg-black text-light w-100" id="session" name="session"
+			   placeholder="Session" th:field="*{sessionName}"
+		/>
+		<button class="btn btn-primary mt-2" type="submit">Save session</button>
+	</form>
+</div>
+</body>
+</html>
