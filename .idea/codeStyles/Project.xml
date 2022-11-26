@@ -1,0 +1,143 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <H2CodeStyleSettings version="6">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="KEYWORD_CASE" value="2" />
+      <option name="IDENTIFIER_CASE" value="1" />
+      <option name="TYPE_CASE" value="2" />
+      <option name="CUSTOM_TYPE_CASE" value="2" />
+      <option name="ALIAS_CASE" value="2" />
+      <option name="BUILT_IN_CASE" value="2" />
+      <option name="INSERT_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
+      <option name="CONSTRAINT_WRAP_2" value="true" />
+      <option name="CONSTRAINT_WRAP_3" value="true" />
+      <option name="CONSTRAINT_WRAP_4" value="true" />
+      <option name="VIEW_INDENT_QUERY" value="true" />
+      <option name="ROUTINE_ARG_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="ROUTINE_ARG_ALIGN_TYPES" value="true" />
+      <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
+      <option name="CORTEGE_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_CALL_SPACE_INSIDE_PARENTHESES" value="true" />
+      <option name="EXPR_CASE_THEN_ALIGN" value="true" />
+      <option name="EXPR_CASE_ELSE_ALIGN_THEN" value="true" />
+      <option name="EXPR_CASE_END" value="1" />
+      <option name="EXPR_CASE_KEEP_NL_AFTER_THEN" value="true" />
+    </H2CodeStyleSettings>
+    <H2CodeStyleSettings version="6">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="KEYWORD_CASE" value="2" />
+      <option name="IDENTIFIER_CASE" value="1" />
+      <option name="TYPE_CASE" value="2" />
+      <option name="CUSTOM_TYPE_CASE" value="2" />
+      <option name="ALIAS_CASE" value="2" />
+      <option name="BUILT_IN_CASE" value="2" />
+      <option name="INSERT_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
+      <option name="CONSTRAINT_WRAP_2" value="true" />
+      <option name="CONSTRAINT_WRAP_3" value="true" />
+      <option name="CONSTRAINT_WRAP_4" value="true" />
+      <option name="VIEW_INDENT_QUERY" value="true" />
+      <option name="ROUTINE_ARG_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="ROUTINE_ARG_ALIGN_TYPES" value="true" />
+      <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
+      <option name="CORTEGE_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_CALL_SPACE_INSIDE_PARENTHESES" value="true" />
+      <option name="EXPR_CASE_THEN_ALIGN" value="true" />
+      <option name="EXPR_CASE_ELSE_ALIGN_THEN" value="true" />
+      <option name="EXPR_CASE_END" value="1" />
+      <option name="EXPR_CASE_KEEP_NL_AFTER_THEN" value="true" />
+    </H2CodeStyleSettings>
+    <HTMLCodeStyleSettings>
+      <option name="HTML_UNIFORM_INDENT" value="true" />
+      <option name="HTML_ATTRIBUTE_WRAP" value="4" />
+      <option name="HTML_ALIGN_TEXT" value="true" />
+      <option name="HTML_SPACE_INSIDE_EMPTY_TAG" value="true" />
+      <option name="HTML_INLINE_ELEMENTS" value="abbr,acronym,b,basefont,bdo,big,br,cite,cite,code,dfn,em,font,kbd,label,q,s,samp,small,span,strike,strong,sub,sup,tt,u,var" />
+      <option name="HTML_ENFORCE_QUOTES" value="true" />
+      <option name="HTML_NEWLINE_AFTER_LAST_ATTRIBUTE" value="When multiline" />
+    </HTMLCodeStyleSettings>
+    <JSCodeStyleSettings version="0">
+      <option name="FORCE_SEMICOLON_STYLE" value="true" />
+      <option name="FORCE_QUOTE_STYlE" value="true" />
+      <option name="ENFORCE_TRAILING_COMMA" value="Remove" />
+    </JSCodeStyleSettings>
+    <JavaCodeStyleSettings>
+      <option name="JD_ADD_BLANK_AFTER_PARM_COMMENTS" value="true" />
+      <option name="JD_ADD_BLANK_AFTER_RETURN" value="true" />
+      <option name="JD_LEADING_ASTERISKS_ARE_ENABLED" value="false" />
+    </JavaCodeStyleSettings>
+    <PostgresCodeStyleSettings version="6">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="KEYWORD_CASE" value="2" />
+      <option name="IDENTIFIER_CASE" value="1" />
+      <option name="TYPE_CASE" value="2" />
+      <option name="CUSTOM_TYPE_CASE" value="2" />
+      <option name="ALIAS_CASE" value="2" />
+      <option name="BUILT_IN_CASE" value="2" />
+      <option name="INSERT_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="INSERT_COLLAPSE_MULTI_ROW_VALUES" value="true" />
+      <option name="CONSTRAINT_WRAP_2" value="true" />
+      <option name="CONSTRAINT_WRAP_3" value="true" />
+      <option name="CONSTRAINT_WRAP_4" value="true" />
+      <option name="VIEW_INDENT_QUERY" value="true" />
+      <option name="ROUTINE_ARG_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="ROUTINE_ARG_ALIGN_TYPES" value="true" />
+      <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
+      <option name="CORTEGE_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_CALL_SPACE_INSIDE_PARENTHESES" value="true" />
+      <option name="EXPR_CASE_THEN_ALIGN" value="true" />
+      <option name="EXPR_CASE_ELSE_ALIGN_THEN" value="true" />
+      <option name="EXPR_CASE_END" value="1" />
+      <option name="EXPR_CASE_KEEP_NL_AFTER_THEN" value="true" />
+    </PostgresCodeStyleSettings>
+    <SqlCodeStyleSettings version="6">
+      <option name="PRIMARY_KEY_NAME_TEMPLATE" value="pk_{table}" />
+      <option name="FOREIGN_KEY_NAME_TEMPLATE" value="fk_{table}_{ref_table}_{ref_columns}" />
+    </SqlCodeStyleSettings>
+    <TypeScriptCodeStyleSettings version="0">
+      <option name="SPACES_WITHIN_OBJECT_LITERAL_BRACES" value="true" />
+      <option name="SPACES_WITHIN_IMPORTS" value="true" />
+    </TypeScriptCodeStyleSettings>
+    <codeStyleSettings language="HTML">
+      <indentOptions>
+        <option name="USE_TAB_CHARACTER" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="JAVA">
+      <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
+      <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+      <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
+      <option name="SPACE_BEFORE_ARRAY_INITIALIZER_LBRACE" value="true" />
+      <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
+      <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
+      <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
+      <option name="KEEP_SIMPLE_LAMBDAS_IN_ONE_LINE" value="true" />
+      <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
+      <option name="SPACE_BEFORE_ANOTATION_PARAMETER_LIST" value="true" />
+      <option name="ENUM_CONSTANTS_WRAP" value="2" />
+      <indentOptions>
+        <option name="USE_TAB_CHARACTER" value="true" />
+        <option name="SMART_TABS" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="JavaScript">
+      <indentOptions>
+        <option name="USE_TAB_CHARACTER" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="TypeScript">
+      <indentOptions>
+        <option name="USE_TAB_CHARACTER" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="yaml">
+      <indentOptions>
+        <option name="INDENT_SIZE" value="4" />
+      </indentOptions>
+    </codeStyleSettings>
+  </code_scheme>
+</component>
