@@ -40,4 +40,17 @@ public class SessionServiceImpl implements SessionService {
 	public Long getSessionsCount(Long userId) {
 		return sessionRepository.getSessionsCountByUserID(userId);
 	}
+
+	@Override
+	public void updateSession(Session session) {
+		if (session.getName().isBlank() || session.getName().isEmpty()) {
+			session.setName(session.getStartTime().toString());
+		}
+		sessionRepository.updateSession(session.getEndTime(), session.getSatisfaction(), session.getName(), session.getId());
+	}
+
+	@Override
+	public void deleteSession(Session session) {
+		sessionRepository.delete(session);
+	}
 }

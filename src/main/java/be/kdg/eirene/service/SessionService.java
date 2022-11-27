@@ -14,4 +14,8 @@ public interface SessionService {
 	Session save(SessionType type, User user);
 
 	Long getSessionsCount(Long userId);
+
+	void updateSession(Session session);
+
+	void deleteSession(Session session);
 }
