@@ -17,31 +17,32 @@
 <div class="pt-5 m-2 m-auto d-flex justify-content-center align-items-center">
 
 	<form method="post" th:action="@{/newsession/submit-feedback}" th:object="${sessionFeedback}">
-		<label>
-			<input id="sad" name="feedback" type="radio" value="1">
-			<img alt="Option 1" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
-		</label>
-		<label>
-			<input id="halfsad" name="feedback" type="radio" value="2">
-			<img alt="Option 2" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
-		</label>
-		<label>
-			<input id="neutral" name="feedback" type="radio" value="3">
-			<img alt="Option 3" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
-		</label>
-		<label>
-			<input id="halfhappy" name="feedback" type="radio" value="4">
-			<img alt="Option 4" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
-		</label>
-		<label>
-			<input id="happy" name="feedback" type="radio" value="5">
-			<img alt="Option 5" src="https://via.placeholder.com/40x60/0bf/fff&text=A">
-		</label>
+
+		<div class="form-check has-validation">
+			<div th:class="${#fields.hasErrors('satisfactionLevel')?'form-floating is-invalid':'form-floating'}">
+				<label th:each="feedback: ${T(be.kdg.eirene.model.SatisfactionLevel).values()}">
+					<input class="form-check-input"
+						   name="satisfactionLevel"
+						   th:field="*{satisfactionLevel}"
+						   th:id="${feedback}"
+						   th:value="${feedback}"
+						   type="radio"
+					>
+					<img alt="Rating level" th:src="${feedback.getImageSrc()}">
+				</label>
+			</div>
+			<div class="invalid-feedback"
+				 th:if="${#fields.hasErrors('satisfactionLevel')}"
+				 th:text="${#fields.errors('satisfactionLevel').get(0).toString()}"
+			>
+			</div>
+		</div>
 		<label class="form-label w-100 mt-2" for="session">Would you like to name your session?</label>
 		<input class="form-control form-control-lg border-0 bg-black text-light w-100" id="session" name="session"
-			   placeholder="Session" th:field="*{sessionName}"
+			   placeholder="Session Name (optional)" th:field="*{sessionName}"
 		/>
 		<button class="btn btn-primary mt-2" type="submit">Save session</button>
+		<button class="btn btn-primary mt-2" th:href="@{/newsession/discard}">Discard session</button>
 	</form>
 </div>
 </body>
