@@ -12,9 +12,7 @@ import be.kdg.eirene.util.RequestDecryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -104,11 +102,5 @@ public class ActiveSessionController {
 			cookieService.setSessionCookie(httpSession, Boolean.FALSE);
 		sessionService.deleteSession(session);
 		return new ModelAndView("redirect:/profile");
-	}
-
-	@InitBinder
-	void initBinder(WebDataBinder dataBinder) {
-		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(false);
-		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 }
