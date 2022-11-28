@@ -11,23 +11,23 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "sensor_readings")
-@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@Table (name = "sensor_readings")
+@TypeDef (name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 @NoArgsConstructor
 @Setter
 @Getter
 public final class SensorReading {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "sensor_reading_id", nullable = false)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column (name = "sensor_reading_id", nullable = false)
 	private Long sensor_reading_id;
 
-	@Column(name = "value", nullable = false)
+	@Column (name = "value", nullable = false)
 	private float value;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "unit", nullable = false)
-	@Type(type = "pgsql_enum")
+	@Enumerated (EnumType.STRING)
+	@Column (name = "unit", nullable = false)
+	@Type (type = "pgsql_enum")
 	private Unit unit;
 
 	public SensorReading(float value, Unit unit) {
@@ -61,6 +61,5 @@ public final class SensorReading {
 	public int hashCode() {
 		return Objects.hash(value, unit);
 	}
-
 
 }

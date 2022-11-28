@@ -39,6 +39,8 @@ public class Reading {
 		this.timestamp = timestamp;
 		this.brainWave = brainWave;
 		this.sensorData = sensorData;
+		this.brainWave.setReading(this);
+		this.sensorData.setReading(this);
 	}
 
 	@Override

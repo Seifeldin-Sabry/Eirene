@@ -93,6 +93,7 @@ public class Session {
 	}
 
 	public boolean addReading(Reading reading) {
+		reading.setSession(this);
 		return readings.add(reading);
 	}
 
