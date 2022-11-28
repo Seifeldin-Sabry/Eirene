@@ -19,7 +19,7 @@
 		<div>
 			<h3>Total session time</h3>
 			<p class="fs-1 text-center"
-			   th:text="${totalDuration.toHours()}+':'+${#numbers.formatInteger(totalDuration.toMinutes() % 60, 2)}"
+			   th:text="${totalDuration.toHours()}+':'+${#numbers.formatInteger(totalDuration.toMinutes()%60, 2)}+':'+${#numbers.formatInteger( totalDuration.toSeconds()%60, 2)}"
 			></p>
 		</div>
 		<div>

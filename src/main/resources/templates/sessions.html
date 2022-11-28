@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Sessions</title>
+	<link rel="icon" th:href="@{/images/icon.png}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-dark text-light m-3">
+<th:block th:insert="~{fragments::navbar(3)}"></th:block>
+<h1 class="text-center my-5">Session history</h1>
+<ol class="d-flex align-items-center flex-column">
+	<li th:each="s: ${sessions}">
+		<a class="text-decoration-none"
+		   th:href="@{sessions/session-overview/{id}(id=${s.getId()})}"
+		   th:text="${s.getName()}"
+		></a>
+	</li>
+</ol>
+</body>
+</html>
