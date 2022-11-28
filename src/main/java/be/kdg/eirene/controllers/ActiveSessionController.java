@@ -51,7 +51,7 @@ public class ActiveSessionController {
 		if (session == null) {
 			User user = userService.getUser(cookieService.getAttribute(httpSession));
 			session = sessionService.save(type, user);
-			user.setSession(session);
+			session.setUser(user);
 		}
 		logger.info(" report: " + evaluatorService.formulateReport(session.getReadings(), type));
 		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(type
@@ -62,7 +62,7 @@ public class ActiveSessionController {
 	}
 
 	@PostMapping
-	public ModelAndView getData(@RequestBody Reading data, HttpSession httpSession) {
+	public ModelAndView getData(@RequestBody Reading data) {
 		if (session == null) {
 			return null;
 		}
@@ -75,7 +75,7 @@ public class ActiveSessionController {
 	}
 
 	@GetMapping ("/stopsession")
-	public ModelAndView stopSession(HttpSession httpSession) {
+	public ModelAndView stopSession() {
 		if (session == null) {
 			return new ModelAndView("redirect:/profile");
 		}
@@ -96,7 +96,9 @@ public class ActiveSessionController {
 		session.setSatisfaction(sessionFeedbackViewModel.getSatisfactionLevel().getValue());
 		session.setName(sessionFeedbackViewModel.getSessionName());
 		sessionService.updateSession(session);
-		return new ModelAndView("redirect:/profile/sessions/session-overview/" + session.getId());
+		Long sessionId = session.getId();
+		session = null;
+		return new ModelAndView("redirect:/profile/sessions/session-overview/" + sessionId);
 	}
 
 	@GetMapping ("/discard-session")

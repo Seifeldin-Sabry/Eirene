@@ -28,9 +28,4 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
 	@Query ("update Session s set s.endTime = ?1, s.satisfaction = ?2, s.name = ?3 where s.id = ?4")
 	void updateSession(@NonNull Timestamp endTime, @Nullable Integer satisfaction, @Nullable String name, Long id);
 
-	//
-	//	List<Session> readSessions();
-	//
-	//	boolean deleteSession(Session session);
-
 }

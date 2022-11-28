@@ -1,9 +1,6 @@
 package be.kdg.eirene.eirenespring;
 
-import be.kdg.eirene.model.Gender;
-import be.kdg.eirene.model.Session;
-import be.kdg.eirene.model.SessionType;
-import be.kdg.eirene.model.User;
+import be.kdg.eirene.model.*;
 import be.kdg.eirene.repository.SessionRepository;
 import be.kdg.eirene.repository.UserRepository;
 import be.kdg.eirene.util.BcryptPasswordUtil;
@@ -12,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -66,6 +65,16 @@ class HibernateFunctionalityTest {
 		User fromDb = userRepository.findById(user.getUser_id()).get();
 		List<Session> sessionHistory = fromDb.getSessionHistory();
 		logger.info("Session history from db: " + sessionHistory);
+	}
+
+	@Test
+	void saveReadings() {
+		User user = userRepository.findById(1L).get();
+		Reading reading = new Reading(Timestamp.valueOf(LocalDateTime.now()), new BrainWaveReading(0, 100, 0), new SensorData(2, 2, 2, 2, 2));
+		Session session = new Session(SessionType.FOCUS);
+		session.setUser(user);
+		session.addReading(reading);
+		sessionRepository.save(session);
 	}
 
 }

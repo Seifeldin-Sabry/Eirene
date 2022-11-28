@@ -39,6 +39,9 @@ public class SensorData {
 	@JoinColumn (name = "light_id", nullable = false)
 	private SensorReading light;
 
+	@OneToOne (mappedBy = "sensorData")
+	private Reading reading;
+
 	public SensorData(float heartRate, float temperature, float sound, float humidity, float light) {
 		this.heartRate = new SensorReading(heartRate, Unit.BPM);
 		this.temperature = new SensorReading(temperature, Unit.C);
@@ -56,5 +59,9 @@ public class SensorData {
 				", humidity=" + humidity +
 				", photo=" + light +
 				'}';
+	}
+
+	public void setReading(Reading reading) {
+		this.reading = reading;
 	}
 }

@@ -25,6 +25,9 @@ public class BrainWaveReading {
 	@Column (name = "meditation", nullable = false)
 	private int meditation;
 
+	@OneToOne (mappedBy = "brainWave")
+	private Reading reading;
+
 	public BrainWaveReading(int signal, int focus, int meditation) {
 		this.signal = signal;
 		this.focus = focus;
@@ -44,5 +47,9 @@ public class BrainWaveReading {
 				"signal=" + signal +
 				", level=" + focus +
 				'}';
+	}
+
+	public void setReading(Reading reading) {
+		this.reading = reading;
 	}
 }
