@@ -58,6 +58,7 @@ public class ActiveSessionController {
 			session = sessionService.save(type, user);
 			user.setSession(session);
 		}
+		logger.info(" report: " + evaluatorService.formulateReport(session.getReadings(), type));
 		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(type
 				                                         .toString()
 				                                         .toLowerCase()))
@@ -67,11 +68,11 @@ public class ActiveSessionController {
 
 	@PostMapping
 	public ModelAndView getData(@RequestBody Reading data, HttpSession httpSession) {
-		Boolean sessionActive = cookieService.isSessionActive(httpSession);
-		if (sessionActive == null || !sessionActive)
-			return new ModelAndView("redirect:/profile");
-		//TODO: check for null because of order of action by the datasender
+		if (session == null) {
+			return null;
+		}
 		session.addReading(data);
+		logger.info("Post called");
 		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(session.getType()
 		                                                                                          .toString()
 		                                                                                          .toLowerCase()))

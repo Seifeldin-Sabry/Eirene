@@ -1,13 +1,11 @@
 package be.kdg.eirene.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 public class EvaluatedData {
 	private String signal;
@@ -15,4 +13,12 @@ public class EvaluatedData {
 	private String heartRate;
 	private String environment;
 	private String generalAdvice;
+
+	public EvaluatedData() {
+		this.signal = "Calibrating...";
+		this.brainwaveStrength = "Calibrating...";
+		this.heartRate = "Calibrating...";
+		this.environment = "Calibrating...";
+		this.generalAdvice = "Calibrating...";
+	}
 }

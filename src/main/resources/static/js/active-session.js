@@ -6,3 +6,7 @@ const environmentEl = document.getElementById("environment");
 const setElementValue = (element, value) => {
 	element.innerText = value;
 };
+setElementValue(signalEl, signal);
+setElementValue(brainWaveStrengEl, brainwaveStrength);
+setElementValue(heartRateEl, heartRate);
+setElementValue(environmentEl, environment);
