@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -44,7 +45,9 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public void updateSession(Session session) {
 		if (session.getName().isBlank() || session.getName().isEmpty()) {
-			session.setName(session.getStartTime().toString());
+			session.setName(session.getStartTime()
+			                       .toLocalDateTime()
+			                       .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 		}
 		sessionRepository.updateSession(session.getEndTime(), session.getSatisfaction(), session.getName(), session.getId());
 	}

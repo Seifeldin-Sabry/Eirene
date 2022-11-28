@@ -8,14 +8,49 @@
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body>
-lyrics to the song hello is it me ur looking for
-Hello, is it me you're looking for?
-'Cause I wonder where you are and I wonder what you do
-Are you somewhere feeling lonely or is someone loving you?
-Tell me how to win your heart, for I haven't got a clue
-But let me start by saying, I love you
-I love you
-I love you
+<body class="bg-dark text-light m-3">
+
+<th:block th:insert="~{fragments::navbar(2)}"></th:block>
+
+<main>
+	<ul>
+		<li>Satisfaction:
+			<th:block th:text="${eireneSession.getSatisfaction()}"></th:block>
+		</li>
+		<li>Duration:
+			<th:block th:text="${eireneSession.getDuration()}"></th:block>
+		</li>
+		<li>Type:
+			<th:block th:text="${eireneSession.getType()}"></th:block>
+		</li>
+	</ul>
+
+	<h1 class="text-center" th:text="${eireneSession.getName()}"></h1>
+	<table class="table table-dark table-striped table-hover my-5">
+		<thead>
+		<tr class="table-header">
+			<th>Timestamp</th>
+			<th th:text="${eireneSession.getType()}"></th>
+			<th>Heart rate</th>
+			<th>Humidity</th>
+			<th>Light</th>
+			<th>Sound</th>
+			<th>Temperature</th>
+		</tr>
+		</thead>
+		<tbody class="table-group-divider">
+		<tr th:each="reading: ${eireneSession.getReadings()}">
+			<td th:text="${reading.getTimestamp()}"></td>
+			<td th:text="${reading.getBrainWave().getLevel(eireneSession.getType())}"></td>
+			<td th:text="${reading.getSensorData().getHeartRate()}"></td>
+			<td th:text="${reading.getSensorData().getHumidity()}"></td>
+			<td th:text="${reading.getSensorData().getLight()}"></td>
+			<td th:text="${reading.getSensorData().getSound()}"></td>
+			<td th:text="${reading.getSensorData().getTemperature()}"></td>
+		</tr>
+		</tbody>
+	</table>
+</main>
+
 </body>
 </html>

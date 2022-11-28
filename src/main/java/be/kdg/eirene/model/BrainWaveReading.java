@@ -31,6 +31,13 @@ public class BrainWaveReading {
 		this.meditation = meditation;
 	}
 
+	public int getLevel(SessionType type) {
+		return switch (type) {
+			case FOCUS -> getFocus();
+			case MEDITATION -> getMeditation();
+		};
+	}
+
 	@Override
 	public String toString() {
 		return "BrainWave{" +
