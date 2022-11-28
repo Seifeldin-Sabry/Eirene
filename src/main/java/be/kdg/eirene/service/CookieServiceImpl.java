@@ -10,7 +10,6 @@ public class CookieServiceImpl implements CookieService {
 
 	@Getter
 	public final String COOKIE_NAME = "user_id";
-	public final String SESSION_ACTIVE = "isActive";
 
 	@Override
 	public boolean cookieInvalid(HttpSession session) {
@@ -32,13 +31,4 @@ public class CookieServiceImpl implements CookieService {
 		return session.getAttribute(COOKIE_NAME) == null ? null : (Long) session.getAttribute(COOKIE_NAME);
 	}
 
-	@Override
-	public void setSessionCookie(HttpSession session, Boolean isActiveSession) {
-		session.setAttribute(SESSION_ACTIVE, isActiveSession);
-	}
-
-	@Override
-	public Boolean isSessionActive(HttpSession session) {
-		return session.getAttribute(SESSION_ACTIVE) == null ? null : (Boolean) session.getAttribute(SESSION_ACTIVE);
-	}
 }

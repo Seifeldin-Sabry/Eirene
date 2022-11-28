@@ -48,11 +48,6 @@ public class ActiveSessionController {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
 		}
-		Boolean sessionActive = cookieService.isSessionActive(httpSession);
-		if (sessionActive == null || !sessionActive) {
-			cookieService.setSessionCookie(httpSession, Boolean.TRUE);
-			return new ModelAndView("redirect:/profile");
-		}
 		if (session == null) {
 			User user = userService.getUser(cookieService.getAttribute(httpSession));
 			session = sessionService.save(type, user);
@@ -81,9 +76,9 @@ public class ActiveSessionController {
 
 	@GetMapping ("/stopsession")
 	public ModelAndView stopSession(HttpSession httpSession) {
-		Boolean sessionActive = cookieService.isSessionActive(httpSession);
-		if (sessionActive == null || !sessionActive)
+		if (session == null) {
 			return new ModelAndView("redirect:/profile");
+		}
 		session.stop();
 		return new ModelAndView("feedback").addObject("sessionFeedback", new SessionFeedbackViewModel());
 	}
@@ -109,10 +104,8 @@ public class ActiveSessionController {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
 		}
-		Boolean sessionActive = cookieService.isSessionActive(httpSession);
-		if (sessionActive)
-			cookieService.setSessionCookie(httpSession, Boolean.FALSE);
 		sessionService.deleteSession(session);
+		session = null;
 		return new ModelAndView("redirect:/profile");
 	}
 }
