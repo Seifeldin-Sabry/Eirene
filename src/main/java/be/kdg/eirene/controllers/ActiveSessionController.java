@@ -6,6 +6,7 @@ import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.presenter.viewmodel.SessionFeedbackViewModel;
 import be.kdg.eirene.service.CookieService;
+import be.kdg.eirene.service.EvaluatorService;
 import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
 import be.kdg.eirene.util.RequestDecryptor;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,16 +28,18 @@ public class ActiveSessionController {
 	private final CookieService cookieService;
 	private final SessionService sessionService;
 	private final UserService userService;
+	private final EvaluatorService evaluatorService;
 	private final Logger logger;
 	private final RequestDecryptor decryptor;
 	private Session session;
 
 	@Autowired
-	public ActiveSessionController(RequestDecryptor decryptor, CookieService cookieService, UserService userService, SessionService sessionService) {
+	public ActiveSessionController(RequestDecryptor decryptor, CookieService cookieService, UserService userService, SessionService sessionService, EvaluatorService evaluatorService) {
 		this.decryptor = decryptor;
 		this.cookieService = cookieService;
 		this.userService = userService;
 		this.sessionService = sessionService;
+		this.evaluatorService = evaluatorService;
 		logger = LoggerFactory.getLogger(this.getClass());
 	}
 
@@ -45,14 +49,20 @@ public class ActiveSessionController {
 			return new ModelAndView("redirect:/");
 		}
 		Boolean sessionActive = cookieService.isSessionActive(httpSession);
-		if (sessionActive == null || !sessionActive)
+		if (sessionActive == null || !sessionActive) {
 			cookieService.setSessionCookie(httpSession, Boolean.TRUE);
-		User user = userService.getUser(cookieService.getAttribute(httpSession));
-		session = sessionService.save(type, user);
-		user.setSession(session);
-		logger.info(session.toString());
-		return new ModelAndView("active-session").addObject("type", type)
-		                                         .addObject("session", session);
+			return new ModelAndView("redirect:/profile");
+		}
+		if (session == null) {
+			User user = userService.getUser(cookieService.getAttribute(httpSession));
+			session = sessionService.save(type, user);
+			user.setSession(session);
+		}
+		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(type
+				                                         .toString()
+				                                         .toLowerCase()))
+		                                         .addObject("session", session)
+		                                         .addObject("report", evaluatorService.formulateReport(session.getReadings(), type));
 	}
 
 	@PostMapping
@@ -62,9 +72,10 @@ public class ActiveSessionController {
 			return new ModelAndView("redirect:/profile");
 		//TODO: check for null because of order of action by the datasender
 		session.addReading(data);
-		logger.info(session.getReadings().toString());
-		logger.info("Data received: " + data);
-		return new ModelAndView("active-session").addObject("type", session.getType());
+		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(session.getType()
+		                                                                                          .toString()
+		                                                                                          .toLowerCase()))
+		                                         .addObject("report", evaluatorService.formulateReport(session.getReadings(), session.getType()));
 	}
 
 	@GetMapping ("/stopsession")

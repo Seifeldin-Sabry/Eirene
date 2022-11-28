@@ -1,23 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" content="10" http-equiv="refresh">
 	<title>Session</title>
 	<link rel="icon" th:href="@{/images/icon.png}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<!--	<script defer th:src="@{/js/active-session.js}" type="text/javascript"></script>-->
 </head>
 <body class="bg-dark text-light m-3">
 
 <th:block th:insert="~{fragments::navbar(2)}"></th:block>
-<!--TODO: ask peter to move this to the left slightly :)-->
 <div class="d-flex justify-content-center align-items-center m-2y">
-	<a class="btn btn-outline-warning fs-2" th:href="@{/newsession/stopsession}"> Stop session
-	</a>
-	<h1 class="text-center" th:text="${type.toString().toLowerCase()} + ' '+ session "></h1>
+	<div class="position-absolute start-0">
+		<a class="btn btn-outline-warning fs-2" th:href="@{/newsession/stopsession}"> Stop session
+		</a>
+	</div>
+	<h1 class="text-center" th:text="${type.toLowerCase()} + ' '+ session "></h1>
 </div>
 <hr>
+<div class="d-flex h-50 w-100 mt-5">
+	<div class="d-flex justify-content-sm-start border border-warning rounded w-25 p-5">
+		<ul class="list-unstyled">
+			<li>Signal:
+				<p id="signal"></p>
+			</li>
+			<li>
+				<a th:text="|${type}:|"></a>
+				<p id="brainwaveStrength"></p>
+			</li>
+			<li>Heart Rate:
+				<p id="heartRate"></p>
+			</li>
+			<li>Environment:
+				<p id="environment"></p>
+			</li>
+		</ul>
+		<script th:inline="javascript">
+			const signalEl = document.getElementById("signal");
+			const brainWaveStrengEl = document.getElementById("brainwaveStrength");
+			const heartRateEl = document.getElementById("heartRate");
+			const environmentEl = document.getElementById("environment");
+
+			const setElementValue = (element, value) => {
+				element.innerText = value;
+			};
+
+			let brainwaveStrength = [[${report.getBrainwaveStrength()}]];
+			let heartRate = [[${report.getHeartRate()}]];
+			let environment = [[${report.getEnvironment()}]];
+			let signal = [[${report.getSignal()}]];
+			// add all variables to the html
+			setElementValue(signalEl, signal);
+			setElementValue(brainWaveStrengEl, brainwaveStrength);
+			setElementValue(heartRateEl, heartRate);
+			setElementValue(environmentEl, environment);
+		</script>
+	</div>
+	<div class="w-50 d-flex justify-content-end mt-5">
+		<h1 class="display-1" th:text="${report.getGeneralAdvice()}">Calibrating...</h1>
+	</div>
+</div>
 
 </body>
 </html>
