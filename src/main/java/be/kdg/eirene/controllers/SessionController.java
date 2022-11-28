@@ -42,6 +42,6 @@ public class SessionController {
 			return new ModelAndView("redirect:/");
 		}
 		return new ModelAndView("session-overview")
-				.addObject("eireneSession", sessionService.getSession(sessionID));
+				.addObject("eireneSession", sessionService.getSession(sessionID, cookieService.getAttribute(httpSession)));
 	}
 }
