@@ -1,0 +1,15 @@
+be.kdg.eirene
+be.kdg.eirene.config
+be.kdg.eirene.controllers
+be.kdg.eirene.controllers.request
+be.kdg.eirene.controllers.request.encryptedObjects
+be.kdg.eirene.eirenespring
+be.kdg.eirene.exceptions
+be.kdg.eirene.model
+be.kdg.eirene.presenter.viewmodel
+be.kdg.eirene.presenter.viewmodel.constraints
+be.kdg.eirene.presenter.viewmodel.validators
+be.kdg.eirene.presenter.viewmodel.validators.password
+be.kdg.eirene.repository
+be.kdg.eirene.service
+be.kdg.eirene.util
