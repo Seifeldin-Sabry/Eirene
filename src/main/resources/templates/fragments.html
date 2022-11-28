@@ -27,6 +27,9 @@
 				<li>
 					<a class="nav-item btn btn-warning" href="/javadoc/index.html">Docs</a>
 				</li>
+				<li>
+					<a class="nav-item btn btn-warning" th:href="@{/profile/sessions}">My Sessions</a>
+				</li>
 				<li th:if="${#httpSession.getAttribute('user_id')!=null}">
 					<a class="nav-item btn btn-warning"
 					   th:href="@{/profile}"
