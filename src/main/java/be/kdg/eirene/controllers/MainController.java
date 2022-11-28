@@ -21,4 +21,9 @@ public class MainController {
 		boolean loggedIn = !cookieService.cookieInvalid(session);
 		return new ModelAndView("index").addObject("loggedIn", loggedIn);
 	}
+
+	@GetMapping ("/terms-of-service")
+	public ModelAndView termsOfService() {
+		return new ModelAndView("terms-of-service");
+	}
 }
