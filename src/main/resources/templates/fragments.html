@@ -27,7 +27,7 @@
 				<li>
 					<a class="nav-item btn btn-warning" href="/javadoc/index.html">Docs</a>
 				</li>
-				<li th:if="${#httpSession.getAttribute('user_id')!=null && !#httpServletRequest.getRequestURL().toString().contains('profile')}">
+				<li th:if="${#httpSession.getAttribute('user_id')!=null}">
 					<a class="nav-item btn btn-warning"
 					   th:href="@{/profile}"
 					>
@@ -46,6 +46,9 @@
 		</div>
 	</div>
 </nav>
+
+
+<footer class="text-center my-2" th:fragment="footer">&copy; Eirene 2022</footer>
 
 </body>
 </html>

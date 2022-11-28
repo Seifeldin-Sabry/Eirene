@@ -96,7 +96,7 @@ public class ActiveSessionController {
 		session.setSatisfaction(sessionFeedbackViewModel.getSatisfactionLevel().getValue());
 		session.setName(sessionFeedbackViewModel.getSessionName());
 		sessionService.updateSession(session);
-		return new ModelAndView("redirect:/session-overview");
+		return new ModelAndView("redirect:/profile/sessions/session-overview/" + session.getId());
 	}
 
 	@GetMapping ("/discard-session")
