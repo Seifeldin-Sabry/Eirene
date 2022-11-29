@@ -11,11 +11,16 @@ import org.springframework.lang.Nullable;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface SessionRepository extends CrudRepository<Session, Long> {
 	@Query ("select s from Session s where s.id = ?1")
 	List<Reading> getReadingsBySessionID(Long id);
+
+	@Query ("select s from Session s where s.user.user_id = ?1 AND s.id = ?2")
+	Optional<Session> getSessionWhereUserID(Long userId, Long sessionId);
+
 
 	@Query ("select s from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL")
 	List<Session> getSessionsByUserID(Long id);

@@ -27,9 +27,9 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public Session getSession(Long id) {
-		return sessionRepository.findById(id)
-		                        .orElseThrow(() -> new SessionNotFoundException("Session with id " + id + " not found"));
+	public Session getSession(Long id, Long userId) {
+		return sessionRepository.getSessionWhereUserID(userId, id)
+		                        .orElseThrow(() -> new SessionNotFoundException("Session not found"));
 	}
 
 	@Override

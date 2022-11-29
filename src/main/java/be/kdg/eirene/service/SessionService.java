@@ -9,7 +9,7 @@ import java.util.List;
 public interface SessionService {
 	List<Session> getSessions(Long userId);
 
-	Session getSession(Long id);
+	Session getSession(Long id, Long userId);
 
 	Session save(SessionType type, User user);
 
