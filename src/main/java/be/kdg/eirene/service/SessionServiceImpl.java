@@ -2,14 +2,11 @@ package be.kdg.eirene.service;
 
 import be.kdg.eirene.exceptions.SessionNotFoundException;
 import be.kdg.eirene.model.Session;
-import be.kdg.eirene.model.SessionType;
-import be.kdg.eirene.model.User;
 import be.kdg.eirene.repository.SessionRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -33,8 +30,8 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public Session save(SessionType type, User user) {
-		return sessionRepository.save(new Session(type, user));
+	public Session save(Session session) {
+		return sessionRepository.save(session);
 	}
 
 	@Override
@@ -45,11 +42,9 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public void updateSession(Session session) {
 		if (session.getName().isBlank() || session.getName().isEmpty()) {
-			session.setName(session.getStartTime()
-			                       .toLocalDateTime()
-			                       .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+			session.setDefaultName();
 		}
-		sessionRepository.updateSession(session.getEndTime(), session.getSatisfaction(), session.getName(), session.getId());
+		sessionRepository.save(session);
 	}
 
 	@Override
