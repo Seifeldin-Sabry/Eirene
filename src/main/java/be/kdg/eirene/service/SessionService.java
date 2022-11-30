@@ -1,8 +1,6 @@
 package be.kdg.eirene.service;
 
 import be.kdg.eirene.model.Session;
-import be.kdg.eirene.model.SessionType;
-import be.kdg.eirene.model.User;
 
 import java.util.List;
 
@@ -11,7 +9,7 @@ public interface SessionService {
 
 	Session getSession(Long id, Long userId);
 
-	Session save(SessionType type, User user);
+	Session save(Session session);
 
 	Long getSessionsCount(Long userId);
 

@@ -11,6 +11,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,13 @@ public class Session {
 	}
 
 	/**
+	 sets a default name for the session
+	 */
+	public void setDefaultName() {
+		this.name = startTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+	}
+
+	/**
 	 Stops the session and sets the end time
 	 */
 	public void stop() {
@@ -93,7 +101,6 @@ public class Session {
 	}
 
 	public boolean addReading(Reading reading) {
-		reading.setSession(this);
 		return readings.add(reading);
 	}
 

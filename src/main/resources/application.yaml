@@ -1,31 +1,31 @@
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: none
-    database: POSTGRESQL
-    show-sql: true
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/Eirene
-    username: postgres
-    password: ${POSTGRES_PASSWORD}
-  devtools:
-    restart:
-      enabled: true
-      additional-paths: src/main/java
-      additional-exclude: WEB-INF/**
-  thymeleaf:
-    cache: false
-  messages:
-    basename: templates/messages
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:data.sql
-      schema-locations: classpath:schema.sql
+    jpa:
+        hibernate:
+            ddl-auto: none
+        database: POSTGRESQL
+        show-sql: true
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/Eirene
+        username: postgres
+        password: ${POSTGRES_PASSWORD}
+    devtools:
+        restart:
+            enabled: true
+            additional-paths: src/main/java
+            additional-exclude: WEB-INF/**
+    thymeleaf:
+        cache: false
+    messages:
+        basename: templates/messages
+    sql:
+        init:
+            mode: always
+            data-locations: classpath:data.sql
+#      schema-locations: classpath:schema.sql
 server:
-  port: 8081
+    port: 8081
 logging:
-  level:
-    #    web: debug
-    be.kdg.eirene: debug
+    level:
+        #    web: debug
+        be.kdg.eirene: debug

@@ -50,8 +50,8 @@ public class ActiveSessionController {
 		}
 		if (session == null) {
 			User user = userService.getUser(cookieService.getAttribute(httpSession));
-			session = sessionService.save(type, user);
-			session.setUser(user);
+			session = new Session(type, user);
+			sessionService.save(session);
 		}
 		logger.info(" report: " + evaluatorService.formulateReport(session.getReadings(), type));
 		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(type

@@ -31,16 +31,13 @@ public class Reading {
 	@JoinColumn (name = "sensor_data_id", nullable = false)
 	private SensorData sensorData;
 
-	@ManyToOne
-	@JoinColumn (name = "session_id")
-	private Session session;
+	@JoinColumn (name = "session_id", nullable = false)
+	private Long session_id;
 
 	public Reading(Timestamp timestamp, BrainWaveReading brainWave, SensorData sensorData) {
 		this.timestamp = timestamp;
 		this.brainWave = brainWave;
 		this.sensorData = sensorData;
-		this.brainWave.setReading(this);
-		this.sensorData.setReading(this);
 	}
 
 	@Override
