@@ -25,21 +25,26 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ms-auto mb-2 gap-3">
 				<li>
-					<a class="nav-item btn btn-warning" href="/javadoc/index.html">Docs</a>
-				</li>
-				<li>
-					<a class="nav-item btn btn-warning" th:href="@{/profile/sessions}">My Sessions</a>
+					<a class="nav-item btn btn-outline-warning" href="/javadoc/index.html">Docs</a>
 				</li>
 				<li th:if="${#httpSession.getAttribute('user_id')!=null}">
-					<a class="nav-item btn btn-warning"
+					<a class="nav-item btn"
+					   th:classappend="${index == 2}? 'btn-warning':'btn-outline-warning'"
+					   th:href="@{/profile/sessions}"
+					>My Sessions
+					</a>
+				</li>
+				<li th:if="${#httpSession.getAttribute('user_id')!=null}">
+					<a class="nav-item btn"
+					   th:classappend="${index == 1}? 'btn-warning':'btn-outline-warning'"
 					   th:href="@{/profile}"
 					>
 						My profile
 					</a>
 				</li>
-				<li th:if="${index != 0}">
+				<li th:if="${index >= 0}">
 					<th:block th:if="${#httpSession.getAttribute('user_id')!=null}">
-						<a class="nav-item btn btn-warning" th:href="@{/logout}">Logout</a>
+						<a class="nav-item btn btn-outline-warning" th:href="@{/logout}">Logout</a>
 					</th:block>
 					<th:block th:unless="${#httpSession.getAttribute('user_id')!=null}">
 						<a class="nav-item btn btn-warning" th:href="@{/login}">Login/Sign up</a>
@@ -51,7 +56,9 @@
 </nav>
 
 
-<footer class="text-center my-2" th:fragment="footer">&copy; Eirene 2022</footer>
+<footer class="text-center my-2" th:fragment="footer">&copy; Eirene 2022 |
+	<a class="link-secondary" th:href="@{/terms-of-service}">Terms of Service</a>
+</footer>
 
 </body>
 </html>
