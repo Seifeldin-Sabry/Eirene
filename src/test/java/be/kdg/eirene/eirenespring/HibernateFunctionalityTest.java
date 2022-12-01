@@ -70,9 +70,9 @@ class HibernateFunctionalityTest {
 	@Test
 	void saveReadings() {
 		User user = userRepository.findById(1L).get();
-		Session session = new Session(SessionType.FOCUS);
-		session.setUser(user);
+		Session session = new Session(SessionType.FOCUS, user);
 		sessionRepository.save(session);
+		logger.info("Session: " + session);
 		Reading reading = new Reading(Timestamp.valueOf(LocalDateTime.now()), new BrainWaveReading(0, 100, 0), new SensorData(2, 2, 2, 2, 2));
 		session.addReading(reading);
 		sessionRepository.save(session);

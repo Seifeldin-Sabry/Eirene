@@ -15,7 +15,9 @@ import java.util.Optional;
 
 @Transactional
 public interface SessionRepository extends CrudRepository<Session, Long> {
-	@Query ("select s from Session s where s.id = ?1")
+	@Query (value = "SELECT * FROM readings " +
+			"JOIN sessions USING (session_id) " +
+			"WHERE session_id = ?1", nativeQuery = true)
 	List<Reading> getReadingsBySessionID(Long id);
 
 	@Query ("select s from Session s where s.user.user_id = ?1 AND s.id = ?2")
