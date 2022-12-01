@@ -9,7 +9,7 @@
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body class="bg-dark text-light m-3">
-<th:block th:insert="~{fragments::navbar(3)}"></th:block>
+<th:block th:insert="~{fragments::navbar(2)}"></th:block>
 <h1 class="text-center my-5">Session history</h1>
 <ol class="d-flex align-items-center flex-column">
 	<li th:each="s: ${sessions}">

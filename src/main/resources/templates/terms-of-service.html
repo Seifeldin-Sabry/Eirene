@@ -10,12 +10,11 @@
 </head>
 <body class="bg-dark text-light m-3">
 
-<th:block th:insert="~{fragments::navbar(2)}"></th:block>
-<div class="d-flex justify-content-center align-items-center m-2y">
-	<h1 class="text-center"> Terms of Service (Last updated on 28/11/2022) </h1>
-</div>
-<hr>
-<div class="d-flex flex-wrap justify-content-center align-items-center border border-warning rounded w-100 p-5">
+<th:block th:insert="~{fragments::navbar(0)}"></th:block>
+<header class="my-5"><h1 class="text-center"> Terms of Service </h1>
+	<h5 class="text-secondary text-center">(Last updated on 28/11/2022)</h5></header>
+<hr class="my-5">
+<main class="d-flex flex-wrap justify-content-center align-items-center border border-warning rounded w-100 p-5">
 	These Terms constitute a legally binding agreement made between you and Eirene, concerning your access and rights of
 	use to the Eirene Project. <br>
 
@@ -32,7 +31,7 @@
 	any laws in your jurisdiction (including but not limited to copyright laws). <br>
 
 	A breach or violation of any of the Terms will result in an immediate termination of your Services. <br>
-</div>
+</main>
 
 </body>
 </html>
