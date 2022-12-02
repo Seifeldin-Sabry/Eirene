@@ -12,10 +12,10 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 	User findByEmailIgnoreCase(@NonNull String email);
 
-	@Query (value = "SELECT SUM(EXTRACT(EPOCH FROM (s.end_time - s.start_time))) AS diff FROM SESSIONS s WHERE s.user_id = ?1 AND s.end_time IS NOT NULL GROUP BY s.user_id", nativeQuery = true)
+	@Query (value = "SELECT SUM(EXTRACT(EPOCH FROM (s.end_time - s.start_time))) AS diff FROM sessions s WHERE s.user_id = ?1 AND s.end_time IS NOT NULL GROUP BY s.user_id", nativeQuery = true)
 	Optional<Long> getTotalDurationSessionsByUserID(Long userId);
 
-	@Query (value = "SELECT AVG(EXTRACT(EPOCH FROM (s.end_time - s.start_time))) AS diff FROM SESSIONS s WHERE s.user_id = ?1 AND s.end_time IS NOT NULL GROUP BY s.user_id", nativeQuery = true)
+	@Query (value = "SELECT AVG(EXTRACT(EPOCH FROM (s.end_time - s.start_time))) AS diff FROM sessions s WHERE s.user_id = ?1 AND s.end_time IS NOT NULL GROUP BY s.user_id", nativeQuery = true)
 	Optional<Long> getAverageDurationSessionsByUserID(Long userId);
 
 	//	User createUser(User user);

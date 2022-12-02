@@ -17,6 +17,11 @@
 		   th:href="@{sessions/session-overview/{id}(id=${s.getId()})}"
 		   th:text="${s.getName()}"
 		></a>
+		<form th:action="@{/profile/sessions/{id}(id=${s.getId()})}" th:method="delete">
+			<button class="btn" type="submit">
+				<i class="bi bi-trash-fill link-danger"></i>
+			</button>
+		</form>
 	</li>
 </ol>
 </body>

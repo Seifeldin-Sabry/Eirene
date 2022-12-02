@@ -101,13 +101,13 @@ public class ActiveSessionController {
 		return new ModelAndView("redirect:/profile/sessions/session-overview/" + sessionId);
 	}
 
-	@GetMapping ("/discard-session")
+	@DeleteMapping ("/discard-session")
 	public ModelAndView discardSession(HttpSession httpSession) {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
 		}
 		sessionService.deleteSession(session);
 		session = null;
-		return new ModelAndView("redirect:/profile");
+		return new ModelAndView("redirect:/profile/sessions");
 	}
 }
