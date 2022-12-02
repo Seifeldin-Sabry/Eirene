@@ -42,9 +42,16 @@
 		/>
 		<div class="d-flex justify-content-between">
 			<button class="btn btn-warning mt-2" type="submit">Save session</button>
-			<a class="btn btn-outline-warning mt-2" th:href="@{/newsession/discard-session}">Discard session</a>
 		</div>
 	</form>
+	<form th:action="@{/newsession/discard-session}"
+		  th:method="delete"
+	>
+		<button class="btn p-0" type="submit">
+			Discard session
+		</button>
+	</form>
+
 </main>
 </body>
 </html>

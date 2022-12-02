@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +44,14 @@ public class SessionController {
 		}
 		return new ModelAndView("session-overview")
 				.addObject("eireneSession", sessionService.getSession(sessionID, cookieService.getAttribute(httpSession)));
+	}
+
+	@DeleteMapping ("/{id}")
+	public ModelAndView removeSession(HttpSession httpSession, @PathVariable Long id) {
+		if (cookieService.cookieInvalid(httpSession)) {
+			return new ModelAndView("redirect:/");
+		}
+		sessionService.deleteSession(sessionService.getSession(id, cookieService.getAttribute(httpSession)));
+		return new ModelAndView("redirect:/profile/sessions");
 	}
 }
