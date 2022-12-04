@@ -3,7 +3,6 @@ package be.kdg.eirene.service;
 import be.kdg.eirene.exceptions.UserNotFoundException;
 import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
-import be.kdg.eirene.presenter.viewmodel.UserEditViewModel;
 import be.kdg.eirene.repository.UserRepository;
 import be.kdg.eirene.util.BcryptPasswordUtil;
 import org.slf4j.Logger;
@@ -73,6 +72,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean emailExists(String email) {
 		return userRepository.existsByEmailIgnoreCase(email);
+	}
+
+	@Override
+	public void deleteUser(Long userId) {
+		userRepository.deleteById(userId);
 	}
 
 	@Override

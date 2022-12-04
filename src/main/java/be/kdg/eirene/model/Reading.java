@@ -31,9 +31,8 @@ public class Reading {
 	@JoinColumn (name = "sensor_data_id", nullable = false)
 	private SensorData sensorData;
 
-	@ManyToOne (cascade = CascadeType.ALL, optional = false)
-	@JoinColumn (name = "session_id", nullable = false)
-	private Session session;
+	@Column (name = "session_id", nullable = false, insertable = false, updatable = false)
+	private Long session_id;
 
 	public Reading(Timestamp timestamp, BrainWaveReading brainWave, SensorData sensorData) {
 		this.timestamp = timestamp;

@@ -48,7 +48,7 @@ public class Session {
 	private SessionType type;
 
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn (name = "session_id")
+	@JoinColumn (name = "session_id", nullable = false)
 	@ToString.Exclude
 	private List<Reading> readings;
 
@@ -101,7 +101,6 @@ public class Session {
 	}
 
 	public boolean addReading(Reading reading) {
-		reading.setSession(this);
 		return readings.add(reading);
 	}
 
