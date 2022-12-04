@@ -1,15 +1,14 @@
 package be.kdg.eirene.controllers;
 
-import be.kdg.eirene.model.Reading;
-import be.kdg.eirene.model.Session;
-import be.kdg.eirene.model.SessionType;
-import be.kdg.eirene.model.User;
+import be.kdg.eirene.model.*;
 import be.kdg.eirene.presenter.viewmodel.SessionFeedbackViewModel;
 import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.EvaluatorService;
 import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
 import be.kdg.eirene.util.RequestDecryptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +58,13 @@ public class ActiveSessionController {
 				                                         .toLowerCase()))
 		                                         .addObject("session", session)
 		                                         .addObject("report", evaluatorService.formulateReport(session.getReadings(), type));
+	}
+
+	@GetMapping ("/api")
+	public String getChartData() {
+		EvaluatedData data = evaluatorService.formulateReport(session.getReadings(), session.getType());
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(data);
 	}
 
 	@PostMapping
