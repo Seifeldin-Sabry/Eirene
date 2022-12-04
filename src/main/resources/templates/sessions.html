@@ -6,23 +6,43 @@
 	<link rel="icon" th:href="@{/images/icon.png}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body class="bg-dark text-light m-3">
 <th:block th:insert="~{fragments::navbar(2)}"></th:block>
 <h1 class="text-center my-5">Session history</h1>
-<ol class="d-flex align-items-center flex-column">
-	<li th:each="s: ${sessions}">
-		<a class="text-decoration-none"
-		   th:href="@{sessions/session-overview/{id}(id=${s.getId()})}"
-		   th:text="${s.getName()}"
-		></a>
-		<form th:action="@{/profile/sessions/{id}(id=${s.getId()})}" th:method="delete">
-			<button class="btn" type="submit">
-				<i class="bi bi-trash-fill link-danger"></i>
-			</button>
-		</form>
-	</li>
-</ol>
+
+<table class="table table-dark table-striped table-hover my-5">
+	<thead>
+	<tr class="table-header">
+		<th class="text-nowrap">Session name</th>
+		<th>Type</th>
+		<th>Start time</th>
+		<th class="text-nowrap">Duration</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody class="table-group-divider">
+	<tr th:each="eSession: ${sessions}">
+		<td>
+			<a class="text-decoration-none" th:href="@{sessions/session-overview/{id}(id=${eSession.getId()})}"
+			   th:text="${eSession.getName()}"
+			></a>
+		</td>
+		<td th:text="${eSession.getType()}"></td>
+		<td th:text="${eSession.getStartTime()}"></td>
+		<td th:text="${eSession.getDuration()}"></td>
+		<td class="text-center">
+			<form th:action="@{sessions/{id}(id=${eSession.getId()})}" th:method="delete">
+				<button class="btn" type="submit">
+					<i class="bi bi-trash-fill link-danger"></i>
+				</button>
+			</form>
+		</td>
+	</tr>
+	</tbody>
+</table>
+
 </body>
 </html>
