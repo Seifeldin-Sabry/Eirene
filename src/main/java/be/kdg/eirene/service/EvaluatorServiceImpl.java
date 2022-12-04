@@ -27,13 +27,7 @@ public class EvaluatorServiceImpl implements EvaluatorService {
 	@Override
 	public EvaluatedData formulateReport(List<Reading> toEvaluate, SessionType type) {
 		if (toEvaluate.size() < 10) {
-			EvaluatedData calibrating = new EvaluatedData();
-			calibrating.setBrainwaveStrength("Calibrating...");
-			calibrating.setSignal("Calibrating...");
-			calibrating.setHeartRate("Calibrating...");
-			calibrating.setGeneralAdvice("Calibrating...");
-			calibrating.setEnvironment("Calibrating...");
-			return calibrating;
+			return new EvaluatedData();
 		}
 		List<Reading> pastReadings = toEvaluate.subList(toEvaluate.size() - 10, toEvaluate.size());
 
@@ -78,6 +72,8 @@ public class EvaluatorServiceImpl implements EvaluatorService {
 		// formulate the report
 
 		EvaluatedData report = new EvaluatedData();
+		report.setAverageBrainwaveStrength((int) brainwaveStrength);
+		report.setAverageHeartRate((int) heartRateValue);
 		report.setHeartRate(evaluateHeartRate(heartRateValue));
 		report.setBrainwaveStrength(evaluateBrainwaves(brainwaveStrength));
 		report.setSignal(evaluateSignal(signalStrength));
