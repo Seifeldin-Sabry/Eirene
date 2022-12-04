@@ -9,10 +9,10 @@ const setElementValue = (element, value) => {
 	element.innerText = value;
 };
 
-window.onload = function () {
+window.onload = () => {
 
-	var dps = []; // dataPoints
-	var chart = new CanvasJS.Chart(chartEl, {
+	const dps = []; // dataPoints
+	const chart = new CanvasJS.Chart(chartEl, {
 		theme: "dark1",
 		title: {
 			text: "Live Data",
@@ -22,7 +22,15 @@ window.onload = function () {
 			gridThickness: 0,
 			minimum: 0,
 			maximum: 100
-
+		},
+		toolTip: {
+			enabled: true,
+			animationEnabled: true,
+			contentFormatter: (e) => `${e.entries[0].dataPoint.x.toLocaleString("en-GB", {
+				hour: "numeric",
+				minute: "numeric",
+				second: "numeric"
+			})} ${e.entries[0].dataPoint.y}`
 		},
 		axisX: {
 			gridThickness: 0,
@@ -38,11 +46,11 @@ window.onload = function () {
 		}]
 	});
 
-	var xVal = 0;
-	var updateInterval = 1000;
-	var dataLength = 15; // number of dataPoints visible at any point
+	let xVal = 0;
+	const updateInterval = 1000;
+	const dataLength = 15; // number of dataPoints visible at any point
 
-	var updateChart = function (count) {
+	const updateChart = () => {
 		$.ajax({
 			type: "GET",
 			url: "http://localhost:8081/newsession/api",
@@ -65,14 +73,12 @@ window.onload = function () {
 				setElementValue(heartRateEl, data.heartRate);
 				setElementValue(environmentEl, data.environment);
 				setElementValue(generalAdviceEl, data.generalAdvice);
-
 			}
 		});
 	};
 
 	updateChart(dataLength);
-	setInterval(function () {
+	setInterval(() => {
 		updateChart();
 	}, updateInterval);
-
 };

@@ -6,20 +6,23 @@
 	<link rel="icon" th:href="@{/images/icon.png}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body class="bg-dark text-light m-3">
 
 <th:block th:insert="~{fragments::navbar(0)}"></th:block>
 
-<h1 class="text-center">Feedback</h1>
-<hr>
-<main class="pt-5 m-2 m-auto d-flex justify-content-center align-items-center">
+<h1 class="text-center my-5">Feedback</h1>
+<hr class="my-5">
+<main class="m-2 d-flex flex-column gap-2 justify-content-center align-items-center">
 
 	<form method="post" th:action="@{/newsession/submit-feedback}" th:object="${sessionFeedback}">
 
 		<div class=" has-validation">
-			<div th:class="${#fields.hasErrors('satisfactionLevel')?'is-invalid':''}">
+			<div class="d-flex justify-content-around flex-row-reverse"
+				 th:classappend="${#fields.hasErrors('satisfactionLevel')?'is-invalid':''}"
+			>
 				<label th:each="feedback: ${T(be.kdg.eirene.model.SatisfactionLevel).values()}"
 					   th:for="*{satisfactionLevel}"
 				>
@@ -27,7 +30,7 @@
 						   th:value="${feedback}"
 						   type="radio"
 					>
-					<img alt="Rating level" class="mx-2" th:src="${feedback.getImageSrc()}">
+					<i class="bi fs-1" th:classappend="${feedback.getBiClass()}"></i>
 				</label>
 			</div>
 			<div class="invalid-feedback"
@@ -40,14 +43,14 @@
 		<input class="form-control form-control-lg border-0 bg-black text-light w-100" id="session" name="session"
 			   placeholder="Session Name (optional)" th:field="*{sessionName}"
 		/>
-		<div class="d-flex justify-content-between">
+		<div class="d-flex justify-content-center">
 			<button class="btn btn-warning mt-2" type="submit">Save session</button>
 		</div>
 	</form>
 	<form th:action="@{/newsession/discard-session}"
 		  th:method="delete"
 	>
-		<button class="btn p-0" type="submit">
+		<button class="btn btn-outline-warning" type="submit">
 			Discard session
 		</button>
 	</form>

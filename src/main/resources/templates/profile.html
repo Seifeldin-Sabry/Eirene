@@ -5,40 +5,77 @@
 	<title>Profile</title>
 	<link rel="icon" th:href="@{/images/icon.png}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body class="bg-dark text-light m-3">
 <th:block th:insert="~{fragments::navbar(1)}"></th:block>
-<h1 class="text-center">Welcome,
+<h1 class="text-center my-5">Welcome,
 	<th:block th:text="${user.name}+'!'"></th:block>
+	<button class="btn btn-lg p-0 fs-1" data-bs-target="#editModal" data-bs-toggle="modal" type="button">
+		<i class="bi bi-pencil-square text-primary"></i>
+	</button>
+
+	<button class="btn btn-lg p-0 fs-1" data-bs-target="#deleteModal" data-bs-toggle="modal" type="button">
+		<i class="bi bi-trash text-danger"></i>
+	</button>
 </h1>
+<div aria-hidden="true"
+	 aria-labelledby="editModalLabel"
+	 class="modal fade"
+	 id="editModal"
+	 tabindex="-1"
+>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content bg-dark text-light">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="editModalLabel">What would you like to edit</h1>
+				<button aria-label="Close"
+						class="btn-close btn-close-white"
+						data-bs-dismiss="modal"
+						type="button"
+				></button>
+			</div>
+			<div class="modal-body">
+				<div class="d-flex flex-row justify-content-around">
+					<a th:href="@{profile/edit}">
+						Profile info
+					</a>
+					<a th:href="@{profile/pw}">Password</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <main>
 	<hr>
-	<article class="d-flex flex-row justify-content-around">
+	<article class="d-flex flex-row justify-content-around my-4">
 		<div>
 			<h3>Total session time</h3>
-			<p class="fs-1 text-center"
+			<p class="fs-1 text-center mb-0"
 			   th:text="${totalDuration.toHours()}+':'+${#numbers.formatInteger(totalDuration.toMinutes()%60, 2)}+':'+${#numbers.formatInteger( totalDuration.toSeconds()%60, 2)}"
 			></p>
 		</div>
 		<div>
 			<h3>Average session time</h3>
-			<p class="fs-1 text-center"
+			<p class="fs-1 text-center mb-0"
 			   th:text="${averageDuration.toHours()}+':'+${#numbers.formatInteger(averageDuration.toMinutes() % 60, 2)}"
 			>XX:XX</p>
 		</div>
 		<div>
 			<h3>Total sessions</h3>
-			<p class="fs-1 text-center" th:text="${sessionCount}"></p>
+			<p class="fs-1 text-center mb-0" th:text="${sessionCount}"></p>
 		</div>
 	</article>
 	<hr>
 	<article class="d-flex flex-row justify-content-around my-5">
-		<a class="btn btn-outline-warning fs-2" th:href="@{/newsession(type=${meditation})}">Start meditation
-																							 session
+		<a class="btn btn-outline-warning fs-2" th:href="@{/newsession(type=${meditation})}">
+			Start meditation session
 		</a>
-		<a class="btn btn-outline-warning fs-2" th:href="@{/newsession(type=${focus})}">Start focus session</a>
+		<a class="btn btn-outline-warning fs-2" th:href="@{/newsession(type=${focus})}">
+			Start focus session
+		</a>
 	</article>
 </main>
 

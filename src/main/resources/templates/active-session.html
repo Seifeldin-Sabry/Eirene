@@ -7,19 +7,19 @@
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
-	<script src="https://code.jquery.com/jquery-3.6.1.min.js" type="text/javascript"></script>
-	<script src="lib/canvasJS/jquery.canvasjs.min.js" type="text/javascript"></script>
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script defer src="https://code.jquery.com/jquery-3.6.1.min.js" type="text/javascript"></script>
+	<script defer src="lib/canvasJS/jquery.canvasjs.min.js" type="text/javascript"></script>
+	<script defer th:src="@{/js/active-session.js}" type="text/javascript"></script>
 </head>
 <body class="bg-dark text-light m-3">
 
 <th:block th:insert="~{fragments::navbar(0)}"></th:block>
-<div class="d-flex justify-content-center align-items-center m-2y">
 
-	<h1 class="text-center" th:text="${type.toLowerCase()} + ' '+ session "></h1>
-</div>
-<hr>
-<div class="d-flex h-50 w-100 mt-5">
-	<div class="d-flex justify-content-sm-start border border-warning rounded w-25 p-5">
+<h1 class="text-center my-5" th:text="${type.toLowerCase()} + ' '+ session "></h1>
+<hr class="my-5">
+<main class="d-flex flex-column flex-md-row">
+	<div class="d-flex border border-warning rounded col-md-3 p-3">
 		<ul class="list-unstyled">
 			<li>Signal:
 				<p id="signal"></p>
@@ -35,15 +35,15 @@
 				<p id="environment"></p>
 			</li>
 			<li>
-				<h1 id="generalAdvice">Calibrating...</h1>
+				<p class="fs-4" id="generalAdvice">Calibrating...</p>
 			</li>
 		</ul>
 	</div>
-	<div class="h-20 w-50" id="chartContainer"></div>
-	<script defer th:src="@{/js/active-session.js}" type="text/javascript"></script>
-</div>
+	<div class="col-md-8 my-3 my-md-0 mx-md-3" id="chartContainer"></div>
+</main>
+
 <div class="d-flex justify-content-center my-5">
-	<a class="btn btn-outline-warning fs-2" th:href="@{/newsession/stopsession}"> Stop session
+	<a class="btn btn-warning fs-2" th:href="@{/newsession/stopsession}"> Stop session
 	</a>
 </div>
 
