@@ -17,7 +17,7 @@ import javax.validation.constraints.*;
 @Setter
 @PasswordMatchConstraint
 @GroupSequence ({UserSignUpViewModel.class, SizeCheck.class, LetterCheck.class, NumberCheck.class, SpecialCharacterCheck.class})
-public class UserSignUpViewModel {
+public class UserSignUpViewModel implements PasswordMatcher {
 
 	@NotBlank (message = "Name is required")
 	@Size (min = 2, max = 50, message = "Name must be between 2 and 50 characters", groups = SizeCheck.class)
