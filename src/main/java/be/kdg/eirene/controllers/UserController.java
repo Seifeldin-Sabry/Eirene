@@ -12,10 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -110,5 +107,15 @@ public class UserController {
 		}
 		userService.updatePassword(user.getUser_id(), viewModel.getPassword());
 		return new ModelAndView("redirect:/profile");
+	}
+
+	@DeleteMapping
+	public ModelAndView deleteProfile(HttpSession session) {
+		if (cookieService.cookieInvalid(session)) {
+			return new ModelAndView("redirect:/");
+		}
+		userService.deleteUser(cookieService.getAttribute(session));
+		cookieService.deleteCookie(session);
+		return new ModelAndView("redirect:/");
 	}
 }

@@ -31,4 +31,9 @@ public class CookieServiceImpl implements CookieService {
 		return session.getAttribute(COOKIE_NAME) == null ? null : (Long) session.getAttribute(COOKIE_NAME);
 	}
 
+	@Override
+	public void deleteCookie(HttpSession session) {
+		session.removeAttribute(COOKIE_NAME);
+	}
+
 }

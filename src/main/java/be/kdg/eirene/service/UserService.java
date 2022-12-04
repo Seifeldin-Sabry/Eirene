@@ -2,7 +2,6 @@ package be.kdg.eirene.service;
 
 import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
-import be.kdg.eirene.presenter.viewmodel.UserEditViewModel;
 
 public interface UserService {
 	User getUser(String email);
@@ -24,4 +23,6 @@ public interface UserService {
 	boolean newEmailIsCurrentEmail(User user, String email);
 
 	boolean emailExists(String email);
+
+	void deleteUser(Long userId);
 }

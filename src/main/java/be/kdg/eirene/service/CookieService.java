@@ -12,4 +12,6 @@ public interface CookieService {
 
 	Long getAttribute(HttpSession session);
 
+	void deleteCookie(HttpSession session);
+
 }

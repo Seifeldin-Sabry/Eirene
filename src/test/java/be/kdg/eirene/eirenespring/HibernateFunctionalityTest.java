@@ -74,8 +74,21 @@ class HibernateFunctionalityTest {
 		sessionRepository.save(session);
 		logger.info("Session: " + session);
 		Reading reading = new Reading(Timestamp.valueOf(LocalDateTime.now()), new BrainWaveReading(0, 100, 0), new SensorData(2, 2, 2, 2, 2));
+		Reading reading2 = new Reading(Timestamp.valueOf(LocalDateTime.now()), new BrainWaveReading(0, 100, 0), new SensorData(2, 2, 2, 2, 2));
 		session.addReading(reading);
+		session.addReading(reading2);
 		sessionRepository.save(session);
+		Assertions.assertEquals(2, session.getReadings().size());
+	}
+
+	@Test
+	void deleteUser() {
+		Long sessionCount = sessionRepository.count();
+		User user = userRepository.findById(1L).get();
+		Long userSessionCount = sessionRepository.getSessionsCountByUserID(user.getUser_id());
+		userRepository.delete(user);
+		Assertions.assertFalse(userRepository.findById(1L).isPresent());
+		Assertions.assertEquals(sessionCount - userSessionCount, sessionRepository.count());
 	}
 
 }
