@@ -12,7 +12,7 @@
 }
 
 ::selection {
-    background: #FEB50D;
+    background: var(--yellow);
     color: #191C1F;
 }
 
