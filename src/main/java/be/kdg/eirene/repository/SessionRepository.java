@@ -24,7 +24,7 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
 	Optional<Session> getSessionWhereUserID(Long userId, Long sessionId);
 
 
-	@Query ("select s from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL")
+	@Query ("select s from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL order by s.startTime, s.id desc")
 	List<Session> getSessionsByUserID(Long id);
 
 	@Query ("select COUNT(s) from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL")

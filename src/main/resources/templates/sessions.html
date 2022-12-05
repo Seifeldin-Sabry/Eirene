@@ -21,25 +21,72 @@
 		<th>Start time</th>
 		<th class="text-nowrap">Duration</th>
 		<th></th>
+		<th></th>
 	</tr>
 	</thead>
 	<tbody class="table-group-divider">
 	<tr th:each="eSession: ${sessions}">
-		<td>
+		<td class="align-middle">
 			<a class="text-decoration-none" th:href="@{sessions/session-overview/{id}(id=${eSession.getId()})}"
 			   th:text="${eSession.getName()}"
 			></a>
 		</td>
-		<td th:text="${eSession.getType()}"></td>
-		<td th:text="${eSession.getStartTime()}"></td>
-		<td th:text="${eSession.getDuration()}"></td>
-		<td class="text-center">
+		<td class="align-middle" th:text="${eSession.getType()}"></td>
+		<td class="align-middle" th:text="${eSession.getStartTime()}"></td>
+		<td class="align-middle" th:text="${eSession.getDuration()}"></td>
+		<td class="text-end align-middle">
+			<button class="btn"
+					th:data-bs-target="'#editModal' + ${eSession.getId()}"
+					data-bs-toggle="modal"
+					type="button"
+			>
+				<i class="bi bi-pencil-square link-primary"></i>
+			</button>
+		</td>
+		<td class="text-start align-middle">
 			<form th:action="@{sessions/{id}(id=${eSession.getId()})}" th:method="delete">
 				<button class="btn" type="submit">
 					<i class="bi bi-trash-fill link-danger"></i>
 				</button>
 			</form>
 		</td>
+		<div aria-hidden="true"
+			 th:aria-labelledby="editModalLabel"
+			 class="modal fade"
+			 th:id="'editModal' + ${eSession.getId()}"
+			 tabindex="-1"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content bg-dark text-light">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5"
+							id="editModalLabel"
+							th:text="'Rename Session: ' + ${eSession.getName()}"
+						>
+							Rename Session</h1>
+						<button aria-label="Close"
+								class="btn-close btn-close-white"
+								data-bs-dismiss="modal"
+								type="button"
+						></button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{sessions/{id}(id=${eSession.getId()})}"
+							  th:method="put"
+							  th:object="${viewModel}"
+						>
+							<div class="d-flex flex-row justify-content-around align-content-center">
+								<input class="form-control border-0 bg-black text-light w-75"
+									   placeholder="New Session Name"
+									   th:field="*{sessionName}"
+								>
+								<button class="btn mt-0 btn-warning" type="submit">Save</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</tr>
 	</tbody>
 </table>

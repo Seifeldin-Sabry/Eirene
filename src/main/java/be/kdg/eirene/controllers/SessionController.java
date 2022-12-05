@@ -1,15 +1,14 @@
 package be.kdg.eirene.controllers;
 
+import be.kdg.eirene.model.Session;
+import be.kdg.eirene.presenter.viewmodel.SessionEditViewModel;
 import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -34,7 +33,8 @@ public class SessionController {
 			return new ModelAndView("redirect:/");
 		}
 		return new ModelAndView("sessions")
-				.addObject("sessions", sessionService.getSessions(cookieService.getAttribute(session)));
+				.addObject("sessions", sessionService.getSessions(cookieService.getAttribute(session)))
+				.addObject("viewModel", new SessionEditViewModel());
 	}
 
 	@GetMapping ("session-overview/{sessionID}")
@@ -44,6 +44,18 @@ public class SessionController {
 		}
 		return new ModelAndView("session-overview")
 				.addObject("eireneSession", sessionService.getSession(sessionID, cookieService.getAttribute(httpSession)));
+	}
+
+	@PutMapping ("/{id}")
+	public ModelAndView editSession(@ModelAttribute ("viewModel") SessionEditViewModel viewModel, @PathVariable Long id, HttpSession httpSession) {
+		final Long userId = cookieService.getAttribute(httpSession);
+		if (cookieService.cookieInvalid(httpSession)) {
+			return new ModelAndView("redirect:/");
+		}
+		final Session session = sessionService.getSession(id, userId);
+		if (!"".equals(viewModel.getSessionName())) session.setName(viewModel.getSessionName());
+		sessionService.updateSession(session);
+		return new ModelAndView("redirect:/profile/sessions");
 	}
 
 	@DeleteMapping ("/{id}")
