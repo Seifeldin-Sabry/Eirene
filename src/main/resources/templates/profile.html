@@ -48,6 +48,39 @@
 		</div>
 	</div>
 </div>
+
+<div aria-hidden="true"
+	 aria-labelledby="deleteModalLabel"
+	 class="modal fade"
+	 id="deleteModal"
+	 tabindex="-1"
+>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content bg-dark text-light">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="deleteModalLabel">Account deleted!</h1>
+				<button aria-label="Close"
+						class="btn-close btn-close-white"
+						data-bs-dismiss="modal"
+						type="button"
+				></button>
+			</div>
+			<div class="modal-body">
+				<p>Just kidding
+					<i class="bi bi-emoji-wink"></i>
+				</p>
+				<p>Are you sure you want to delete your account?</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
+				<form th:action="@{/profile}" th:method="delete">
+					<button class="btn btn-danger" type="submit">Delete Account</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 <main>
 	<hr>
 	<article class="d-flex flex-row justify-content-around my-4">
