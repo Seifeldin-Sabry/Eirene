@@ -4,6 +4,10 @@ const heartRateEl = document.getElementById("heartRate");
 const environmentEl = document.getElementById("environment");
 const chartEl = document.getElementById("chartContainer");
 const generalAdviceEl = document.getElementById("generalAdvice");
+const sessionTimer = document.getElementById("session-timer");
+
+
+const UPDATE_INTERVAL = 1000;
 
 const setElementValue = (element, value) => {
 	element.innerText = value;
@@ -47,7 +51,6 @@ window.onload = () => {
 	});
 
 	let xVal = 0;
-	const updateInterval = 1000;
 	const dataLength = 15; // number of dataPoints visible at any point
 
 	const updateChart = () => {
@@ -80,5 +83,18 @@ window.onload = () => {
 	updateChart(dataLength);
 	setInterval(() => {
 		updateChart();
-	}, updateInterval);
+	}, UPDATE_INTERVAL);
 };
+
+
+const startTime = Date.now();
+const currentTime = () => {
+	const now = Math.floor((Date.now() - startTime) / 1000);
+	const hour = Math.floor(now / 3600).toString().padStart(2, "0");
+	const minute = (Math.floor(now / 60) % 60).toString().padStart(2, "0");
+	const second = (now % 60).toString().padStart(2, "0");
+	return `${hour}:${minute}:${second}`;
+};
+setInterval(() => {
+	sessionTimer.textContent = currentTime();
+}, UPDATE_INTERVAL);
