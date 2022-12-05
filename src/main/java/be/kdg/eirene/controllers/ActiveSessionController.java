@@ -68,16 +68,10 @@ public class ActiveSessionController {
 	}
 
 	@PostMapping
-	public ModelAndView getData(@RequestBody Reading data) {
-		if (session == null) {
-			return null;
+	public void getData(@RequestBody Reading data) {
+		if (session != null) {
+			session.addReading(data);
 		}
-		session.addReading(data);
-		logger.info("Post called");
-		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(session.getType()
-		                                                                                          .toString()
-		                                                                                          .toLowerCase()))
-		                                         .addObject("report", evaluatorService.formulateReport(session.getReadings(), session.getType()));
 	}
 
 	@GetMapping ("/stopsession")
