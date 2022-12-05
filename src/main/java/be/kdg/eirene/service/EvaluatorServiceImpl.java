@@ -34,7 +34,7 @@ public class EvaluatorServiceImpl implements EvaluatorService {
 		// Calculate the average values
 
 		double heartRateValue = pastReadings.parallelStream()
-		                                    .mapToDouble(a -> a.getSensorData().getHeartRate().getValue())
+		                                    .mapToDouble(a -> a.getSensorData().getHeartRate())
 		                                    .average()
 		                                    .orElse(0);
 
@@ -53,19 +53,19 @@ public class EvaluatorServiceImpl implements EvaluatorService {
 		                                    .average()
 		                                    .orElse(0);
 		double humidity = pastReadings.parallelStream()
-		                              .mapToDouble(a -> a.getSensorData().getHumidity().getValue())
+		                              .mapToDouble(a -> a.getSensorData().getHumidity())
 		                              .average()
 		                              .orElse(0);
 		double temperature = pastReadings.parallelStream()
-		                                 .mapToDouble(a -> a.getSensorData().getTemperature().getValue())
+		                                 .mapToDouble(a -> a.getSensorData().getTemperature())
 		                                 .average()
 		                                 .orElse(0);
 		double light = pastReadings.parallelStream()
-		                           .mapToDouble(a -> a.getSensorData().getLight().getValue())
+		                           .mapToDouble(a -> a.getSensorData().getLight())
 		                           .average()
 		                           .orElse(0);
 		double sound = pastReadings.parallelStream()
-		                           .mapToDouble(a -> a.getSensorData().getSound().getValue())
+		                           .mapToDouble(a -> a.getSensorData().getSound())
 		                           .average()
 		                           .orElse(0);
 
