@@ -43,11 +43,11 @@
 		<tr th:each="reading: ${eireneSession.getReadings()}">
 			<td th:text="${reading.getTimestamp()}"></td>
 			<td th:text="${reading.getBrainWave().getLevel(eireneSession.getType())}"></td>
-			<td th:text="${reading.getSensorData().getHeartRate()}"></td>
-			<td th:text="${reading.getSensorData().getHumidity()}"></td>
-			<td th:text="${reading.getSensorData().getLight()}"></td>
-			<td th:text="${reading.getSensorData().getSound()}"></td>
-			<td th:text="${reading.getSensorData().getTemperature()}"></td>
+			<td th:text="${reading.getSensorData().getHeartRate()} + ' ' +${T(be.kdg.eirene.model.Unit).BPM}"></td>
+			<td th:text="${reading.getSensorData().getHumidity()} + ' ' +${T(be.kdg.eirene.model.Unit).PERCENT}"></td>
+			<td th:text="${reading.getSensorData().getLight()} + ' ' +${T(be.kdg.eirene.model.Unit).L}"></td>
+			<td th:text="${reading.getSensorData().getSound()} + ' ' +${T(be.kdg.eirene.model.Unit).DB}"></td>
+			<td th:text="${reading.getSensorData().getTemperature()} + ' ' +${T(be.kdg.eirene.model.Unit).C}"></td>
 		</tr>
 		</tbody>
 	</table>
