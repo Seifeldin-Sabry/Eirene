@@ -1,6 +1,5 @@
 package be.kdg.eirene.repository;
 
-import be.kdg.eirene.model.Gender;
 import be.kdg.eirene.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,19 +22,11 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
 	@Transactional
 	@Modifying
-	@Query (value = "UPDATE users SET name = ?2, email = ?3, gender = CAST(?4 AS gender) WHERE user_id = ?1", nativeQuery = true)
+	@Query (value = "UPDATE users SET name = ?2, email = ?3, gender = CAST(?4 AS GENDER) WHERE user_id = ?1", nativeQuery = true)
 	void updateProfile(Long userId, String name, String email, String gender);
 
 	@Transactional
 	@Modifying
 	@Query (value = "UPDATE users SET password = ?2 WHERE user_id = ?1", nativeQuery = true)
 	void updatePassword(Long userId, String password);
-
-	//	User createUser(User user);
-
-	//	List<User> readUsers();
-
-	//	boolean deleteUser(User user);
-
-
 }

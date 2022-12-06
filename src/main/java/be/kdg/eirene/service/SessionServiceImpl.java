@@ -1,8 +1,12 @@
 package be.kdg.eirene.service;
 
 import be.kdg.eirene.exceptions.SessionNotFoundException;
+import be.kdg.eirene.model.Reading;
 import be.kdg.eirene.model.Session;
+import be.kdg.eirene.model.SessionType;
+import be.kdg.eirene.repository.Period;
 import be.kdg.eirene.repository.SessionRepository;
+import be.kdg.eirene.util.ReadingsAdapt;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +17,12 @@ import java.util.List;
 public class SessionServiceImpl implements SessionService {
 	private final SessionRepository sessionRepository;
 
+	private final ReadingsAdapt readingsAdaptor;
+
 	@Autowired
-	public SessionServiceImpl(SessionRepository sessionRepository) {
+	public SessionServiceImpl(SessionRepository sessionRepository, ReadingsAdapt readingsAdaptor) {
 		this.sessionRepository = sessionRepository;
+		this.readingsAdaptor = readingsAdaptor;
 	}
 
 	@Override
@@ -51,4 +58,10 @@ public class SessionServiceImpl implements SessionService {
 	public void deleteSession(Session session) {
 		sessionRepository.delete(session);
 	}
+
+	@Override
+	public List<Reading> getReadings(Long userId, Period period, SessionType sessionType) {
+		return readingsAdaptor.convert(sessionRepository.getReadingsByUserID(userId, period.name(), sessionType.name()));
+	}
+
 }

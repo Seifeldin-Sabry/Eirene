@@ -1,6 +1,9 @@
 package be.kdg.eirene.service;
 
+import be.kdg.eirene.model.Reading;
 import be.kdg.eirene.model.Session;
+import be.kdg.eirene.model.SessionType;
+import be.kdg.eirene.repository.Period;
 
 import java.util.List;
 
@@ -16,4 +19,6 @@ public interface SessionService {
 	void updateSession(Session session);
 
 	void deleteSession(Session session);
+
+	List<Reading> getReadings(Long userId, Period period, SessionType sessionType);
 }

@@ -33,3 +33,7 @@
 #chartContainer {
     height: 357px;
 }
+
+.hidden {
+    display: none;
+}

@@ -1,25 +1,15 @@
 package be.kdg.eirene.repository;
 
-import be.kdg.eirene.model.Reading;
 import be.kdg.eirene.model.Session;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
 public interface SessionRepository extends CrudRepository<Session, Long> {
-	@Query (value = "SELECT * FROM readings " +
-			"JOIN sessions USING (session_id) " +
-			"WHERE session_id = ?1", nativeQuery = true)
-	List<Reading> getReadingsBySessionID(Long id);
-
 	@Query ("select s from Session s where s.user.user_id = ?1 AND s.id = ?2")
 	Optional<Session> getSessionWhereUserID(Long userId, Long sessionId);
 
@@ -30,9 +20,51 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
 	@Query ("select COUNT(s) from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL")
 	Long getSessionsCountByUserID(Long id);
 
-	@org.springframework.transaction.annotation.Transactional
-	@Modifying
-	@Query ("update Session s set s.endTime = ?1, s.satisfaction = ?2, s.name = ?3 where s.id = ?4")
-	void updateSession(@NonNull Timestamp endTime, @Nullable Integer satisfaction, @Nullable String name, Long id);
+	@Query (value = """
+			SELECT r.time_stamp, sd.heart_rate, sd.humidity, sd.light, sd.sound, sd.temperature, b.focus, b.meditation, b.signal
+			FROM readings r
+			JOIN brainwaves b USING(brainwave_id)
+			JOIN sensor_data sd USING(sensor_data_id)
+			JOIN sessions s USING (session_id)
+			JOIN users u USING (user_id)
+			WHERE u.user_id = ?1
+			AND CASE
+			    WHEN ?2 = 'day' THEN
+			        DATE_PART('day', date(r.time_stamp)) = DATE_PART('day', date(NOW()))
+			        AND DATE_PART('week', date(r.time_stamp)) = DATE_PART('week', date(NOW()))
+			        AND DATE_PART('month', date(r.time_stamp)) = DATE_PART('month', date(NOW()))
+			        AND DATE_PART('year', date(r.time_stamp)) = DATE_PART('year', date(NOW()))
+			    WHEN ?2  = 'week' THEN
+			        DATE_PART('week', date(r.time_stamp)) = DATE_PART('week', date(NOW()))
+			        AND DATE_PART('month', date(r.time_stamp)) = DATE_PART('month', date(NOW()))
+			        AND DATE_PART('year', date(r.time_stamp)) = DATE_PART('year', date(NOW()))
+			    WHEN ?2  = 'month' THEN
+			        DATE_PART('month', date(r.time_stamp)) = DATE_PART('month', date(NOW()))
+			        AND DATE_PART('year', date(r.time_stamp)) = DATE_PART('year', date(NOW()))
+			    WHEN ?2  = 'year' THEN DATE_PART('year', date(r.time_stamp)) = DATE_PART('year', date(NOW()))
+			    ELSE TRUE
+			    END
+			AND CASE WHEN UPPER(?3) = 'FOCUS' THEN s.session_type = 'FOCUS'
+			    WHEN UPPER(?3) = 'MEDITATION' THEN s.session_type = 'MEDITATION'
+			    ELSE TRUE
+			    END
+			ORDER BY r.time_stamp
+			;""", nativeQuery = true)
+	List<Object[]> getReadingsByUserID(Long id, String period, String sessionType);
 
+	@Query (value = """
+			SELECT r.time_stamp, sd.heart_rate, sd.humidity, sd.light, sd.sound, sd.temperature ,b.focus, b.meditation, b.signal
+			FROM readings r
+			JOIN brainwaves b USING(brainwave_id)
+			JOIN sensor_data sd USING(sensor_data_id)
+			JOIN sessions s USING (session_id)
+			JOIN users u USING (user_id)
+			WHERE u.user_id = ?1
+			AND CASE WHEN UPPER(?3) = 'FOCUS' THEN s.session_type = 'FOCUS'
+			    WHEN UPPER(?3) = 'MEDITATION' THEN s.session_type = 'MEDITATION'
+			    ELSE TRUE
+			    END
+			ORDER BY r.time_stamp;
+			""", nativeQuery = true)
+	List<Object[]> getReadingsByUserID(Long id, String sessionType);
 }

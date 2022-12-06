@@ -5,9 +5,11 @@ import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.presenter.viewmodel.PasswordEditViewModel;
 import be.kdg.eirene.presenter.viewmodel.UserEditViewModel;
+import be.kdg.eirene.repository.Period;
 import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -107,6 +109,26 @@ public class UserController {
 		}
 		userService.updatePassword(user.getUser_id(), viewModel.getPassword());
 		return new ModelAndView("redirect:/profile");
+	}
+
+	@GetMapping ("/analytics")
+	public ModelAndView loadAnalytics(HttpSession session) {
+		if (cookieService.cookieInvalid(session)) {
+			return new ModelAndView("redirect:/");
+		}
+		Gson gson = new Gson();
+		User user = userService.getUser(cookieService.getAttribute(session));
+		return new ModelAndView("profile-analytics")
+				.addObject("dayFocus", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.DAY, SessionType.FOCUS)))
+				.addObject("weekFocus", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.WEEK, SessionType.FOCUS)))
+				.addObject("monthFocus", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.MONTH, SessionType.FOCUS)))
+				.addObject("yearFocus", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.YEAR, SessionType.FOCUS)))
+				.addObject("allFocus", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.ALL, SessionType.FOCUS)))
+				.addObject("dayMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.DAY, SessionType.MEDITATION)))
+				.addObject("weekMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.WEEK, SessionType.MEDITATION)))
+				.addObject("monthMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.MONTH, SessionType.MEDITATION)))
+				.addObject("yearMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.YEAR, SessionType.MEDITATION)))
+				.addObject("allMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.ALL, SessionType.MEDITATION)));
 	}
 
 	@DeleteMapping

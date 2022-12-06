@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Analytics</title>
+	<link rel="icon" th:href="@{/images/icon.png}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<ul class="nav nav-tabs" role="tablist">
+	<li class="nav-item">
+		<a class="nav-link active" data-toggle="tab" href="#focus" role="tab">Focus</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" data-toggle="tab" href="#meditation" role="tab">Meditation</a>
+	</li>
+</ul>
+
+<div class="tab-content">
+	<div class="tab-pane active" id="focus" role="tabpanel">
+		<ul class="nav nav-pills" id="focus-tabs-links" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#dayFocus" role="tab">Day</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#weekFocus" role="tab">Week</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#monthFocus" role="tab">Month</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#yearFocus" role="tab">Year</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#allFocus" role="tab">All Time</a>
+			</li>
+		</ul>
+
+		<div class="tab-content" id="focus-tabs-content">
+			<div class="tab-pane active" id="dayFocus" role="tabpanel">
+				<div class="chart-container">
+					<canvas id="dayFocusChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="weekFocus" role="tabpanel">
+				<div class="chart-container">
+					<canvas id="weekFocusChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="monthFocus" role="tabpanel">
+				<div class="chart-container">
+					<canvas id="monthFocusChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="yearFocus" role="tabpanel">
+				<div class="chart-container">
+					<canvas id="yearFocusChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="allFocus" role="tabpanel">
+				<div class="chart-container">
+					<canvas id="allFocusChart"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tab-pane" id="meditation" role="tabpanel">
+		<ul class="nav nav-pills" id="meditation-tabs-links" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#dayMeditation" role="tab">Day</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#weekMeditation" role="tab">Week</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#monthMeditation" role="tab">Month</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#yearMeditation" role="tab">Year</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#allMeditation" role="tab">All Time</a>
+			</li>
+		</ul>
+
+		<div class="tab-content" id="meditation-tabs-content">
+			<div class="tab-pane active" id="dayMeditation" role="tabpanel">
+				<div>
+					<canvas id="dayMeditationChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="weekMeditation" role="tabpanel">
+				<div>
+					<canvas id="weekMeditationChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="monthMeditation" role="tabpanel">
+				<div>
+					<canvas id="monthMeditationChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="yearMeditation" role="tabpanel">
+				<div>
+					<canvas id="yearMeditationChart"></canvas>
+				</div>
+			</div>
+			<div class="tab-pane" id="allMeditation" role="tabpanel">
+				<div>
+					<canvas id="allMeditationChart"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script th:inline="javascript" th:src="@{/js/profile-analytics.js}"></script>
+<script th:inline="javascript">
+	let dayFocusChart = document.getElementById("dayFocusChart");
+	let weekFocusChart = document.getElementById("weekFocusChart");
+	let monthFocusChart = document.getElementById("monthFocusChart");
+	let yearFocusChart = document.getElementById("yearFocusChart");
+	let allFocusChart = document.getElementById("allFocusChart");
+
+	let dayMeditationChart = document.getElementById("dayMeditationChart");
+	let weekMeditationChart = document.getElementById("weekMeditationChart");
+	let monthMeditationChart = document.getElementById("monthMeditationChart");
+	let yearMeditationChart = document.getElementById("yearMeditationChart");
+	let allMeditationChart = document.getElementById("allMeditationChart");
+
+	let dayFocusData = JSON.parse(/*[[${dayFocus}]]*/);
+	let weekFocusData = JSON.parse(/*[[${weekFocus}]]*/);
+	let monthFocusData = JSON.parse(/*[[${monthFocus}]]*/);
+	let yearFocusData = JSON.parse(/*[[${yearFocus}]]*/);
+	let allFocusData = JSON.parse(/*[[${allFocus}]]*/);
+	let dayMeditationData = JSON.parse(/*[[${dayMeditation}]]*/);
+	let weekMeditationData = JSON.parse(/*[[${weekMeditation}]]*/);
+	let monthMeditationData = JSON.parse(/*[[${monthMeditation}]]*/);
+	let yearMeditationData = JSON.parse(/*[[${yearMeditation}]]*/);
+	let allMeditationData = JSON.parse(/*[[${allMeditation}]]*/);
+
+	makeChart(dayFocusChart, dayFocusData, true);
+	makeChart(weekFocusChart, weekFocusData, true);
+	makeChart(monthFocusChart, monthFocusData, true);
+	makeChart(yearFocusChart, yearFocusData, true);
+	makeChart(allFocusChart, allFocusData, true);
+	makeChart(dayMeditationChart, dayMeditationData);
+	makeChart(weekMeditationChart, weekMeditationData);
+	makeChart(monthMeditationChart, monthMeditationData);
+	makeChart(yearMeditationChart, yearMeditationData);
+	makeChart(allMeditationChart, allMeditationData);
+</script>
+</html>
