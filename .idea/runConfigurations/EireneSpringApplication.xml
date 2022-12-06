@@ -1,6 +1,5 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="EireneSpringApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" />
     <module name="Eirene-spring.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="be.kdg.eirene.EireneSpringApplication" />
     <extension name="net.ashald.envfile">

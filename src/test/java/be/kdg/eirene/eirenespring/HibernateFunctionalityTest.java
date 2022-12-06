@@ -1,8 +1,11 @@
 package be.kdg.eirene.eirenespring;
 
 import be.kdg.eirene.model.*;
+import be.kdg.eirene.repository.Period;
 import be.kdg.eirene.repository.SessionRepository;
 import be.kdg.eirene.repository.UserRepository;
+import be.kdg.eirene.service.SessionService;
+import be.kdg.eirene.service.UserService;
 import be.kdg.eirene.util.BcryptPasswordUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,12 +22,18 @@ class HibernateFunctionalityTest {
 
 	private final UserRepository userRepository;
 	private final SessionRepository sessionRepository;
+
+	private final SessionService sessionService;
+
+	private final UserService userService;
 	private final Logger logger = Logger.getLogger(HibernateFunctionalityTest.class.getName());
 
 	@Autowired
-	public HibernateFunctionalityTest(UserRepository userRepository, SessionRepository sessionRepository) {
+	public HibernateFunctionalityTest(UserRepository userRepository, SessionRepository sessionRepository, UserService userService, SessionService sessionService) {
 		this.userRepository = userRepository;
 		this.sessionRepository = sessionRepository;
+		this.userService = userService;
+		this.sessionService = sessionService;
 	}
 
 
@@ -89,6 +98,13 @@ class HibernateFunctionalityTest {
 		userRepository.delete(user);
 		Assertions.assertFalse(userRepository.findById(1L).isPresent());
 		Assertions.assertEquals(sessionCount - userSessionCount, sessionRepository.count());
+	}
+
+	@Test
+	void groupDataTest() {
+		User user = userRepository.findById(1L).get();
+		List<Reading> readings = sessionService.getReadings(user.getUser_id(), Period.ALL, SessionType.FOCUS);
+		readings.forEach(reading -> logger.info("Reading: " + reading));
 	}
 
 }
