@@ -3,9 +3,10 @@ package be.kdg.eirene.controllers;
 import be.kdg.eirene.model.*;
 import be.kdg.eirene.presenter.viewmodel.SessionFeedbackViewModel;
 import be.kdg.eirene.service.CookieService;
-import be.kdg.eirene.service.EvaluatorService;
 import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
+import be.kdg.eirene.service.evaluator.ReportGeneratorService;
+import be.kdg.eirene.util.ReadingValidator;
 import be.kdg.eirene.util.RequestDecryptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,21 +25,23 @@ import javax.validation.Valid;
 @RequestMapping ("/newsession")
 public class ActiveSessionController {
 
+	private final ReportGeneratorService reportGenerator;
+	private final ReadingValidator validator;
 	private final CookieService cookieService;
 	private final SessionService sessionService;
 	private final UserService userService;
-	private final EvaluatorService evaluatorService;
 	private final Logger logger;
 	private final RequestDecryptor decryptor;
 	private Session session;
 
 	@Autowired
-	public ActiveSessionController(RequestDecryptor decryptor, CookieService cookieService, UserService userService, SessionService sessionService, EvaluatorService evaluatorService) {
+	public ActiveSessionController(RequestDecryptor decryptor, CookieService cookieService, UserService userService, SessionService sessionService, ReportGeneratorService reportGenerator, ReadingValidator validator) {
 		this.decryptor = decryptor;
 		this.cookieService = cookieService;
 		this.userService = userService;
 		this.sessionService = sessionService;
-		this.evaluatorService = evaluatorService;
+		this.reportGenerator = reportGenerator;
+		this.validator = validator;
 		logger = LoggerFactory.getLogger(this.getClass());
 	}
 
@@ -52,25 +55,26 @@ public class ActiveSessionController {
 			session = new Session(type, user);
 			sessionService.save(session);
 		}
-		logger.info(" report: " + evaluatorService.formulateReport(session.getReadings(), type));
+		logger.info(" report: " + reportGenerator.formulateReport(session.getReadings(), type));
 		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(type
 				                                         .toString()
 				                                         .toLowerCase()))
 		                                         .addObject("session", session)
-		                                         .addObject("report", evaluatorService.formulateReport(session.getReadings(), type));
+		                                         .addObject("report", reportGenerator.formulateReport(session.getReadings(), type));
 	}
 
 	@GetMapping ("/api")
 	public String getChartData() {
-		EvaluatedData data = evaluatorService.formulateReport(session.getReadings(), session.getType());
+		EvaluatedData data = reportGenerator.formulateReport(session.getReadings(), session.getType());
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		return gson.toJson(data);
 	}
 
 	@PostMapping
 	public void getData(@RequestBody Reading data) {
-		if (session != null) {
-			session.addReading(data);
+		if (session != null && validator.validate(data)) {
+				session.addReading(data);
+			}
 		}
 	}
 

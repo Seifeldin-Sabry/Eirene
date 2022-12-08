@@ -59,7 +59,7 @@ window.onload = () => {
 			url: "http://localhost:8081/newsession/api",
 			dataType: "json",
 			success: function (data, status) {
-				yVal = data.averageBrainwaveStrength;
+				yVal = data.brainwaveStrengthValue;
 				xVal = new Date();
 				dps.push({
 					x: xVal,
