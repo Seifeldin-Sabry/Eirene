@@ -73,10 +73,10 @@ public class ActiveSessionController {
 	@PostMapping
 	public void getData(@RequestBody Reading data) {
 		if (session != null && validator.validate(data)) {
-				session.addReading(data);
-			}
+			session.addReading(data);
 		}
 	}
+
 
 	@GetMapping ("/stopsession")
 	public ModelAndView stopSession() {
@@ -112,6 +112,6 @@ public class ActiveSessionController {
 		}
 		sessionService.deleteSession(session);
 		session = null;
-		return new ModelAndView("redirect:/profile/sessions");
+		return new ModelAndView("redirect:/profile/sessions/1");
 	}
 }

@@ -8,7 +8,9 @@ import be.kdg.eirene.repository.Period;
 import java.util.List;
 
 public interface SessionService {
-	List<Session> getSessions(Long userId);
+	Integer getSessionsPageCount(Long userId);
+
+	List<Session> getSessions(Long userId, int page);
 
 	Session getSession(Long id, Long userId);
 

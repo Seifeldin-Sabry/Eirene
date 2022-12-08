@@ -30,7 +30,7 @@
 				<li th:if="${#httpSession.getAttribute('user_id')!=null}">
 					<a class="nav-item btn"
 					   th:classappend="${index == 2}? 'btn-warning':'btn-outline-warning'"
-					   th:href="@{/profile/sessions}"
+					   th:href="@{/profile/sessions/1}"
 					>My Sessions
 					</a>
 				</li>

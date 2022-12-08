@@ -1,5 +1,6 @@
 package be.kdg.eirene.controllers;
 
+import be.kdg.eirene.exceptions.PageNotFoundException;
 import be.kdg.eirene.model.Session;
 import be.kdg.eirene.presenter.viewmodel.SessionEditViewModel;
 import be.kdg.eirene.service.CookieService;
@@ -19,25 +20,40 @@ public class SessionController {
 	private final Logger logger;
 	private final SessionService sessionService;
 	private final CookieService cookieService;
+	private Integer totalPages;
+	private int currentPage;
 
 	@Autowired
 	public SessionController(SessionService sessionService, CookieService cookieService) {
 		this.logger = LoggerFactory.getLogger(this.getClass());
 		this.sessionService = sessionService;
 		this.cookieService = cookieService;
+
 	}
 
-	@GetMapping
-	public ModelAndView loadSessions(HttpSession session) {
+	@GetMapping ("/{page}")
+	public ModelAndView loadSessions(HttpSession session, @PathVariable int page) {
 		if (cookieService.cookieInvalid(session)) {
 			return new ModelAndView("redirect:/");
 		}
+		// this is used to make only 1 call to the database for the total amount of sessions
+		if (totalPages == null) {
+			totalPages = sessionService.getSessionsPageCount(cookieService.getAttribute(session));
+		}
+		if (page <= 0 || page > totalPages) {
+			throw new PageNotFoundException("Page not found");
+		}
+		currentPage = page - 1;
+		logger.info("Total pages " + totalPages);
+		logger.info("Loading sessions page " + currentPage);
 		return new ModelAndView("sessions")
-				.addObject("sessions", sessionService.getSessions(cookieService.getAttribute(session)))
-				.addObject("viewModel", new SessionEditViewModel());
+				.addObject("sessions", sessionService.getSessions(cookieService.getAttribute(session), currentPage))
+				.addObject("viewModel", new SessionEditViewModel())
+				.addObject("page", currentPage)
+				.addObject("numPages", totalPages);
 	}
 
-	@GetMapping ("session-overview/{sessionID}")
+	@GetMapping ("/session-overview/{sessionID}")
 	public ModelAndView showSessionOverview(HttpSession httpSession, @PathVariable Long sessionID) {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
@@ -55,7 +71,7 @@ public class SessionController {
 		final Session session = sessionService.getSession(id, userId);
 		if (!"".equals(viewModel.getSessionName())) session.setName(viewModel.getSessionName());
 		sessionService.updateSession(session);
-		return new ModelAndView("redirect:/profile/sessions");
+		return new ModelAndView("redirect:/profile/sessions/" + (currentPage + 1));
 	}
 
 	@DeleteMapping ("/{id}")
@@ -64,6 +80,7 @@ public class SessionController {
 			return new ModelAndView("redirect:/");
 		}
 		sessionService.deleteSession(sessionService.getSession(id, cookieService.getAttribute(httpSession)));
-		return new ModelAndView("redirect:/profile/sessions");
+		totalPages = sessionService.getSessionsPageCount(cookieService.getAttribute(httpSession));
+		return new ModelAndView("redirect:/profile/sessions/" + (currentPage + 1 > totalPages ? totalPages : currentPage + 1));
 	}
 }
