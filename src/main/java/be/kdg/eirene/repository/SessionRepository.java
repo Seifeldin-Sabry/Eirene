@@ -1,6 +1,8 @@
 package be.kdg.eirene.repository;
 
 import be.kdg.eirene.model.Session;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -15,7 +17,7 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
 
 
 	@Query ("select s from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL order by s.startTime, s.id desc")
-	List<Session> getSessionsByUserID(Long id);
+	Page<Session> getSessionsByUserID(Long id, Pageable pageable);
 
 	@Query ("select COUNT(s) from Session s where s.user.user_id = ?1  AND s.endTime IS NOT NULL")
 	Long getSessionsCountByUserID(Long id);
@@ -51,20 +53,4 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
 			ORDER BY r.time_stamp
 			;""", nativeQuery = true)
 	List<Object[]> getReadingsByUserID(Long id, String period, String sessionType);
-
-	@Query (value = """
-			SELECT r.time_stamp, sd.heart_rate, sd.humidity, sd.light, sd.sound, sd.temperature ,b.focus, b.meditation, b.signal
-			FROM readings r
-			JOIN brainwaves b USING(brainwave_id)
-			JOIN sensor_data sd USING(sensor_data_id)
-			JOIN sessions s USING (session_id)
-			JOIN users u USING (user_id)
-			WHERE u.user_id = ?1
-			AND CASE WHEN UPPER(?3) = 'FOCUS' THEN s.session_type = 'FOCUS'
-			    WHEN UPPER(?3) = 'MEDITATION' THEN s.session_type = 'MEDITATION'
-			    ELSE TRUE
-			    END
-			ORDER BY r.time_stamp;
-			""", nativeQuery = true)
-	List<Object[]> getReadingsByUserID(Long id, String sessionType);
 }

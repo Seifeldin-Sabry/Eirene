@@ -9,6 +9,8 @@ import be.kdg.eirene.repository.SessionRepository;
 import be.kdg.eirene.util.ReadingsAdapt;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,15 +21,24 @@ public class SessionServiceImpl implements SessionService {
 
 	private final ReadingsAdapt readingsAdaptor;
 
+	private final int PAGE_SIZE = 10;
+
 	@Autowired
 	public SessionServiceImpl(SessionRepository sessionRepository, ReadingsAdapt readingsAdaptor) {
 		this.sessionRepository = sessionRepository;
 		this.readingsAdaptor = readingsAdaptor;
 	}
 
+
 	@Override
-	public List<Session> getSessions(Long userId) {
-		return Lists.newArrayList(sessionRepository.getSessionsByUserID(userId));
+	public Integer getSessionsPageCount(Long userId) {
+		return sessionRepository.getSessionsByUserID(userId, Pageable.ofSize(PAGE_SIZE)).getTotalPages();
+	}
+
+	@Override
+	public List<Session> getSessions(Long userId, int page) {
+		Pageable pageSession = PageRequest.of(page, PAGE_SIZE);
+		return Lists.newArrayList(sessionRepository.getSessionsByUserID(userId, pageSession));
 	}
 
 	@Override
