@@ -6,7 +6,9 @@
 	<link rel="icon" th:href="@{/images/icon.png}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script defer th:src="@{/js/session-overview.js}" type="text/javascript"></script>
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body class="bg-dark text-light m-3">
@@ -25,6 +27,117 @@
 			<th:block th:text="${eireneSession.getType()}"></th:block>
 		</li>
 	</ul>
+
+	<ul class="nav nav-tabs justify-content-center" id="sensor-type-tab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<button aria-controls="heart-tab-pane"
+					aria-selected="true"
+					class="nav-link active"
+					data-bs-target="#heart-tab-pane"
+					data-bs-toggle="tab"
+					id="heart-tab"
+					role="tab"
+					type="button"
+			>Heart rate
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="temperature-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#temperature-tab-pane"
+					data-bs-toggle="tab"
+					id="temperature-tab"
+					role="tab"
+					type="button"
+			>Temperature
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="humidity-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#humidity-tab-pane"
+					data-bs-toggle="tab"
+					id="humidity-tab"
+					role="tab"
+					type="button"
+			>Humidity
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="sound-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#sound-tab-pane"
+					data-bs-toggle="tab"
+					id="sound-tab"
+					role="tab"
+					type="button"
+			>Sound
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="light-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#light-tab-pane"
+					data-bs-toggle="tab"
+					id="light-tab"
+					role="tab"
+					type="button"
+			>Light
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="brainwave-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#brainwave-tab-pane"
+					data-bs-toggle="tab"
+					id="brainwave-tab"
+					role="tab"
+					th:text="${eireneSession.getType()}"
+					type="button"
+			>
+			</button>
+		</li>
+	</ul>
+
+	<div class="tab-content" id="sensor-type-tab-content">
+		<div aria-labelledby="heart-tab"
+			 class="tab-pane fade show active"
+			 id="heart-tab-pane"
+			 role="tabpanel"
+			 tabindex="0"
+		>
+			<canvas id="heart-chart" th:attr="data-sensor-readings=${heartRateData}, data-title='Heart rate'"></canvas>
+		</div>
+		<div aria-labelledby="temperature-tab"
+			 class="tab-pane fade"
+			 id="temperature-tab-pane"
+			 role="tabpanel"
+			 tabindex="1"
+		>
+			<canvas id="temperature-chart"
+					th:attr="data-sensor-readings=${tempData}, data-title='Temperature'"
+			></canvas>
+		</div>
+		<div aria-labelledby="humidity-tab" class="tab-pane fade" id="humidity-tab-pane" role="tabpanel" tabindex="2">
+			<canvas id="humidity-chart" th:attr="data-sensor-readings=${humidityData}, data-title='Humidity'"></canvas>
+		</div>
+		<div aria-labelledby="sound-tab" class="tab-pane fade" id="sound-tab-pane" role="tabpanel" tabindex="3">
+			<canvas id="sound-chart" th:attr="data-sensor-readings=${soundData}, data-title='Sound'"></canvas>
+		</div>
+		<div aria-labelledby="light-tab" class="tab-pane fade" id="light-tab-pane" role="tabpanel" tabindex="4">
+			<canvas id="light-chart" th:attr="data-sensor-readings=${lightData}, data-title='Light'"></canvas>
+		</div>
+		<div aria-labelledby="brainwave-tab" class="tab-pane fade" id="brainwave-tab-pane" role="tabpanel" tabindex="5">
+			<canvas id="brainwave-chart"
+					th:attr="data-sensor-readings=${brainwaveData}, data-title='Brainwave'"
+			></canvas>
+		</div>
+	</div>
 
 	<h1 class="text-center" th:text="${eireneSession.getName()}"></h1>
 	<table class="table table-dark table-striped table-hover my-5">

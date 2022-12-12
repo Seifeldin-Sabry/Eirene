@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping ("/profile/sessions")
@@ -58,8 +59,16 @@ public class SessionController {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
 		}
+		Session session = sessionService.getSession(sessionID, cookieService.getAttribute(httpSession));
+		HashMap<String, String> sensorToJsonData = sessionService.getJSONReadings(session);
 		return new ModelAndView("session-overview")
-				.addObject("eireneSession", sessionService.getSession(sessionID, cookieService.getAttribute(httpSession)));
+				.addObject("eireneSession", session)
+				.addObject("heartRateData", sensorToJsonData.get("heart"))
+				.addObject("tempData", sensorToJsonData.get("temperature"))
+				.addObject("lightData", sensorToJsonData.get("light"))
+				.addObject("humidityData", sensorToJsonData.get("humidity"))
+				.addObject("soundData", sensorToJsonData.get("sound"))
+				.addObject("brainwaveData", sensorToJsonData.get("brainwave"));
 	}
 
 	@PutMapping ("/{id}")

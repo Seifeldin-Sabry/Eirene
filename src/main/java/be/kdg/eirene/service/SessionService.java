@@ -5,6 +5,7 @@ import be.kdg.eirene.model.Session;
 import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.repository.Period;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface SessionService {
@@ -23,4 +24,6 @@ public interface SessionService {
 	void deleteSession(Session session);
 
 	List<Reading> getReadings(Long userId, Period period, SessionType sessionType);
+
+	HashMap<String, String> getJSONReadings(Session session);
 }
