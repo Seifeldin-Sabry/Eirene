@@ -69,7 +69,7 @@ public class UserController {
 		boolean emailIsDifferentButIsTaken = !userService.newEmailIsCurrentEmail(user, viewModel.getEmail()) && userService.emailExists(viewModel.getEmail());
 		if (errors.hasErrors()) {
 			errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-			errors.rejectValue("email", "409", "Email already exists");
+			if (emailIsDifferentButIsTaken) errors.rejectValue("email", "409", "Email already exists");
 			return new ModelAndView("profile-edit")
 					.addObject("genders", Gender.values());
 		}
