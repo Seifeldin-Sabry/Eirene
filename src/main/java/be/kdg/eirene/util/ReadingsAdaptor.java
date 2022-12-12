@@ -25,7 +25,7 @@ public class ReadingsAdaptor implements ReadingsAdapt {
 	public List<Reading> convert(List<Object[]> readings) {
 		List<Reading> readingsToReturn = new ArrayList<>();
 		for (Object[] reading : readings) {
-			readingsToReturn.add(new Reading((Timestamp) reading[timestampIndex], new BrainWaveReading((int) reading[signalIndex], (int) reading[focusIndex], (int) reading[meditationIndex]), new SensorData((float) reading[heartRateIndex], (float) reading[temperatureIndex], (float) reading[soundIndex], (float) reading[humidityIndex], (float) reading[lightIndex])));
+			readingsToReturn.add(new Reading((Timestamp) reading[timestampIndex], new BrainWaveReading((int) reading[signalIndex], (int) reading[focusIndex], (int) reading[meditationIndex]), new SensorData(Float.parseFloat(reading[heartRateIndex].toString()), Float.parseFloat(reading[temperatureIndex].toString()), Float.parseFloat(reading[soundIndex].toString()), Float.parseFloat(reading[humidityIndex].toString()), Float.parseFloat(reading[lightIndex].toString()))));
 		}
 		return readingsToReturn;
 	}
