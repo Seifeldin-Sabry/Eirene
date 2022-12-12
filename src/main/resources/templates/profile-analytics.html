@@ -9,148 +9,266 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<script defer th:src="@{/js/profile-analytics.js}"></script>
 </head>
-<body>
-<ul class="nav nav-tabs" role="tablist">
-	<li class="nav-item">
-		<a class="nav-link active" data-toggle="tab" href="#focus" role="tab">Focus</a>
+<body class="m-3 bg-dark text-light">
+
+<th:block th:insert="~{fragments::navbar(3)}"></th:block>
+
+<h1 class="text-center my-5">Analytics</h1>
+
+<ul class="nav nav-tabs justify-content-center" id="brainwave-type-tab" role="tablist">
+	<li class="nav-item" role="presentation">
+		<button aria-controls="focus-tab-pane"
+				aria-selected="true"
+				class="nav-link active"
+				data-bs-target="#focus-tab-pane"
+				data-bs-toggle="tab"
+				id="focus-tab"
+				role="tab"
+				type="button"
+		>Focus
+		</button>
 	</li>
-	<li class="nav-item">
-		<a class="nav-link" data-toggle="tab" href="#meditation" role="tab">Meditation</a>
+	<li class="nav-item" role="presentation">
+		<button aria-controls="meditation-tab-pane"
+				aria-selected="false"
+				class="nav-link"
+				data-bs-target="#meditation-tab-pane"
+				data-bs-toggle="tab"
+				id="meditation-tab"
+				role="tab"
+				type="button"
+		>Meditation
+		</button>
 	</li>
 </ul>
-
-<div class="tab-content">
-	<div class="tab-pane active" id="focus" role="tabpanel">
-		<ul class="nav nav-pills" id="focus-tabs-links" role="tablist">
-			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#dayFocus" role="tab">Day</a>
+<div class="tab-content" id="brainwave-type-tab-content">
+	<div aria-labelledby="focus-tab"
+		 class="tab-pane fade show active my-2"
+		 id="focus-tab-pane"
+		 role="tabpanel"
+		 tabindex="0"
+	>
+		<ul class="nav nav-pills justify-content-center mb-4" id="focus-period-tab" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button aria-controls="focus-tab-day-pane"
+						aria-selected="true"
+						class="nav-link active"
+						data-bs-target="#focus-tab-day-pane"
+						data-bs-toggle="tab"
+						id="day-focus-tab"
+						role="tab"
+						type="button"
+				>Day
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#weekFocus" role="tab">Week</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="focus-tab-week-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#focus-tab-week-pane"
+						data-bs-toggle="tab"
+						id="week-focus-tab"
+						role="tab"
+						type="button"
+				>Week
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#monthFocus" role="tab">Month</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="focus-tab-month-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#focus-tab-month-pane"
+						data-bs-toggle="tab"
+						id="month-focus-tab"
+						role="tab"
+						type="button"
+				>Month
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#yearFocus" role="tab">Year</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="focus-tab-year-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#focus-tab-year-pane"
+						data-bs-toggle="tab"
+						id="year-focus-tab"
+						role="tab"
+						type="button"
+				>Year
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#allFocus" role="tab">All Time</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="focus-tab-alltime-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#focus-tab-alltime-pane"
+						data-bs-toggle="tab"
+						id="alltime-focus-tab"
+						role="tab"
+						type="button"
+				>All time
+				</button>
 			</li>
 		</ul>
-
-		<div class="tab-content" id="focus-tabs-content">
-			<div class="tab-pane active" id="dayFocus" role="tabpanel">
-				<div class="chart-container">
-					<canvas id="dayFocusChart"></canvas>
-				</div>
+		<div class="tab-content" id="focus-period-tab-content">
+			<div aria-labelledby="day-focus-tab"
+				 class="tab-pane fade show active"
+				 id="focus-tab-day-pane"
+				 role="tabpanel"
+				 tabindex="1"
+			>
+				<canvas id="focus-tab-day-canvas" th:attr="data-eirene-readings=${dayFocus}"></canvas>
 			</div>
-			<div class="tab-pane" id="weekFocus" role="tabpanel">
-				<div class="chart-container">
-					<canvas id="weekFocusChart"></canvas>
-				</div>
+			<div aria-labelledby="week-focus-tab"
+				 class="tab-pane fade"
+				 id="focus-tab-week-pane"
+				 role="tabpanel"
+				 tabindex="2"
+			>
+				<canvas id="focus-tab-week-canvas" th:attr="data-eirene-readings=${weekFocus}"></canvas>
 			</div>
-			<div class="tab-pane" id="monthFocus" role="tabpanel">
-				<div class="chart-container">
-					<canvas id="monthFocusChart"></canvas>
-				</div>
+			<div aria-labelledby="month-focus-tab"
+				 class="tab-pane fade"
+				 id="focus-tab-month-pane"
+				 role="tabpanel"
+				 tabindex="3"
+			>
+				<canvas id="focus-tab-month-canvas" th:attr="data-eirene-readings=${monthFocus}"></canvas>
 			</div>
-			<div class="tab-pane" id="yearFocus" role="tabpanel">
-				<div class="chart-container">
-					<canvas id="yearFocusChart"></canvas>
-				</div>
+			<div aria-labelledby="year-focus-tab"
+				 class="tab-pane fade"
+				 id="focus-tab-year-pane"
+				 role="tabpanel"
+				 tabindex="4"
+			>
+				<canvas id="focus-tab-year-canvas" th:attr="data-eirene-readings=${yearFocus}"></canvas>
 			</div>
-			<div class="tab-pane" id="allFocus" role="tabpanel">
-				<div class="chart-container">
-					<canvas id="allFocusChart"></canvas>
-				</div>
+			<div aria-labelledby="alltime-focus-tab"
+				 class="tab-pane fade"
+				 id="focus-tab-alltime-pane"
+				 role="tabpanel"
+				 tabindex="5"
+			>
+				<canvas id="focus-tab-alltime-canvas" th:attr="data-eirene-readings=${allFocus}"></canvas>
 			</div>
 		</div>
 	</div>
-	<div class="tab-pane" id="meditation" role="tabpanel">
-		<ul class="nav nav-pills" id="meditation-tabs-links" role="tablist">
-			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#dayMeditation" role="tab">Day</a>
+
+	<div aria-labelledby="meditation-tab"
+		 class="tab-pane fade my-2"
+		 id="meditation-tab-pane"
+		 role="tabpanel"
+		 tabindex="7"
+	>
+		<ul class="nav nav-pills justify-content-center mb-4" id="meditation-period-tab" role="tablist">
+			<li class="nav-item" role="presentation">
+				<button aria-controls="meditation-tab-day-pane"
+						aria-selected="true"
+						class="nav-link active"
+						data-bs-target="#meditation-tab-day-pane"
+						data-bs-toggle="tab"
+						id="day-meditation-tab"
+						role="tab"
+						type="button"
+				>Day
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#weekMeditation" role="tab">Week</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="meditation-tab-week-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#meditation-tab-week-pane"
+						data-bs-toggle="tab"
+						id="week-meditation-tab"
+						role="tab"
+						type="button"
+				>Week
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#monthMeditation" role="tab">Month</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="meditation-tab-month-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#meditation-tab-month-pane"
+						data-bs-toggle="tab"
+						id="month-meditation-tab"
+						role="tab"
+						type="button"
+				>Month
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#yearMeditation" role="tab">Year</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="meditation-tab-year-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#meditation-tab-year-pane"
+						data-bs-toggle="tab"
+						id="year-meditation-tab"
+						role="tab"
+						type="button"
+				>Year
+				</button>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#allMeditation" role="tab">All Time</a>
+			<li class="nav-item" role="presentation">
+				<button aria-controls="meditation-tab-alltime-pane"
+						aria-selected="false"
+						class="nav-link"
+						data-bs-target="#meditation-tab-alltime-pane"
+						data-bs-toggle="tab"
+						id="alltime-meditation-tab"
+						role="tab"
+						type="button"
+				>All time
+				</button>
 			</li>
 		</ul>
-
-		<div class="tab-content" id="meditation-tabs-content">
-			<div class="tab-pane active" id="dayMeditation" role="tabpanel">
-				<div>
-					<canvas id="dayMeditationChart"></canvas>
-				</div>
+		<div class="tab-content" id="meditation-period-tab-content">
+			<div aria-labelledby="day-meditation-tab"
+				 class="tab-pane fade show active"
+				 id="meditation-tab-day-pane"
+				 role="tabpanel"
+				 tabindex="7"
+			>
+				<canvas id="meditation-tab-day-canvas" th:attr="data-eirene-readings=${dayMeditation}"></canvas>
 			</div>
-			<div class="tab-pane" id="weekMeditation" role="tabpanel">
-				<div>
-					<canvas id="weekMeditationChart"></canvas>
-				</div>
+			<div aria-labelledby="week-meditation-tab"
+				 class="tab-pane fade"
+				 id="meditation-tab-week-pane"
+				 role="tabpanel"
+				 tabindex="8"
+			>
+				<canvas id="meditation-tab-week-canvas" th:attr="data-eirene-readings=${weekMeditation}"></canvas>
 			</div>
-			<div class="tab-pane" id="monthMeditation" role="tabpanel">
-				<div>
-					<canvas id="monthMeditationChart"></canvas>
-				</div>
+			<div aria-labelledby="month-meditation-tab"
+				 class="tab-pane fade"
+				 id="meditation-tab-month-pane"
+				 role="tabpanel"
+				 tabindex="9"
+			>
+				<canvas id="meditation-tab-month-canvas" th:attr="data-eirene-readings=${monthMeditation}"></canvas>
 			</div>
-			<div class="tab-pane" id="yearMeditation" role="tabpanel">
-				<div>
-					<canvas id="yearMeditationChart"></canvas>
-				</div>
+			<div aria-labelledby="year-meditation-tab"
+				 class="tab-pane fade"
+				 id="meditation-tab-year-pane"
+				 role="tabpanel"
+				 tabindex="10"
+			>
+				<canvas id="meditation-tab-year-canvas" th:attr="data-eirene-readings=${yearMeditation}"></canvas>
 			</div>
-			<div class="tab-pane" id="allMeditation" role="tabpanel">
-				<div>
-					<canvas id="allMeditationChart"></canvas>
-				</div>
+			<div aria-labelledby="alltime-meditation-tab"
+				 class="tab-pane fade"
+				 id="meditation-tab-alltime-pane"
+				 role="tabpanel"
+				 tabindex="11"
+			>
+				<canvas id="meditation-tab-alltime-canvas" th:attr="data-eirene-readings=${allMeditation}"></canvas>
 			</div>
 		</div>
+
 	</div>
 </div>
+<th:block th:insert="~{fragments::footer}"></th:block>
 </body>
-<script th:inline="javascript" th:src="@{/js/profile-analytics.js}"></script>
-<script th:inline="javascript">
-	let dayFocusChart = document.getElementById("dayFocusChart");
-	let weekFocusChart = document.getElementById("weekFocusChart");
-	let monthFocusChart = document.getElementById("monthFocusChart");
-	let yearFocusChart = document.getElementById("yearFocusChart");
-	let allFocusChart = document.getElementById("allFocusChart");
-
-	let dayMeditationChart = document.getElementById("dayMeditationChart");
-	let weekMeditationChart = document.getElementById("weekMeditationChart");
-	let monthMeditationChart = document.getElementById("monthMeditationChart");
-	let yearMeditationChart = document.getElementById("yearMeditationChart");
-	let allMeditationChart = document.getElementById("allMeditationChart");
-
-	let dayFocusData = JSON.parse(/*[[${dayFocus}]]*/);
-	let weekFocusData = JSON.parse(/*[[${weekFocus}]]*/);
-	let monthFocusData = JSON.parse(/*[[${monthFocus}]]*/);
-	let yearFocusData = JSON.parse(/*[[${yearFocus}]]*/);
-	let allFocusData = JSON.parse(/*[[${allFocus}]]*/);
-	let dayMeditationData = JSON.parse(/*[[${dayMeditation}]]*/);
-	let weekMeditationData = JSON.parse(/*[[${weekMeditation}]]*/);
-	let monthMeditationData = JSON.parse(/*[[${monthMeditation}]]*/);
-	let yearMeditationData = JSON.parse(/*[[${yearMeditation}]]*/);
-	let allMeditationData = JSON.parse(/*[[${allMeditation}]]*/);
-
-	makeChart(dayFocusChart, dayFocusData, true);
-	makeChart(weekFocusChart, weekFocusData, true);
-	makeChart(monthFocusChart, monthFocusData, true);
-	makeChart(yearFocusChart, yearFocusData, true);
-	makeChart(allFocusChart, allFocusData, true);
-	makeChart(dayMeditationChart, dayMeditationData);
-	makeChart(weekMeditationChart, weekMeditationData);
-	makeChart(monthMeditationChart, monthMeditationData);
-	makeChart(yearMeditationChart, yearMeditationData);
-	makeChart(allMeditationChart, allMeditationData);
-</script>
 </html>

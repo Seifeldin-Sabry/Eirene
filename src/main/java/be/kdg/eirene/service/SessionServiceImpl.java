@@ -72,7 +72,8 @@ public class SessionServiceImpl implements SessionService {
 
 	@Override
 	public List<Reading> getReadings(Long userId, Period period, SessionType sessionType) {
-		return readingsAdaptor.convert(sessionRepository.getReadingsByUserID(userId, period.name(), sessionType.name()));
+		return readingsAdaptor.convert(sessionRepository.getReadingsByUserID(userId, period.name()
+		                                                                                   .toLowerCase(), sessionType.name()));
 	}
 
 }
