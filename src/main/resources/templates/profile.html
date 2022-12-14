@@ -87,13 +87,13 @@
 		<div>
 			<h3>Total session time</h3>
 			<p class="fs-1 text-center mb-0"
-			   th:text="${totalDuration.toHours()}+':'+${#numbers.formatInteger(totalDuration.toMinutes()%60, 2)}+':'+${#numbers.formatInteger( totalDuration.toSeconds()%60, 2)}"
+			   th:text="${totalDuration}"
 			></p>
 		</div>
 		<div>
 			<h3>Average session time</h3>
 			<p class="fs-1 text-center mb-0"
-			   th:text="${averageDuration.toHours()}+':'+${#numbers.formatInteger(averageDuration.toMinutes() % 60, 2)}"
+			   th:text="${averageDuration}"
 			>XX:XX</p>
 		</div>
 		<div>

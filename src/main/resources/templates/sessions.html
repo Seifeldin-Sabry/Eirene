@@ -32,7 +32,7 @@
 			></a>
 		</td>
 		<td class="align-middle" th:text="${eSession.getPrettyTime()}"></td>
-		<td class="align-middle" th:text="${eSession.getType()}"></td>
+		<td class="align-middle" th:text="${eSession.getType().getCapitalizedName()}"></td>
 		<td class="align-middle" th:text="${eSession.getPrettyDuration()}"></td>
 		<td class="text-end align-middle">
 			<button class="btn"

@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -56,9 +55,7 @@ public class ActiveSessionController {
 			sessionService.save(session);
 		}
 		logger.info(" report: " + reportGenerator.formulateReport(session.getReadings(), type));
-		return new ModelAndView("active-session").addObject("type", StringUtils.capitalize(type
-				                                         .toString()
-				                                         .toLowerCase()))
+		return new ModelAndView("active-session").addObject("type", type.getCapitalizedName())
 		                                         .addObject("session", session)
 		                                         .addObject("report", reportGenerator.formulateReport(session.getReadings(), type));
 	}
