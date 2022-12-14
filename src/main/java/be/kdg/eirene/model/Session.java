@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.ocpsoft.prettytime.PrettyTime;
+import org.slf4j.Logger;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -25,33 +27,28 @@ import java.util.Objects;
 @Getter
 @ToString
 public class Session {
+	@Transient
+	Logger logger = org.slf4j.LoggerFactory.getLogger(Session.class);
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column (name = "session_id", nullable = false)
 	private Long id;
-
 	@Column (name = "session_name")
 	private String name;
-
 	@Column (name = "satisfaction")
 	private Integer satisfaction;
-
 	@Column (name = "start_time", nullable = false)
 	private Timestamp startTime;
-
 	@Column (name = "end_time")
 	private Timestamp endTime;
-
 	@Enumerated (EnumType.STRING)
 	@Column (name = "session_type", nullable = false)
 	@Type (type = "pgsql_enum")
 	private SessionType type;
-
 	@OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn (name = "session_id", nullable = false)
 	@ToString.Exclude
 	private List<Reading> readings;
-
 	@ManyToOne (fetch = FetchType.EAGER)
 	@JoinColumn (name = "user_id", nullable = false)
 	@ToString.Exclude
@@ -87,8 +84,8 @@ public class Session {
 
 	 @return The duration of the session in seconds.
 	 */
-	public long getDuration() {
-		return Duration.of(this.endTime.getTime() - this.startTime.getTime(), ChronoUnit.MILLIS).toSeconds();
+	public Duration getDuration() {
+		return Duration.of(this.endTime.getTime() - this.startTime.getTime(), ChronoUnit.MILLIS);
 	}
 
 	/**
@@ -98,6 +95,15 @@ public class Session {
 	 */
 	public long getCurrentDuration() {
 		return Duration.of(System.currentTimeMillis() - this.startTime.getTime(), ChronoUnit.MILLIS).toSeconds();
+	}
+
+	public String getPrettyTime() {
+		PrettyTime prettyTime = new PrettyTime();
+		return prettyTime.format(startTime);
+	}
+
+	public String getPrettyDuration() {
+		return getDuration().toString().substring(2).replaceAll("(\\d[HMS])(?!$)", "$1 ").toLowerCase();
 	}
 
 	public boolean addReading(Reading reading) {
