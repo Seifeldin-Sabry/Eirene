@@ -9,6 +9,7 @@ import be.kdg.eirene.repository.Period;
 import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
+import be.kdg.eirene.util.PrettyTimeUtil;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +45,8 @@ public class UserController {
 		User user = userService.getUser(cookieService.getAttribute(session));
 		final ModelAndView modelAndView = new ModelAndView("profile").addObject(user);
 		modelAndView
-				.addObject("totalDuration", Duration.ofSeconds(userService.getTotalDuration(user.getUser_id())))
-				.addObject("averageDuration", Duration.ofSeconds(userService.getAverageDuration(user.getUser_id())))
+				.addObject("totalDuration", PrettyTimeUtil.getPrettyDuration(Duration.ofSeconds(userService.getTotalDuration(user.getUser_id()))))
+				.addObject("averageDuration", PrettyTimeUtil.getPrettyDuration(Duration.ofSeconds(userService.getAverageDuration(user.getUser_id()))))
 				.addObject("focus", SessionType.FOCUS)
 				.addObject("meditation", SessionType.MEDITATION)
 				.addObject("sessionCount", sessionService.getSessionsCount(user.getUser_id()));

@@ -1,13 +1,13 @@
 package be.kdg.eirene.model;
 
 import be.kdg.eirene.util.PostgreSQLEnumType;
+import be.kdg.eirene.util.PrettyTimeUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 
 import javax.persistence.*;
@@ -18,6 +18,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static be.kdg.eirene.util.PrettyTimeUtil.getPrettyTimeAgo;
 
 @Entity
 @Table (name = "sessions")
@@ -98,12 +100,11 @@ public class Session {
 	}
 
 	public String getPrettyTime() {
-		PrettyTime prettyTime = new PrettyTime();
-		return prettyTime.format(startTime);
+		return getPrettyTimeAgo(startTime);
 	}
 
 	public String getPrettyDuration() {
-		return getDuration().toString().substring(2).replaceAll("(\\d[HMS])(?!$)", "$1 ").toLowerCase();
+		return PrettyTimeUtil.getPrettyDuration(getDuration());
 	}
 
 	public boolean addReading(Reading reading) {

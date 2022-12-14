@@ -6,8 +6,7 @@ public enum SessionType {
 	FOCUS,
 	MEDITATION;
 
-	@Override
-	public String toString() {
+	public String getCapitalizedName() {
 		return StringUtils.capitalize(this.name().toLowerCase());
 	}
 }

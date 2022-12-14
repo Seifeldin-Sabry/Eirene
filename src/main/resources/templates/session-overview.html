@@ -26,7 +26,7 @@
 			<th:block th:text="${eireneSession.getPrettyDuration()}"></th:block>
 		</li>
 		<li>Type:
-			<th:block th:text="${eireneSession.getType()}"></th:block>
+			<th:block th:text="${eireneSession.getType().getCapitalizedName()}"></th:block>
 		</li>
 	</ul>
 
@@ -95,7 +95,7 @@
 
 	<div class="tab-content"
 		 id="sensor-type-tab-content"
-		 th:attr="data-brain-type=${eireneSession.getType().toString()}, data-brain=${sensorToData.get('BRAINWAVE')}"
+		 th:attr="data-brain-type=${eireneSession.getType().getCapitalizedName()}, data-brain=${sensorToData.get('BRAINWAVE')}"
 	>
 		<div aria-labelledby="heart-tab"
 			 class="tab-pane fade show active"
