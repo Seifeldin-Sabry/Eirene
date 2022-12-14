@@ -15,6 +15,8 @@
 
 <th:block th:insert="~{fragments::navbar(0)}"></th:block>
 
+<h1 class="text-center my-5" th:text="${eireneSession.getName()}"></h1>
+
 <main>
 	<ul>
 		<li>Satisfaction:
@@ -89,29 +91,21 @@
 			>Light
 			</button>
 		</li>
-		<li class="nav-item" role="presentation">
-			<button aria-controls="brainwave-tab-pane"
-					aria-selected="false"
-					class="nav-link"
-					data-bs-target="#brainwave-tab-pane"
-					data-bs-toggle="tab"
-					id="brainwave-tab"
-					role="tab"
-					th:text="${eireneSession.getType()}"
-					type="button"
-			>
-			</button>
-		</li>
 	</ul>
 
-	<div class="tab-content" id="sensor-type-tab-content">
+	<div class="tab-content"
+		 id="sensor-type-tab-content"
+		 th:attr="data-brain-type=${eireneSession.getType().toString()}, data-brain=${sensorToData.get('BRAINWAVE')}"
+	>
 		<div aria-labelledby="heart-tab"
 			 class="tab-pane fade show active"
 			 id="heart-tab-pane"
 			 role="tabpanel"
 			 tabindex="0"
 		>
-			<canvas id="heart-chart" th:attr="data-sensor-readings=${heartRateData}, data-title='Heart rate'"></canvas>
+			<canvas id="heart-chart"
+					th:attr="data-sensor-readings=${sensorToData.get('HR')}, data-title='Heart rate'"
+			></canvas>
 		</div>
 		<div aria-labelledby="temperature-tab"
 			 class="tab-pane fade"
@@ -120,26 +114,26 @@
 			 tabindex="1"
 		>
 			<canvas id="temperature-chart"
-					th:attr="data-sensor-readings=${tempData}, data-title='Temperature'"
+					th:attr="data-sensor-readings=${sensorToData.get('TEMPERATURE')}, data-title='Temperature'"
 			></canvas>
 		</div>
 		<div aria-labelledby="humidity-tab" class="tab-pane fade" id="humidity-tab-pane" role="tabpanel" tabindex="2">
-			<canvas id="humidity-chart" th:attr="data-sensor-readings=${humidityData}, data-title='Humidity'"></canvas>
+			<canvas id="humidity-chart"
+					th:attr="data-sensor-readings=${sensorToData.get('HUMIDITY')}, data-title='Humidity'"
+			></canvas>
 		</div>
 		<div aria-labelledby="sound-tab" class="tab-pane fade" id="sound-tab-pane" role="tabpanel" tabindex="3">
-			<canvas id="sound-chart" th:attr="data-sensor-readings=${soundData}, data-title='Sound'"></canvas>
+			<canvas id="sound-chart"
+					th:attr="data-sensor-readings=${sensorToData.get('SOUND')}, data-title='Sound'"
+			></canvas>
 		</div>
 		<div aria-labelledby="light-tab" class="tab-pane fade" id="light-tab-pane" role="tabpanel" tabindex="4">
-			<canvas id="light-chart" th:attr="data-sensor-readings=${lightData}, data-title='Light'"></canvas>
-		</div>
-		<div aria-labelledby="brainwave-tab" class="tab-pane fade" id="brainwave-tab-pane" role="tabpanel" tabindex="5">
-			<canvas id="brainwave-chart"
-					th:attr="data-sensor-readings=${brainwaveData}, data-title='Brainwave'"
+			<canvas id="light-chart"
+					th:attr="data-sensor-readings=${sensorToData.get('PHOTOTRANSISTOR')}, data-title='Light'"
 			></canvas>
 		</div>
 	</div>
 
-	<h1 class="text-center" th:text="${eireneSession.getName()}"></h1>
 	<table class="table table-dark table-striped table-hover my-5">
 		<thead>
 		<tr class="table-header">

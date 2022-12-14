@@ -25,5 +25,5 @@ public interface SessionService {
 
 	List<Reading> getReadings(Long userId, Period period, SessionType sessionType);
 
-	HashMap<String, String> getJSONReadings(Session session);
+	HashMap<String, List<Float>> getReadingsBySensor(Session session);
 }

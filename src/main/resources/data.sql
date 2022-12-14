@@ -201,59 +201,58 @@ INSERT INTO sensor_data ( sensor_data_id, heart_rate, temperature, light, sound,
 VALUES ( 28, 81, 23.799999237060547, 0, 52, 24 );
 
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 1, 1, 1, 1, '2022-12-12 15:43:44.266000' );
+VALUES ( 1, 72, 1, 1, '2022-12-12 15:43:44.266000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 2, 1, 2, 2, '2022-12-12 15:43:46.287000' );
+VALUES ( 2, 72, 2, 2, '2022-12-12 15:43:46.287000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 3, 1, 3, 3, '2022-12-12 15:43:48.302000' );
+VALUES ( 3, 72, 3, 3, '2022-12-12 15:43:48.302000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 4, 1, 4, 4, '2022-12-12 15:43:50.317000' );
+VALUES ( 4, 72, 4, 4, '2022-12-12 15:43:50.317000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 5, 1, 5, 5, '2022-12-12 15:43:52.338000' );
+VALUES ( 5, 72, 5, 5, '2022-12-12 15:43:52.338000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 6, 1, 6, 6, '2022-12-12 15:43:54.356000' );
+VALUES ( 6, 72, 6, 6, '2022-12-12 15:43:54.356000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 7, 1, 7, 7, '2022-12-12 15:43:56.377000' );
+VALUES ( 7, 72, 7, 7, '2022-12-12 15:43:56.377000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 8, 1, 8, 8, '2022-12-12 15:43:58.392000' );
+VALUES ( 8, 72, 8, 8, '2022-12-12 15:43:58.392000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 9, 1, 9, 9, '2022-12-12 15:44:00.411000' );
+VALUES ( 9, 72, 9, 9, '2022-12-12 15:44:00.411000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 10, 1, 10, 10, '2022-12-12 15:44:02.432000' );
+VALUES ( 10, 72, 10, 10, '2022-12-12 15:44:02.432000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 11, 1, 11, 11, '2022-12-12 15:44:04.450000' );
+VALUES ( 11, 72, 11, 11, '2022-12-12 15:44:04.450000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 12, 1, 12, 12, '2022-12-12 15:44:06.465000' );
+VALUES ( 12, 72, 12, 12, '2022-12-12 15:44:06.465000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 13, 1, 13, 13, '2022-12-12 15:44:08.485000' );
+VALUES ( 13, 72, 13, 13, '2022-12-12 15:44:08.485000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 14, 1, 14, 14, '2022-12-12 15:44:10.504000' );
+VALUES ( 14, 72, 14, 14, '2022-12-12 15:44:10.504000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 15, 1, 15, 15, '2022-12-12 15:44:12.528000' );
+VALUES ( 15, 72, 15, 15, '2022-12-12 15:44:12.528000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 16, 1, 16, 16, '2022-12-12 15:44:14.545000' );
+VALUES ( 16, 72, 16, 16, '2022-12-12 15:44:14.545000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 17, 1, 17, 17, '2022-12-12 15:44:16.566000' );
+VALUES ( 17, 72, 17, 17, '2022-12-12 15:44:16.566000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 18, 1, 18, 18, '2022-12-12 15:44:18.588000' );
+VALUES ( 18, 72, 18, 18, '2022-12-12 15:44:18.588000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 19, 1, 19, 19, '2022-12-12 15:44:20.610000' );
+VALUES ( 19, 72, 19, 19, '2022-12-12 15:44:20.610000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 20, 1, 20, 20, '2022-12-12 15:44:22.619000' );
+VALUES ( 20, 72, 20, 20, '2022-12-12 15:44:22.619000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 21, 1, 21, 21, '2022-12-12 15:44:24.639000' );
+VALUES ( 21, 72, 21, 21, '2022-12-12 15:44:24.639000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 22, 1, 22, 22, '2022-12-12 15:44:26.661000' );
+VALUES ( 22, 72, 22, 22, '2022-12-12 15:44:26.661000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 23, 1, 23, 23, '2022-12-12 15:44:28.681000' );
+VALUES ( 23, 72, 23, 23, '2022-12-12 15:44:28.681000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 24, 1, 24, 24, '2022-12-12 15:44:30.701000' );
+VALUES ( 24, 72, 24, 24, '2022-12-12 15:44:30.701000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 25, 1, 25, 25, '2022-12-12 15:44:32.721000' );
+VALUES ( 25, 72, 25, 25, '2022-12-12 15:44:32.721000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 26, 1, 26, 26, '2022-12-12 15:44:34.742000' );
+VALUES ( 26, 72, 26, 26, '2022-12-12 15:44:34.742000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 27, 1, 27, 27, '2022-12-12 15:44:36.763000' );
+VALUES ( 27, 72, 27, 27, '2022-12-12 15:44:36.763000' );
 INSERT INTO readings ( reading_id, session_id, brainwave_id, sensor_data_id, time_stamp )
-VALUES ( 28, 1, 28, 28, '2022-12-12 15:44:38.783000' );
-
+VALUES ( 28, 72, 28, 28, '2022-12-12 15:44:38.783000' );

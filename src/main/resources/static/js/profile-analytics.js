@@ -24,6 +24,16 @@ const makeChart = (element) => {
 					fill: false
 				}
 			]
+		},
+		options: {
+			plugins: {
+				tooltip: {
+					interaction: {
+						intersect: false,
+						mode: "index"
+					}
+				}
+			}
 		}
 	});
 };
