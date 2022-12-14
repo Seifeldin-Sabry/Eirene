@@ -17,8 +17,8 @@
 	<thead>
 	<tr class="table-header">
 		<th class="text-nowrap">Session name</th>
+		<th></th>
 		<th>Type</th>
-		<th>Start time</th>
 		<th class="text-nowrap">Duration</th>
 		<th></th>
 		<th></th>
@@ -31,9 +31,9 @@
 			   th:text="${eSession.getName()}"
 			></a>
 		</td>
+		<td class="align-middle" th:text="${eSession.getPrettyTime()}"></td>
 		<td class="align-middle" th:text="${eSession.getType()}"></td>
-		<td class="align-middle" th:text="${eSession.getStartTime()}"></td>
-		<td class="align-middle" th:text="${eSession.getDuration()}"></td>
+		<td class="align-middle" th:text="${eSession.getPrettyDuration()}"></td>
 		<td class="text-end align-middle">
 			<button class="btn"
 					data-bs-toggle="modal"
