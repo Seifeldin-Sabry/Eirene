@@ -37,3 +37,13 @@
 .hidden {
     display: none;
 }
+
+#v-pills-tab-wiki > .nav-link {
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+}
+
+#v-pills-tab-wiki > .nav-pills, #v-pills-tab-wiki > .nav-link.active, #v-pills-tab-wiki > .nav-link:hover, #v-pills-tab-wiki > .nav-pills .show > .nav-link {
+    color: black;
+    background-color: var(--yellow);
+}

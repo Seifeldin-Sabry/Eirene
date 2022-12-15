@@ -26,4 +26,9 @@ public class MainController {
 	public ModelAndView termsOfService() {
 		return new ModelAndView("terms-of-service");
 	}
+
+	@GetMapping ("/wiki")
+	public ModelAndView wiki() {
+		return new ModelAndView("wiki");
+	}
 }

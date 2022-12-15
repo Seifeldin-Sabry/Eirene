@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Guide</title>
+	<link rel="icon" th:href="@{/images/icon.png}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-dark text-light m-3">
+
+<th:block th:insert="~{fragments::navbar(4)}"></th:block>
+<header class="my-5"><h1 class="text-center"> Wiki </h1></header>
+<hr class="my-5">
+<main class="d-flex flex-column justify-content-between align-items-start m-auto pt-0">
+	<div aria-orientation="vertical" class="nav nav-pills flex-column flex-lg-row m-auto p-5" id="v-pills-tab-wiki" role="tablist">
+		<button aria-controls="v-pills-arduino"
+				aria-selected="true"
+				class="nav-link active mt-3 mx-2"
+				data-bs-target="#v-pills-arduino"
+				data-bs-toggle="pill"
+				id="v-pills-arduino-tab"
+				role="tab"
+				type="button"
+		>Setting up Arduino
+		</button>
+		<button aria-controls="v-pills-mindflex"
+				aria-selected="false"
+				class="nav-link mt-3 mx-2"
+				data-bs-target="#v-pills-mindflex"
+				data-bs-toggle="pill"
+				id="v-pills-mindflex-tab"
+				role="tab"
+				type="button"
+		>Connecting to Mindflex
+		</button>
+		<button aria-controls="v-pills-eirene"
+				aria-selected="false"
+				class="nav-link mt-3 mx-2"
+				data-bs-target="#v-pills-eirene"
+				data-bs-toggle="pill"
+				id="v-pills-eirene-tab"
+				role="tab"
+				type="button"
+		>Integrating Eirene
+		</button>
+		<button aria-controls="v-pills-faq"
+				aria-selected="false"
+				class="nav-link mt-3 mx-2"
+				data-bs-target="#v-pills-faq"
+				data-bs-toggle="pill"
+				id="v-pills-faq-tab"
+				role="tab"
+				type="button"
+		>FAQ
+		</button>
+		<button aria-controls="v-pills-contactus"
+				aria-selected="false"
+				class="nav-link mt-3 mx-2"
+				data-bs-target="#v-pills-contactus"
+				data-bs-toggle="pill"
+				id="v-pills-contactus-tab"
+				role="tab"
+				type="button"
+		>Contact
+		</button>
+	</div>
+	<div class="border border-warning rounded d-flex flex-md-row m-auto">
+		<div class="tab-content" id="v-pills-tabContent">
+			<div aria-labelledby="v-pills-arduino-tab"
+				 class="tab-pane fade show active p-3"
+				 id="v-pills-arduino"
+				 role="tabpanel"
+			>
+				<h3> Setting up Arduino</h3></br>
+				<p> The arduino will collect the data about surroundings. </p>
+				<p> The arduino will be connected to the computer via USB. </p>
+				<p> To set it up follow the diagram here:
+					<a class="link-warning text-decoration-none" href="https://www.circuito.io/app?components=512,9088,10167,11021,11574,93712" target="_blank"> Arduino Diagram
+					</a>
+				</p>
+				<p>All the necessary components are listed in the diagram</p>
+			</div>
+			<div aria-labelledby="v-pills-mindflex-tab"
+				 class="tab-pane fade p-3"
+				 id="v-pills-mindflex"
+				 role="tabpanel"
+			>
+				<h3> Connecting to Mindflex </h3></br>
+				<p> The Mindflex headset will collect data about your FOCUS / MEDITATION </p>
+				<p> The Mindflex headset will be connected to the computer via Bluetooth. </p>
+				<p> To connect -> open your bluetooth settings and look for <strong>HC-06</strong></p>
+			</div>
+			<div aria-labelledby="v-pills-eirene-tab"
+				 class="tab-pane fade p-3"
+				 id="v-pills-eirene"
+				 role="tabpanel"
+			>
+				<h3> Integrating Eirene </h3></br>
+				<p> Eirene is a web application that will help you to focus and meditate. </p>
+				<p> To integrate Eirene with the arduino and Mindflex headset, you need to follow the steps below: </p>
+				<ol>
+					<li>Connect your devices</li>
+					<li>Login/Register on the Eirene page</li>
+					<li>Download the Eirene PC app and follow the steps there</li>
+					<li>Select a <strong>FOCUS / MEDITATION </strong> session on the user dashboard</li>
+
+				</ol>
+			</div>
+			<div aria-labelledby="v-pills-faq-tab" class="tab-pane fade p-3" id="v-pills-faq" role="tabpanel">
+				<h3> FAQ </h3></br>
+				<p> <strong>Q: </strong> What is the purpose of this project? </p>
+				<p> <strong>A: </strong> The purpose of this project is to help people to focus and meditate. </p>
+				<p> <strong>Q: </strong> How does it work? </p>
+				<p> <strong>A: </strong> The arduino collects data about the surroundings and sends it to the computer.</br>
+				 The Mindflex headset collects data about your FOCUS / MEDITATION and sends it to the computer.</br>
+				 The Eirene PC app collects data from the arduino and Mindflex headset and sends it to the Eirene web application.</br>
+							   The Eirene web application will show you the data and will help you to focus and meditate. </p>
+				<p> <strong>Q: </strong> My headset doesn't want to connect, what should I do?</p>
+				<p> <strong>A: </strong> If restarting the headset doesn't work, try replacing the batteries.</br>Other than that there's a known issue with macOS and not being able to connect </p>
+			</div>
+			<div aria-labelledby="v-pills-contactus-tab"
+				 class="tab-pane fade p-3"
+				 id="v-pills-contactus"
+				 role="tabpanel"
+			>
+				<h3> Contact </h3></br>
+				<p> If you have any questions, feel free to contact us: </p>
+				<p> <strong> Email: </strong>
+				<ul class="list-unstyled">
+				<li>Elina -> elina.vandertaelen@student.kdg.be </li>
+				<li>Filip -> filip.nowak@student.kdg.be </li>
+				<li>Peter -> peter.buschenreiter@student.kdg.be</li>
+				<li>Seif -> seifeldin.sabry@student.kdg.be </li>
+				</ul>
+				<a href="mailto:contact-project+kdg-ti-integration-2-1-22-23-team-3-project-planning-39534906-issue-@incoming.gitlab.com'">
+					<button class="btn btn-warning w-100" type="button"> General Questions </button>
+				</a>
+			</div>
+		</div>
+	</div>
+
+</main>
+<th:block th:insert="~{fragments::footer}"></th:block>
+</body>
+</html>
