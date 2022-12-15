@@ -6,7 +6,10 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" th:fragment="navbar(index)">
+<nav class="navbar navbar-dark bg-dark"
+	 th:classappend="${#httpSession.getAttribute('user_id')!=null}?'navbar-expand-lg':'navbar-expand-sm'"
+	 th:fragment="navbar(index)"
+>
 	<div class="container-fluid">
 		<a class="navbar-brand" th:href="@{/}">
 			<img alt="Logo" th:height="50" th:src="@{/images/icon.png}">
