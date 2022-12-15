@@ -91,6 +91,18 @@
 			>Light
 			</button>
 		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="all-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#all-tab-pane"
+					data-bs-toggle="tab"
+					id="all-tab"
+					role="tab"
+					type="button"
+			>All
+			</button>
+		</li>
 	</ul>
 
 	<div class="tab-content"
@@ -103,7 +115,7 @@
 			 role="tabpanel"
 			 tabindex="0"
 		>
-			<canvas id="heart-chart"
+			<canvas class="sensor-chart" id="heart-chart"
 					th:attr="data-sensor-readings=${sensorToData.get('HR')}, data-title='Heart rate'"
 			></canvas>
 		</div>
@@ -113,23 +125,28 @@
 			 role="tabpanel"
 			 tabindex="1"
 		>
-			<canvas id="temperature-chart"
+			<canvas class="sensor-chart" id="temperature-chart"
 					th:attr="data-sensor-readings=${sensorToData.get('TEMPERATURE')}, data-title='Temperature'"
 			></canvas>
 		</div>
 		<div aria-labelledby="humidity-tab" class="tab-pane fade" id="humidity-tab-pane" role="tabpanel" tabindex="2">
-			<canvas id="humidity-chart"
+			<canvas class="sensor-chart" id="humidity-chart"
 					th:attr="data-sensor-readings=${sensorToData.get('HUMIDITY')}, data-title='Humidity'"
 			></canvas>
 		</div>
 		<div aria-labelledby="sound-tab" class="tab-pane fade" id="sound-tab-pane" role="tabpanel" tabindex="3">
-			<canvas id="sound-chart"
+			<canvas class="sensor-chart" id="sound-chart"
 					th:attr="data-sensor-readings=${sensorToData.get('SOUND')}, data-title='Sound'"
 			></canvas>
 		</div>
 		<div aria-labelledby="light-tab" class="tab-pane fade" id="light-tab-pane" role="tabpanel" tabindex="4">
-			<canvas id="light-chart"
+			<canvas class="sensor-chart" id="light-chart"
 					th:attr="data-sensor-readings=${sensorToData.get('PHOTOTRANSISTOR')}, data-title='Light'"
+			></canvas>
+		</div>
+		<div aria-labelledby="all-tab" class="tab-pane fade" id="all-tab-pane" role="tabpanel" tabindex="5">
+			<canvas id="all-chart"
+					th:attr="data-light=${sensorToData.get('PHOTOTRANSISTOR')}, data-sound=${sensorToData.get('SOUND')}, data-humidity=${sensorToData.get('HUMIDITY')}, data-temperature=${sensorToData.get('TEMPERATURE')}, data-heart=${sensorToData.get('HR')}, data-title='All'"
 			></canvas>
 		</div>
 	</div>
