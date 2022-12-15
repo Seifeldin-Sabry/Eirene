@@ -42,7 +42,7 @@ public class SessionController {
 		if (totalPages == null) {
 			totalPages = sessionService.getSessionsPageCount(cookieService.getAttribute(session));
 		}
-		if (page <= 0 || page > totalPages) {
+		if (page <= 0 || (page > totalPages) && (totalPages == 0 && page != 1)) {
 			throw new PageNotFoundException("Page not found");
 		}
 		currentPage = page - 1;
