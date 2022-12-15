@@ -2,99 +2,94 @@ const signalEl = document.getElementById("signal");
 const brainWaveStrengthEl = document.getElementById("brainwaveStrength");
 const heartRateEl = document.getElementById("heartRate");
 const environmentEl = document.getElementById("environment");
-const chartEl = document.getElementById("chartContainer");
 const generalAdviceEl = document.getElementById("generalAdvice");
-const sessionTimer = document.getElementById("session-timer");
 
+const sessionTimerEl = document.getElementById("session-timer");
+
+const graphEl = document.getElementById("graph");
 
 const UPDATE_INTERVAL = 1000;
+const DATA_LENGTH = 15;
+
+const START_TIME = Date.now();
 
 const setElementValue = (element, value) => {
-	element.innerText = value;
+	element.textContent = value;
 };
 
-window.onload = () => {
+const currentTime = () => {
+	const delta = new Date(Date.now() - START_TIME);
+	return `${delta.getUTCHours() ? delta.getUTCHours() + "h " : ""}${delta.getUTCMinutes() ? delta.getUTCMinutes() + "m " : ""}${delta.getUTCSeconds() + "s"}`;
+};
 
-	const dps = []; // dataPoints
-	const chart = new CanvasJS.Chart(chartEl, {
-		theme: "dark1",
-		title: {
-			text: "Live Data",
-			fontFamily: "comfortana"
-		},
-		axisY: {
-			gridThickness: 0,
-			minimum: 0,
-			maximum: 100
-		},
-		toolTip: {
-			enabled: true,
-			animationEnabled: true,
-			contentFormatter: (e) => `${e.entries[0].dataPoint.x.toLocaleString("en-GB", {
-				hour: "numeric",
-				minute: "numeric",
-				second: "numeric"
-			})} ${e.entries[0].dataPoint.y}`
-		},
-		axisX: {
-			gridThickness: 0,
-			valueFormatString: "HH:mm:ss",
-			labelAngle: -20,
-			labelFontSize: 10
-		},
-		data: [{
-			type: "spline",
-			markerSize: 1,
-			lineColor: "yellow",
-			dataPoints: dps
-		}]
-	});
-
-	let xVal = 0;
-	const dataLength = 15; // number of dataPoints visible at any point
-
-	const updateChart = () => {
-		$.ajax({
-			type: "GET",
-			url: "http://localhost:8081/newsession/api",
-			dataType: "json",
-			success: function (data, status) {
-				yVal = data.brainwaveStrengthValue;
-				xVal = new Date();
-				dps.push({
-					x: xVal,
-					y: yVal
-				});
-
-				if (dps.length > dataLength) {
-					dps.shift();
-				}
-
-				chart.render();
-				setElementValue(signalEl, data.signal);
-				setElementValue(brainWaveStrengthEl, data.brainwaveStrength);
-				setElementValue(heartRateEl, data.heartRate);
-				setElementValue(environmentEl, data.environment);
-				setElementValue(generalAdviceEl, data.generalAdvice);
+const fetchSensorData = async () => {
+	let response = await fetch("http://localhost:8081/newsession/api",
+		{
+			method: "GET",
+			headers: {
+				accept: "application/json"
 			}
 		});
-	};
-
-	updateChart(dataLength);
-	setInterval(() => {
-		updateChart();
-	}, UPDATE_INTERVAL);
+	return await response.json();
 };
 
-
-const startTime = Date.now();
-const currentTime = () => {
-	const now = Math.floor((Date.now() - startTime) / 1000);
-	const hour = Math.floor(now / 3600).toString().padStart(2, "0");
-	const minute = (Math.floor(now / 60) % 60).toString().padStart(2, "0");
-	const second = (now % 60).toString().padStart(2, "0");
-	return `${hour}:${minute}:${second}`;
+const createChart = () => {
+	return new Chart(graphEl, {
+		type: "line",
+		data: {
+			labels: [],
+			datasets: [
+				{
+					data: [],
+					label: graphEl.dataset.type,
+					borderColor: "#FEB50D",
+					fill: false
+				}
+			]
+		},
+		options: {
+			elements: {
+				line: {
+					tension: 0.4
+				}
+			},
+			plugins: {
+				tooltip: {
+					interaction: {
+						intersect: false,
+						mode: "index"
+					}
+				}
+			}
+		}
+	});
 };
-setInterval(() => {
-	sessionTimer.textContent = currentTime();
+
+const addData = (chart, label, data) => {
+	chart.data.labels.push(label);
+	chart.data.datasets[0].data.push(data);
+	chart.update();
+};
+
+const removeData = (chart) => {
+	if (chart.data.datasets[0].data.length < DATA_LENGTH) return;
+	chart.data.labels.shift();
+	chart.data.datasets[0].data.shift();
+	chart.update();
+};
+
+const chart = createChart();
+
+setInterval(async () => {
+	const data = await fetchSensorData();
+	removeData(chart);
+	addData(chart, currentTime(), data);
+
+	setElementValue(signalEl, data.signal);
+	setElementValue(brainWaveStrengthEl, data.brainwaveStrength);
+	setElementValue(heartRateEl, data.heartRate);
+	setElementValue(environmentEl, data.environment);
+	setElementValue(generalAdviceEl, data.generalAdvice);
+
+	setElementValue(sessionTimerEl, currentTime());
 }, UPDATE_INTERVAL);

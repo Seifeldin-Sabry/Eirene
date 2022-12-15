@@ -83,21 +83,21 @@
 
 <main>
 	<hr>
-	<article class="d-flex flex-row justify-content-around my-4">
-		<div>
-			<h3>Total session time</h3>
+	<article class="d-flex flex-column flex-md-row justify-content-around my-4">
+		<div class="my-3">
+			<h3 class="text-center">Total session time</h3>
 			<p class="fs-1 text-center mb-0"
 			   th:text="${totalDuration}"
 			></p>
 		</div>
-		<div>
-			<h3>Average session time</h3>
+		<div class="my-3">
+			<h3 class="text-center">Average session time</h3>
 			<p class="fs-1 text-center mb-0"
 			   th:text="${averageDuration}"
 			>XX:XX</p>
 		</div>
-		<div>
-			<h3>Total sessions</h3>
+		<div class="my-3">
+			<h3 class="text-center">Total sessions</h3>
 			<p class="fs-1 text-center mb-0" th:text="${sessionCount}"></p>
 		</div>
 	</article>
