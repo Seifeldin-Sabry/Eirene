@@ -27,6 +27,13 @@
 				<li>
 					<a class="nav-item btn btn-outline-warning" href="/javadoc/index.html">Docs</a>
 				</li>
+				<li>
+					<a class="nav-item btn"
+					   th:classappend="${index == 4} ? 'btn-warning':'btn-outline-warning'"
+					   th:href="@{/wiki}"
+					>Wiki
+					</a>
+				</li>
 				<li th:if="${#httpSession.getAttribute('user_id')!=null}">
 					<a class="nav-item btn"
 					   th:classappend="${index == 3}? 'btn-warning':'btn-outline-warning'"
