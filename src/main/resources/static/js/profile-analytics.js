@@ -26,6 +26,11 @@ const makeChart = (element) => {
 			]
 		},
 		options: {
+			elements: {
+				line: {
+					tension: 0.4
+				}
+			},
 			plugins: {
 				tooltip: {
 					interaction: {
