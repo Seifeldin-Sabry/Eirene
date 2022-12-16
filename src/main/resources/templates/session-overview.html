@@ -107,7 +107,7 @@
 
 	<div class="tab-content"
 		 id="sensor-type-tab-content"
-		 th:attr="data-brain-type=${eireneSession.getType().getCapitalizedName()}, data-brain=${sensorToData.get('BRAINWAVE')}"
+		 th:attr="data-brain-type=${eireneSession.getType().getCapitalizedName()}, data-brain=${sensorToData.get('BRAINWAVE')}, data-light=${sensorToData.get('PHOTOTRANSISTOR')}, data-sound=${sensorToData.get('SOUND')}, data-humidity=${sensorToData.get('HUMIDITY')}, data-temperature=${sensorToData.get('TEMPERATURE')}, data-heart=${sensorToData.get('HR')}"
 	>
 		<div aria-labelledby="heart-tab"
 			 class="tab-pane fade show active"
@@ -115,9 +115,7 @@
 			 role="tabpanel"
 			 tabindex="0"
 		>
-			<canvas class="sensor-chart" id="heart-chart"
-					th:attr="data-sensor-readings=${sensorToData.get('HR')}, data-title='Heart rate'"
-			></canvas>
+			<canvas id="heart-chart" th:attr="data-title='Heart rate'"></canvas>
 		</div>
 		<div aria-labelledby="temperature-tab"
 			 class="tab-pane fade"
@@ -125,29 +123,19 @@
 			 role="tabpanel"
 			 tabindex="1"
 		>
-			<canvas class="sensor-chart" id="temperature-chart"
-					th:attr="data-sensor-readings=${sensorToData.get('TEMPERATURE')}, data-title='Temperature'"
-			></canvas>
+			<canvas id="temperature-chart" th:attr="data-title='Temperature'"></canvas>
 		</div>
 		<div aria-labelledby="humidity-tab" class="tab-pane fade" id="humidity-tab-pane" role="tabpanel" tabindex="2">
-			<canvas class="sensor-chart" id="humidity-chart"
-					th:attr="data-sensor-readings=${sensorToData.get('HUMIDITY')}, data-title='Humidity'"
-			></canvas>
+			<canvas id="humidity-chart" th:attr="data-title='Humidity'"></canvas>
 		</div>
 		<div aria-labelledby="sound-tab" class="tab-pane fade" id="sound-tab-pane" role="tabpanel" tabindex="3">
-			<canvas class="sensor-chart" id="sound-chart"
-					th:attr="data-sensor-readings=${sensorToData.get('SOUND')}, data-title='Sound'"
-			></canvas>
+			<canvas id="sound-chart" th:attr="data-title='Sound'"></canvas>
 		</div>
 		<div aria-labelledby="light-tab" class="tab-pane fade" id="light-tab-pane" role="tabpanel" tabindex="4">
-			<canvas class="sensor-chart" id="light-chart"
-					th:attr="data-sensor-readings=${sensorToData.get('PHOTOTRANSISTOR')}, data-title='Light'"
-			></canvas>
+			<canvas id="light-chart" th:attr="data-title='Light'"></canvas>
 		</div>
 		<div aria-labelledby="all-tab" class="tab-pane fade" id="all-tab-pane" role="tabpanel" tabindex="5">
-			<canvas id="all-chart"
-					th:attr="data-light=${sensorToData.get('PHOTOTRANSISTOR')}, data-sound=${sensorToData.get('SOUND')}, data-humidity=${sensorToData.get('HUMIDITY')}, data-temperature=${sensorToData.get('TEMPERATURE')}, data-heart=${sensorToData.get('HR')}, data-title='All'"
-			></canvas>
+			<canvas></canvas>
 		</div>
 	</div>
 
