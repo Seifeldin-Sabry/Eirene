@@ -1,15 +1,19 @@
 package be.kdg.eirene.service;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 
 @Service
+@Getter
+@Setter
 public class CookieServiceImpl implements CookieService {
 
-	@Getter
 	public final String COOKIE_NAME = "user_id";
+	private Integer totalPages;
+	private int currentPage;
 
 	@Override
 	public boolean cookieInvalid(HttpSession session) {
@@ -32,8 +36,16 @@ public class CookieServiceImpl implements CookieService {
 	}
 
 	@Override
-	public void deleteCookie(HttpSession session) {
+	public void removeCookie(HttpSession session) {
+		resetPages();
 		session.removeAttribute(COOKIE_NAME);
+		session.invalidate();
+	}
+
+	@Override
+	public void resetPages() {
+		totalPages = null;
+		currentPage = 0;
 	}
 
 }

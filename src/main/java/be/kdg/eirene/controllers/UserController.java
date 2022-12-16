@@ -138,7 +138,7 @@ public class UserController {
 			return new ModelAndView("redirect:/");
 		}
 		userService.deleteUser(cookieService.getAttribute(session));
-		cookieService.deleteCookie(session);
+		cookieService.removeCookie(session);
 		return new ModelAndView("redirect:/");
 	}
 }
