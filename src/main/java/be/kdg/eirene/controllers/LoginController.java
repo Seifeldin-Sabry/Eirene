@@ -71,7 +71,8 @@ public class LoginController {
 
 	@GetMapping ("/logout")
 	public ModelAndView logoutUser(HttpSession session) {
-		session.invalidate();
+		logger.info("logout called" + session.toString());
+		cookieService.removeCookie(session);
 		return new ModelAndView("redirect:/");
 	}
 }

@@ -22,8 +22,6 @@ public class SessionController {
 	private final Logger logger;
 	private final SessionService sessionService;
 	private final CookieService cookieService;
-	private Integer totalPages;
-	private int currentPage;
 
 	@Autowired
 	public SessionController(SessionService sessionService, CookieService cookieService) {
@@ -39,15 +37,18 @@ public class SessionController {
 			return new ModelAndView("redirect:/");
 		}
 		// this is used to make only 1 call to the database for the total amount of sessions
+		logger.info("Current user id " + cookieService.getAttribute(session));
+		Integer totalPages = cookieService.getTotalPages();
 		if (totalPages == null) {
-			totalPages = sessionService.getSessionsPageCount(cookieService.getAttribute(session));
+			cookieService.setTotalPages(sessionService.getSessionsPageCount(cookieService.getAttribute(session)));
+			totalPages = cookieService.getTotalPages();
 		}
 		if (page <= 0 || (page > totalPages) && (totalPages == 0 && page != 1)) {
 			throw new PageNotFoundException("Page not found");
 		}
-		currentPage = page - 1;
+		cookieService.setCurrentPage(page);
+		int currentPage = cookieService.getCurrentPage() - 1;
 		logger.info("Total pages " + totalPages);
-		logger.info("Loading sessions page " + currentPage);
 		return new ModelAndView("sessions")
 				.addObject("sessions", sessionService.getSessions(cookieService.getAttribute(session), currentPage))
 				.addObject("viewModel", new SessionEditViewModel())
@@ -75,9 +76,9 @@ public class SessionController {
 			return new ModelAndView("redirect:/");
 		}
 		final Session session = sessionService.getSession(id, userId);
-		if (!"".equals(viewModel.getSessionName())) session.setName(viewModel.getSessionName());
+		if (!viewModel.getSessionName().isBlank()) session.setName(viewModel.getSessionName());
 		sessionService.updateSession(session);
-		return new ModelAndView("redirect:/profile/sessions/" + (currentPage + 1));
+		return new ModelAndView("redirect:/profile/sessions/" + (cookieService.getCurrentPage() + 1));
 	}
 
 	@DeleteMapping ("/{id}")
@@ -86,7 +87,8 @@ public class SessionController {
 			return new ModelAndView("redirect:/");
 		}
 		sessionService.deleteSession(sessionService.getSession(id, cookieService.getAttribute(httpSession)));
-		totalPages = sessionService.getSessionsPageCount(cookieService.getAttribute(httpSession));
+		Integer totalPages = sessionService.getSessionsPageCount(cookieService.getAttribute(httpSession));
+		int currentPage = cookieService.getCurrentPage() - 1;
 		return new ModelAndView("redirect:/profile/sessions/" + (currentPage + 1 > totalPages ? totalPages : currentPage + 1));
 	}
 }
