@@ -3,6 +3,7 @@ package be.kdg.eirene.controllers;
 import be.kdg.eirene.model.User;
 import be.kdg.eirene.presenter.viewmodel.UserLoginViewModel;
 import be.kdg.eirene.service.CookieService;
+import be.kdg.eirene.service.PaginationService;
 import be.kdg.eirene.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,12 @@ public class LoginController {
 
 	private final Logger logger;
 	private final UserService userService;
-
+	private final PaginationService paginationService;
 	private final CookieService cookieService;
 
 	@Autowired
-	public LoginController(UserService userService, CookieService cookieService) {
+	public LoginController(UserService userService, PaginationService paginationService, CookieService cookieService) {
+		this.paginationService = paginationService;
 		this.logger = LoggerFactory.getLogger(this.getClass());
 		this.userService = userService;
 		this.cookieService = cookieService;
@@ -71,7 +73,7 @@ public class LoginController {
 
 	@GetMapping ("/logout")
 	public ModelAndView logoutUser(HttpSession session) {
-		logger.info("logout called" + session.toString());
+		paginationService.reset();
 		cookieService.removeCookie(session);
 		return new ModelAndView("redirect:/");
 	}

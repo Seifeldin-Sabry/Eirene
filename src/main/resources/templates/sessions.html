@@ -90,10 +90,10 @@
 	</tr>
 	</tbody>
 </table>
-<ul class="pagination justify-content-center" th:unless="${numPages < 1}">
+<ul class="pagination justify-content-center" th:unless="${numPages <= 1}">
 	<li class="page-item" th:each="i: ${#numbers.sequence(1, numPages)}">
 		<a class="page-link"
-		   th:classappend="${page} == ${i} - 1 ? 'active': ''"
+		   th:classappend="${page == i} ? 'active': ''"
 		   th:href="@{/profile/sessions/{page}(page=${i})}"
 		   th:text="${i}"
 		></a>

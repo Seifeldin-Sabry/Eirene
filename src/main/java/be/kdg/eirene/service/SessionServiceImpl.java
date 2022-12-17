@@ -25,23 +25,25 @@ public class SessionServiceImpl implements SessionService {
 
 	private final ReadingsAdapt readingsAdaptor;
 
-	private final int PAGE_SIZE = 10;
+	private final PaginationService paginationService;
 
 	@Autowired
-	public SessionServiceImpl(SessionRepository sessionRepository, ReadingsAdapt readingsAdaptor) {
+	public SessionServiceImpl(SessionRepository sessionRepository, ReadingsAdapt readingsAdaptor, PaginationService paginationService) {
 		this.sessionRepository = sessionRepository;
 		this.readingsAdaptor = readingsAdaptor;
+		this.paginationService = paginationService;
 	}
 
 
 	@Override
 	public Integer getSessionsPageCount(Long userId) {
-		return sessionRepository.getSessionsByUserID(userId, Pageable.ofSize(PAGE_SIZE)).getTotalPages();
+		return sessionRepository.getSessionsByUserID(userId, Pageable.ofSize(paginationService.getPageSize()))
+		                        .getTotalPages();
 	}
 
 	@Override
 	public List<Session> getSessions(Long userId, int page) {
-		Pageable pageSession = PageRequest.of(page, PAGE_SIZE);
+		Pageable pageSession = PageRequest.of(page - 1, paginationService.getPageSize());
 		return Lists.newArrayList(sessionRepository.getSessionsByUserID(userId, pageSession));
 	}
 

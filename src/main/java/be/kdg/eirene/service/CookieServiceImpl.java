@@ -37,15 +37,8 @@ public class CookieServiceImpl implements CookieService {
 
 	@Override
 	public void removeCookie(HttpSession session) {
-		resetPages();
 		session.removeAttribute(COOKIE_NAME);
 		session.invalidate();
-	}
-
-	@Override
-	public void resetPages() {
-		totalPages = null;
-		currentPage = 0;
 	}
 
 }
