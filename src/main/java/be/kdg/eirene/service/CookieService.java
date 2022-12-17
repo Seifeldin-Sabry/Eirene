@@ -13,14 +13,4 @@ public interface CookieService {
 	Long getAttribute(HttpSession session);
 
 	void removeCookie(HttpSession session);
-
-	Integer getTotalPages();
-
-	void setTotalPages(Integer totalPages);
-
-	int getCurrentPage();
-
-	void setCurrentPage(int currentPage);
-
-	void resetPages();
 }
