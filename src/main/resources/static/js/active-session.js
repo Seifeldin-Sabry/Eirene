@@ -43,11 +43,20 @@ const createChart = () => {
 					data: [],
 					label: graphEl.dataset.type,
 					borderColor: "#FEB50D",
-					fill: false
+					fill: false,
+					yAxisID: "brainwave"
 				}
 			]
 		},
 		options: {
+			scales: {
+				brainwave: {
+					type: "linear",
+					position: "left",
+					min: 0,
+					max: 100
+				}
+			},
 			elements: {
 				line: {
 					tension: 0.4
