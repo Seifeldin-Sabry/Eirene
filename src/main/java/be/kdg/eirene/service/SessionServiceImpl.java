@@ -4,10 +4,12 @@ import be.kdg.eirene.exceptions.SessionNotFoundException;
 import be.kdg.eirene.model.Reading;
 import be.kdg.eirene.model.Session;
 import be.kdg.eirene.model.SessionType;
+import be.kdg.eirene.repository.GlobalAnalCategory;
 import be.kdg.eirene.repository.Period;
 import be.kdg.eirene.repository.SessionRepository;
 import be.kdg.eirene.util.ReadingsAdapt;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static be.kdg.eirene.model.Sensor.*;
+import static org.slf4j.LoggerFactory.getLogger;
 
 @Service
 public class SessionServiceImpl implements SessionService {
@@ -27,11 +30,15 @@ public class SessionServiceImpl implements SessionService {
 
 	private final PaginationService paginationService;
 
+	private final GlobalAnalyticsComparator globalAnalyticsComparator;
+	private final Logger logger = getLogger(this.getClass());
+
 	@Autowired
-	public SessionServiceImpl(SessionRepository sessionRepository, ReadingsAdapt readingsAdaptor, PaginationService paginationService) {
+	public SessionServiceImpl(SessionRepository sessionRepository, ReadingsAdapt readingsAdaptor, PaginationService paginationService, GlobalAnalyticsComparator globalAnalyticsComparator) {
 		this.sessionRepository = sessionRepository;
 		this.readingsAdaptor = readingsAdaptor;
 		this.paginationService = paginationService;
+		this.globalAnalyticsComparator = globalAnalyticsComparator;
 	}
 
 
@@ -101,6 +108,19 @@ public class SessionServiceImpl implements SessionService {
 			readings.get(BRAINWAVE.name()).add((float) reading.getBrainWave().getLevel(session.getType()));
 		});
 		return readings;
+	}
+
+	@Override
+	public String getUserGlobalAverageComparison(Long userId, SessionType sessionType) {
+		Double averageBrainUser = sessionRepository.getAverageBrainwaveStrengthByUserID(userId, sessionType.name());
+		Double averageBrainGlobal = sessionRepository.getAverageBrainwaveStrengthByOtherUsers(userId, sessionType.name());
+		if (averageBrainUser == null || averageBrainGlobal == null) {
+			return "";
+		}
+		final int percentile = Math.round((float) (averageBrainUser / averageBrainGlobal) * 100);
+		GlobalAnalCategory globalAverageComparison = globalAnalyticsComparator.getGlobalAverageComparison(averageBrainUser, averageBrainGlobal);
+		return String.format("Your average %s is in the top %d%% percentile, that's %s", sessionType.name()
+		                                                                                            .toLowerCase(), percentile, globalAverageComparison.getCapitalizedName());
 	}
 
 }

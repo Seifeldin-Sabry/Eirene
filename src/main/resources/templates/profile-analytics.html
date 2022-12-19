@@ -266,9 +266,10 @@
 				<canvas id="meditation-tab-alltime-canvas" th:attr="data-eirene-readings=${allMeditation}"></canvas>
 			</div>
 		</div>
-
 	</div>
 </div>
+<div class="justify-content-center text-center"><p th:text="${globalStatCompFocus}"></p>
+	<p th:text="${globalStatCompMeditation}"></p></div>
 <th:block th:insert="~{fragments::footer}"></th:block>
 </body>
 </html>

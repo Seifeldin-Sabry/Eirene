@@ -26,4 +26,6 @@ public interface SessionService {
 	List<Reading> getReadings(Long userId, Period period, SessionType sessionType);
 
 	HashMap<String, List<Float>> getReadingsBySensor(Session session);
+
+	String getUserGlobalAverageComparison(Long userId, SessionType sessionType);
 }

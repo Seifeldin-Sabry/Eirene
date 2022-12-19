@@ -129,7 +129,10 @@ public class UserController {
 				.addObject("weekMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.WEEK, SessionType.MEDITATION)))
 				.addObject("monthMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.MONTH, SessionType.MEDITATION)))
 				.addObject("yearMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.YEAR, SessionType.MEDITATION)))
-				.addObject("allMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.ALL, SessionType.MEDITATION)));
+				.addObject("allMeditation", gson.toJson(sessionService.getReadings(user.getUser_id(), Period.ALL, SessionType.MEDITATION)))
+				.addObject("globalStatCompFocus", sessionService.getUserGlobalAverageComparison(user.getUser_id(), SessionType.FOCUS))
+				.addObject("globalStatCompMeditation", sessionService.getUserGlobalAverageComparison(user.getUser_id(), SessionType.MEDITATION))
+				;
 	}
 
 	@DeleteMapping
