@@ -83,7 +83,7 @@ const chart = createChart();
 setInterval(async () => {
 	const data = await fetchSensorData();
 	removeData(chart);
-	addData(chart, currentTime(), data);
+	addData(chart, currentTime(), data.brainwaveStrengthValue);
 
 	setElementValue(signalEl, data.signal);
 	setElementValue(brainWaveStrengthEl, data.brainwaveStrength);
