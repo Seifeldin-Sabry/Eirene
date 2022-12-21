@@ -51,11 +51,8 @@ public class ActiveSessionController {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
 		}
-		if (session == null) {
-			User user = userService.getUser(cookieService.getAttribute(httpSession));
-			session = new Session(type, user);
-			sessionService.save(session);
-		}
+		User user = userService.getUser(cookieService.getAttribute(httpSession));
+		session = new Session(type, user);
 		logger.info(" report: " + reportGenerator.formulateReport(session.getReadings(), type));
 		return new ModelAndView("active-session").addObject("type", type.getCapitalizedName())
 		                                         .addObject("session", session)
@@ -98,9 +95,8 @@ public class ActiveSessionController {
 		logger.info(sessionFeedbackViewModel.getSessionName());
 		session.setSatisfaction(sessionFeedbackViewModel.getSatisfactionLevel().getValue());
 		session.setName(sessionFeedbackViewModel.getSessionName());
-		sessionService.updateSession(session);
+		sessionService.save(session);
 		Long sessionId = session.getId();
-		session = null;
 		return new ModelAndView("redirect:/profile/sessions/session-overview/" + sessionId);
 	}
 
@@ -109,8 +105,6 @@ public class ActiveSessionController {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
 		}
-		sessionService.deleteSession(session);
-		session = null;
 		return new ModelAndView("redirect:/profile/sessions/1");
 	}
 }
