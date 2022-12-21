@@ -19,8 +19,6 @@ public interface SessionService {
 
 	Long getSessionsCount(Long userId);
 
-	void updateSession(Session session);
-
 	void deleteSession(Session session);
 
 	List<Reading> getReadings(Long userId, Period period, SessionType sessionType);

@@ -7,7 +7,7 @@ import be.kdg.eirene.model.SessionType;
 import be.kdg.eirene.repository.GlobalAnalCategory;
 import be.kdg.eirene.repository.Period;
 import be.kdg.eirene.repository.SessionRepository;
-import be.kdg.eirene.util.ReadingsAdapt;
+import be.kdg.eirene.util.ReadingsObjectAdaptor;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +25,13 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Service
 public class SessionServiceImpl implements SessionService {
 	private final SessionRepository sessionRepository;
-
-	private final ReadingsAdapt readingsAdaptor;
-
 	private final PaginationService paginationService;
-
 	private final GlobalAnalyticsComparator globalAnalyticsComparator;
 	private final Logger logger = getLogger(this.getClass());
 
 	@Autowired
-	public SessionServiceImpl(SessionRepository sessionRepository, ReadingsAdapt readingsAdaptor, PaginationService paginationService, GlobalAnalyticsComparator globalAnalyticsComparator) {
+	public SessionServiceImpl(SessionRepository sessionRepository, PaginationService paginationService, GlobalAnalyticsComparator globalAnalyticsComparator) {
 		this.sessionRepository = sessionRepository;
-		this.readingsAdaptor = readingsAdaptor;
 		this.paginationService = paginationService;
 		this.globalAnalyticsComparator = globalAnalyticsComparator;
 	}
@@ -62,6 +57,9 @@ public class SessionServiceImpl implements SessionService {
 
 	@Override
 	public Session save(Session session) {
+		if (session.getName().isBlank() || session.getName().isEmpty()) {
+			session.setDefaultName();
+		}
 		return sessionRepository.save(session);
 	}
 
@@ -71,22 +69,18 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public void updateSession(Session session) {
-		if (session.getName().isBlank() || session.getName().isEmpty()) {
-			session.setDefaultName();
-		}
-		sessionRepository.save(session);
-	}
-
-	@Override
 	public void deleteSession(Session session) {
 		sessionRepository.delete(session);
 	}
 
 	@Override
 	public List<Reading> getReadings(Long userId, Period period, SessionType sessionType) {
-		return readingsAdaptor.convert(sessionRepository.getReadingsByUserID(userId, period.name()
-		                                                                                   .toLowerCase(), sessionType.name()));
+		ReadingsObjectAdaptor readingsObjectAdaptor = new ReadingsObjectAdaptor(sessionRepository
+				.getReadingsByUserID(
+						userId,
+						period.name().toLowerCase(),
+						sessionType.name()));
+		return readingsObjectAdaptor.convertToReadings();
 	}
 
 	@Override

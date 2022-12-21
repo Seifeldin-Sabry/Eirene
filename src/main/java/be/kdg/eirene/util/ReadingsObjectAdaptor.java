@@ -10,19 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ReadingsAdaptor implements ReadingsAdapt {
-	private final int timestampIndex = 0;
-	private final int heartRateIndex = 1;
-	private final int humidityIndex = 2;
-	private final int lightIndex = 3;
-	private final int soundIndex = 4;
-	private final int temperatureIndex = 5;
-	private final int focusIndex = 6;
-	private final int meditationIndex = 7;
-	private final int signalIndex = 8;
+public class ReadingsObjectAdaptor implements ReadingsAdapt {
+
+	private final List<Object[]> readings;
+
+	public ReadingsObjectAdaptor(List<Object[]> readings) {
+		this.readings = readings;
+	}
 
 	@Override
-	public List<Reading> convert(List<Object[]> readings) {
+	public List<Reading> convertToReadings() {
 		List<Reading> readingsToReturn = new ArrayList<>();
 		for (Object[] reading : readings) {
 			readingsToReturn.add(
