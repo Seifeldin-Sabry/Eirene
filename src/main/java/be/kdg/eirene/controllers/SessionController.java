@@ -72,7 +72,7 @@ public class SessionController {
 		}
 		final Session session = sessionService.getSession(id, userId);
 		if (!viewModel.getSessionName().isBlank()) session.setName(viewModel.getSessionName());
-		sessionService.updateSession(session);
+		sessionService.save(session);
 		return new ModelAndView("redirect:/profile/sessions/" + (paginationService.getPageNumber()));
 	}
 
