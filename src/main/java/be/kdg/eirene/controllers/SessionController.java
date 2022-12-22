@@ -30,7 +30,6 @@ public class SessionController {
 		this.logger = LoggerFactory.getLogger(this.getClass());
 		this.sessionService = sessionService;
 		this.cookieService = cookieService;
-
 	}
 
 	@GetMapping ("/{page}")

@@ -1,6 +1,9 @@
+import {chartsConfigs, colors} from "./utils.js";
+
 const wrapper = document.getElementById("sensor-type-tab-content");
 const type = wrapper.dataset.brainType;
 const brainData = JSON.parse(wrapper.dataset.brain);
+
 const charts = {
 	Light: JSON.parse(wrapper.dataset.light),
 	Temperature: JSON.parse(wrapper.dataset.temperature),
@@ -9,16 +12,6 @@ const charts = {
 	"Heart rate": JSON.parse(wrapper.dataset.heart)
 };
 
-const colors = {
-	Light: "#ffffff",
-	Temperature: "#ff2b2b",
-	Humidity: "#03A9F4",
-	Sound: "#4CAF50",
-	"Heart rate": "#9C27B0",
-	Brainwave: "#FEB50D"
-};
-
-const allCanvases = document.querySelectorAll("canvas");
 const makeChart = (element) => {
 	const title = element.dataset.title;
 	const brainWaveOptions = {
@@ -54,35 +47,9 @@ const makeChart = (element) => {
 					}),
 						brainWaveOptions]
 		},
-		options: {
-			scales: {
-				brainwave: {
-					type: "linear",
-					display: true,
-					position: "right",
-					min: 0,
-					max: 100,
-
-					// grid line settings
-					grid: {
-						drawOnChartArea: false // only want the grid lines for one axis to show up
-					}
-				}
-			},
-			elements: {
-				line: {
-					tension: 0.4
-				}
-			},
-			plugins: {
-				tooltip: {
-					interaction: {
-						intersect: false,
-						mode: "index"
-					}
-				}
-			}
-		}
+		options: chartsConfigs
 	});
 };
+
+const allCanvases = document.querySelectorAll("canvas");
 allCanvases.forEach(canvas => makeChart(canvas));

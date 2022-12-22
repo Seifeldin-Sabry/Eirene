@@ -1,3 +1,5 @@
+import {chartsConfigs, colors} from "./utils.js";
+
 const makeChart = (element) => {
 	const readings = JSON.parse(element.dataset.eireneReadings);
 	const isFocus = element.id.startsWith("focus");
@@ -8,38 +10,27 @@ const makeChart = (element) => {
 			datasets: [{
 				data: readings.map(d => isFocus ? d.brainWave.focus : d.brainWave.meditation),
 				label: isFocus ? "Focus" : "Meditation",
-				borderColor: "#3e95cd",
-				fill: false
+				borderColor: colors.Brainwave,
+				fill: false,
+				yAxisID: "brainwave"
 			},
 				{
 					data: readings.map(d => d.sensorData.heartRate),
 					label: "Heart Rate",
-					borderColor: "#8e5ea2",
-					fill: false
+					borderColor: colors["Heart rate"],
+					fill: false,
+					yAxisID: "sensor"
 				},
 				{
 					data: readings.map(d => d.sensorData.temperature),
 					label: "Temperature",
-					borderColor: "#3cba9f",
-					fill: false
+					borderColor: colors.Temperature,
+					fill: false,
+					yAxisID: "sensor"
 				}
 			]
 		},
-		options: {
-			elements: {
-				line: {
-					tension: 0.4
-				}
-			},
-			plugins: {
-				tooltip: {
-					interaction: {
-						intersect: false,
-						mode: "index"
-					}
-				}
-			}
-		}
+		options: chartsConfigs
 	});
 };
 

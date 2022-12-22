@@ -1,3 +1,7 @@
+import {chartsConfigs, colors} from "./utils.js";
+
+chartsConfigs.scales.brainwave.position = "left";
+
 const signalEl = document.getElementById("signal");
 const brainWaveStrengthEl = document.getElementById("brainwaveStrength");
 const heartRateEl = document.getElementById("heartRate");
@@ -42,35 +46,13 @@ const createChart = () => {
 				{
 					data: [],
 					label: graphEl.dataset.type,
-					borderColor: "#FEB50D",
+					borderColor: colors.Brainwave,
 					fill: false,
 					yAxisID: "brainwave"
 				}
 			]
 		},
-		options: {
-			scales: {
-				brainwave: {
-					type: "linear",
-					position: "left",
-					min: 0,
-					max: 100
-				}
-			},
-			elements: {
-				line: {
-					tension: 0.4
-				}
-			},
-			plugins: {
-				tooltip: {
-					interaction: {
-						intersect: false,
-						mode: "index"
-					}
-				}
-			}
-		}
+		options: chartsConfigs
 	});
 };
 

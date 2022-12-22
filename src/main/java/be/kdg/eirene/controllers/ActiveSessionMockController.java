@@ -74,9 +74,9 @@ public class ActiveSessionMockController {
 				new SensorData(
 						faker.number().numberBetween(40, 180),
 						faker.number().numberBetween(18, 25),
-						faker.number().numberBetween(52, 53),
+						faker.number().numberBetween(52, 54),
 						faker.number().numberBetween(30, 60),
-						faker.number().numberBetween(0, 1)));
+						faker.number().numberBetween(0, 2)));
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").setPrettyPrinting().create();
 
