@@ -6,17 +6,26 @@
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
 </head>
-<body>
-<div class="d-flex align-items-center justify-content-center vh-100">
+<body class="bg-dark text-light">
+<div class="d-flex flex-column align-items-center justify-content-center vh-100">
 	<div class="text-center">
-		<h1 class="display-1 fw-bold">404</h1>
+		<h1 class="display-1 fw-bold text-warning" th:text="${status}">404</h1>
 		<p class="fs-3" th:text="${message}" th:unless="${message != null}"></p>
 		<p class="lead">
-			The page you’re looking for doesn’t exist.
+			The page you’re looking for doesn't exist.
 		</p>
-		<a class="btn btn-primary" th:href="@{/profile}">Go Home</a>
 	</div>
+	<button class="btn btn-lg btn-warning" th:onclick="window.history.back()">
+		<i class="bi bi-caret-left-fill"></i>
+		Go Back
+	</button>
+	<a class="btn btn-lg btn-outline-warning my-3" th:href="@{/profile}">
+		<i class="bi bi-house-fill"></i>
+		Go Home
+	</a>
 </div>
 </body>
 </html>
