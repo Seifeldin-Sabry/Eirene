@@ -7,6 +7,8 @@ const brainWaveStrengthEl = document.getElementById("brainwaveStrength");
 const heartRateEl = document.getElementById("heartRate");
 const environmentEl = document.getElementById("environment");
 const generalAdviceEl = document.getElementById("generalAdvice");
+const toastEl = document.getElementById("toast");
+const toastTextEl = document.getElementById("toastText");
 
 const sessionTimerEl = document.getElementById("session-timer");
 
@@ -35,6 +37,14 @@ const fetchSensorData = async () => {
 			}
 		});
 	return await response.json();
+};
+
+const fetchLiveFeedback = async () => {
+	let response = await fetch("http://localhost:8081/newsession/live-feedback",
+		{
+			method: "GET"
+		});
+	return await response.text();
 };
 
 const createChart = () => {
@@ -81,6 +91,13 @@ setInterval(async () => {
 	setElementValue(heartRateEl, data.heartRate);
 	setElementValue(environmentEl, data.environment);
 	setElementValue(generalAdviceEl, data.generalAdvice);
+
+	const liveFeedback = await fetchLiveFeedback();
+	const toast = new bootstrap.Toast(toastEl);
+	if (liveFeedback && !toast.isShown()) {
+		setElementValue(toastTextEl, liveFeedback);
+		toast.show();
+	}
 
 	setElementValue(sessionTimerEl, currentTime());
 }, UPDATE_INTERVAL);
