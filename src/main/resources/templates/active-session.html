@@ -16,6 +16,23 @@
 <th:block th:insert="~{fragments::navbar(0)}"></th:block>
 
 <h1 class="text-center my-5" th:text="${type} + ' '+ session "></h1>
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+	<div class="toast-container p-3 top-0 start-50 translate-middle-x">
+		<div class="toast text-bg-warning d-flex fade hide"
+			 id="toast"
+			 role="alert"
+			 aria-live="assertive"
+			 aria-atomic="true"
+		>
+			<div class="toast-body" id="toastText"></div>
+			<button type="button"
+					class="btn-close btn-close-white me-2 m-auto"
+					data-bs-dismiss="toast"
+					aria-label="Close"
+			></button>
+		</div>
+	</div>
+</div>
 <hr class="my-5">
 
 <h3 class="my-2">Duration: <span id="session-timer">0s</span></h3>

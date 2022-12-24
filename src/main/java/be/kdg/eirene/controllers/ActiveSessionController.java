@@ -5,6 +5,7 @@ import be.kdg.eirene.presenter.viewmodel.SessionFeedbackViewModel;
 import be.kdg.eirene.service.CookieService;
 import be.kdg.eirene.service.SessionService;
 import be.kdg.eirene.service.UserService;
+import be.kdg.eirene.service.evaluator.EvaluatorService;
 import be.kdg.eirene.service.evaluator.ReportGeneratorService;
 import be.kdg.eirene.util.ReadingValidator;
 import be.kdg.eirene.util.RequestDecryptor;
@@ -31,18 +32,20 @@ public class ActiveSessionController {
 	private final CookieService cookieService;
 	private final SessionService sessionService;
 	private final UserService userService;
+	private final EvaluatorService evaluatorService;
 	private final Logger logger;
 	private final RequestDecryptor decryptor;
 	private Session session;
 
 	@Autowired
-	public ActiveSessionController(RequestDecryptor decryptor, CookieService cookieService, UserService userService, SessionService sessionService, ReportGeneratorService reportGenerator, ReadingValidator validator) {
+	public ActiveSessionController(RequestDecryptor decryptor, CookieService cookieService, UserService userService, SessionService sessionService, ReportGeneratorService reportGenerator, ReadingValidator validator, EvaluatorService evaluatorService) {
 		this.decryptor = decryptor;
 		this.cookieService = cookieService;
 		this.userService = userService;
 		this.sessionService = sessionService;
 		this.reportGenerator = reportGenerator;
 		this.validator = validator;
+		this.evaluatorService = evaluatorService;
 		logger = LoggerFactory.getLogger(this.getClass());
 	}
 
@@ -64,6 +67,11 @@ public class ActiveSessionController {
 		EvaluatedData data = reportGenerator.formulateReport(session.getReadings(), session.getType());
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		return gson.toJson(data);
+	}
+
+	@GetMapping ("/live-feedback")
+	public String getLiveFeedback() {
+		return evaluatorService.evaluateRecentReadings(session);
 	}
 
 	@PostMapping
@@ -105,6 +113,6 @@ public class ActiveSessionController {
 		if (cookieService.cookieInvalid(httpSession)) {
 			return new ModelAndView("redirect:/");
 		}
-		return new ModelAndView("redirect:/profile/sessions/1");
+		return new ModelAndView("redirect:/profile");
 	}
 }

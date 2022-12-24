@@ -36,12 +36,22 @@ public class SensorData {
 	@Column
 	private float light;
 
-
 	public SensorData(float heartRate, float temperature, float sound, float humidity, float light) {
 		this.heartRate = heartRate;
 		this.temperature = temperature;
 		this.sound = sound;
 		this.humidity = humidity;
 		this.light = light;
+	}
+
+	public float getDataOf(Sensor sensor) {
+		return switch (sensor) {
+			case HR -> heartRate;
+			case TEMPERATURE -> temperature;
+			case SOUND -> sound;
+			case HUMIDITY -> humidity;
+			case PHOTOTRANSISTOR -> light;
+			case BRAINWAVE -> 0.0F;
+		};
 	}
 }
