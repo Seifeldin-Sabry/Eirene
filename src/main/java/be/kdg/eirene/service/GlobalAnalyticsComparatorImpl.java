@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GlobalAnalyticsComparatorImpl implements GlobalAnalyticsComparator {
 	@Override
-	public GlobalAnalCategory getGlobalAverageComparison(double userAverage, double globalAverage) {
-		double percentile = userAverage / globalAverage * 100;
+	public GlobalAnalCategory getGlobalAverageComparison(double percentile) {
 
 		if (percentile < GlobalAnalCategory.TERRIBLE.getPercentile()) {
 			return GlobalAnalCategory.TERRIBLE;

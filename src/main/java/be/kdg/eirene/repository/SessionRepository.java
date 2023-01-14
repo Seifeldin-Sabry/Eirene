@@ -36,31 +36,46 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
 			                WHERE s.user_id = ?1
 			                  AND s.session_type = CAST(?2 AS SESSION_TYPE)
 			                  AND s.end_time IS NOT NULL
-			                 -- AND EXTRACT(EPOCH FROM (s.end_time - s.start_time))/60 > 4
+			                  AND EXTRACT(EPOCH FROM (s.end_time - s.start_time))/60 > 4 
 			                GROUP BY s.session_id
 			            ) AS avg_brainwaves
 			""", nativeQuery = true)
 	Double getAverageBrainwaveStrengthByUserID(Long id, String type);
 
 	@Query (value = """
-			SELECT SUM(avg_brainwaves.avg)
-			         FROM (
-			                SELECT AVG(CASE
-			                       WHEN ?2 = 'FOCUS' THEN focus
-			                       WHEN ?2 = 'MEDITATION' THEN meditation
+			SELECT (COUNT(*) / SUM(total_count.total_count) * 100) AS percentile
+			        FROM (
+			                 SELECT COUNT(avg.avg) AS total_count
+			                 FROM(
+			                 SELECT AVG(CASE
+			                                WHEN ?2 = 'FOCUS' THEN focus
+			                                WHEN ?2 = 'MEDITATION' THEN meditation
+			                            END
+			                            ) AS avg
+			                 FROM brainwaves
+			                          JOIN readings r ON brainwaves.brainwave_id = r.brainwave_id
+			                          JOIN sessions s ON r.session_id = s.session_id
+			                     AND s.session_type = CAST(?2 AS SESSION_TYPE)
+			                     AND s.end_time IS NOT NULL
+			         AND EXTRACT(EPOCH FROM (s.end_time - s.start_time))/60 > 4
+			                 GROUP BY s.user_id, s.session_id
+			             ) AS avg) AS total_count
+			        WHERE ?1 > ANY (
+			            SELECT AVG(CASE
+			                           WHEN ?2 = 'FOCUS' THEN focus
+			                           WHEN ?2 = 'MEDITATION' THEN meditation
 			                       END
-			                    ) AS avg
-			                FROM brainwaves
-			                         JOIN readings r ON brainwaves.brainwave_id = r.brainwave_id
-			                         JOIN sessions s ON r.session_id = s.session_id
-			                WHERE s.user_id != ?1
-			                  AND s.session_type = CAST(?2 AS SESSION_TYPE)
-			                  AND s.end_time IS NOT NULL
-			                  -- AND EXTRACT(EPOCH FROM (s.end_time - s.start_time))/60 > 4 TODO: comment this out for production
-			                GROUP BY s.session_id
-			            ) AS avg_brainwaves
+			                       ) AS avg
+			            FROM brainwaves
+			                     JOIN readings r ON brainwaves.brainwave_id = r.brainwave_id
+			                     JOIN sessions s ON r.session_id = s.session_id
+			                AND s.session_type = CAST(?2 AS SESSION_TYPE)
+			                AND s.end_time IS NOT NULL
+			         AND EXTRACT(EPOCH FROM (s.end_time - s.start_time))/60 > 4
+			            GROUP BY s.user_id, s.session_id
+			        );
 			""", nativeQuery = true)
-	Double getAverageBrainwaveStrengthByOtherUsers(Long id, String type);
+	Optional<Double> getPercentile(Double valueToCompare, String type);
 
 	@Query (value = """
 			SELECT r.time_stamp, sd.heart_rate, sd.humidity, sd.light, sd.sound, sd.temperature, b.focus, b.meditation, b.signal

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface GlobalAnalyticsComparator {
-	GlobalAnalCategory getGlobalAverageComparison(double userAverage, double globalAverage);
+	GlobalAnalCategory getGlobalAverageComparison(double percentile);
 }
