@@ -107,14 +107,13 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public String getUserGlobalAverageComparison(Long userId, SessionType sessionType) {
 		Double averageBrainUser = sessionRepository.getAverageBrainwaveStrengthByUserID(userId, sessionType.name());
-		Double averageBrainGlobal = sessionRepository.getAverageBrainwaveStrengthByOtherUsers(userId, sessionType.name());
-		if (averageBrainUser == null || averageBrainGlobal == null) {
+		Double percentile = sessionRepository.getPercentile(averageBrainUser, sessionType.name()).orElse(0.0);
+		if (averageBrainUser == null) {
 			return "";
 		}
-		final int percentile = Math.round((float) (averageBrainUser / averageBrainGlobal) * 100);
-		GlobalAnalCategory globalAverageComparison = globalAnalyticsComparator.getGlobalAverageComparison(averageBrainUser, averageBrainGlobal);
-		return String.format("Your average %s is in the top %d%% percentile, that's %s", sessionType.name()
-		                                                                                            .toLowerCase(), percentile, globalAverageComparison.getCapitalizedName());
+		GlobalAnalCategory globalAverageComparison = globalAnalyticsComparator.getGlobalAverageComparison(percentile);
+		return String.format("Your average %s is in the top %.1f%% percentile, that's %s", sessionType.name()
+		                                                                                              .toLowerCase(), percentile, globalAverageComparison.getCapitalizedName());
 	}
 
 }
