@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Sessions</title>
+	<link rel="icon" th:href="@{/images/icon.png}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-dark text-light m-3">
+<th:block th:insert="~{fragments::navbar(2)}"></th:block>
+<h1 class="text-center my-5">Session history</h1>
+
+<table class="table table-dark table-striped table-hover my-5">
+	<thead>
+	<tr class="table-header">
+		<th class="text-nowrap">Session name</th>
+		<th></th>
+		<th>Type</th>
+		<th class="text-nowrap">Duration</th>
+		<th></th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody class="table-group-divider">
+	<tr th:each="eSession: ${sessions}">
+		<td class="align-middle">
+			<a class="text-decoration-none" th:href="@{session-overview/{id}(id=${eSession.getId()})}"
+			   th:text="${eSession.getName()}"
+			></a>
+		</td>
+		<td class="align-middle" th:text="${eSession.getPrettyTime()}"></td>
+		<td class="align-middle" th:text="${eSession.getType().getCapitalizedName()}"></td>
+		<td class="align-middle" th:text="${eSession.getPrettyDuration()}"></td>
+		<td class="text-end align-middle">
+			<button class="btn"
+					data-bs-toggle="modal"
+					th:data-bs-target="'#editModal' + ${eSession.getId()}"
+					type="button"
+			>
+				<i class="bi bi-pencil-square link-primary"></i>
+			</button>
+		</td>
+		<td class="text-start align-middle">
+			<form th:action="@{/profile/sessions/{id}(id=${eSession.getId()})}" th:method="delete">
+				<button class="btn" type="submit">
+					<i class="bi bi-trash-fill link-danger"></i>
+				</button>
+			</form>
+		</td>
+		<div aria-hidden="true"
+			 class="modal fade"
+			 tabindex="-1"
+			 th:aria-labelledby="editModalLabel"
+			 th:id="'editModal' + ${eSession.getId()}"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content bg-dark text-light">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5"
+							id="editModalLabel"
+							th:text="'Rename Session: ' + ${eSession.getName()}"
+						>
+							Rename Session</h1>
+						<button aria-label="Close"
+								class="btn-close btn-close-white"
+								data-bs-dismiss="modal"
+								type="button"
+						></button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/profile/sessions/{id}(id=${eSession.getId()})}"
+							  th:method="put"
+							  th:object="${viewModel}"
+						>
+							<div class="d-flex flex-row justify-content-around align-content-center">
+								<input class="form-control border-0 bg-black text-light w-75"
+									   placeholder="New Session Name"
+									   th:field="*{sessionName}"
+								>
+								<button class="btn mt-0 btn-warning" type="submit">Save</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</tr>
+	</tbody>
+</table>
+<ul class="pagination justify-content-center" th:unless="${numPages <= 1}">
+	<li class="page-item" th:each="i: ${#numbers.sequence(1, numPages)}">
+		<a class="page-link"
+		   th:classappend="${page == i} ? 'active': ''"
+		   th:href="@{/profile/sessions/{page}(page=${i})}"
+		   th:text="${i}"
+		></a>
+	</li>
+</ul>
+<th:block th:insert="~{fragments::footer}"></th:block>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Session Overview</title>
+	<link rel="icon" th:href="@{/images/icon.png}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script defer th:src="@{/js/session-overview.js}" type="module"></script>
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="bg-dark text-light m-3">
+
+<th:block th:insert="~{fragments::navbar(0)}"></th:block>
+
+<h1 class="text-center my-5" th:text="${eireneSession.getName()}"></h1>
+
+<main>
+	<ul>
+		<li>Satisfaction:
+			<th:block th:text="${eireneSession.getSatisfaction()}"></th:block>
+		</li>
+		<li>Duration:
+			<th:block th:text="${eireneSession.getPrettyDuration()}"></th:block>
+		</li>
+		<li>Type:
+			<th:block th:text="${eireneSession.getType().getCapitalizedName()}"></th:block>
+		</li>
+	</ul>
+
+	<ul class="nav nav-tabs justify-content-center" id="sensor-type-tab" role="tablist">
+		<li class="nav-item" role="presentation">
+			<button aria-controls="heart-tab-pane"
+					aria-selected="true"
+					class="nav-link active"
+					data-bs-target="#heart-tab-pane"
+					data-bs-toggle="tab"
+					id="heart-tab"
+					role="tab"
+					type="button"
+			>Heart rate
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="temperature-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#temperature-tab-pane"
+					data-bs-toggle="tab"
+					id="temperature-tab"
+					role="tab"
+					type="button"
+			>Temperature
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="humidity-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#humidity-tab-pane"
+					data-bs-toggle="tab"
+					id="humidity-tab"
+					role="tab"
+					type="button"
+			>Humidity
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="sound-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#sound-tab-pane"
+					data-bs-toggle="tab"
+					id="sound-tab"
+					role="tab"
+					type="button"
+			>Sound
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="light-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#light-tab-pane"
+					data-bs-toggle="tab"
+					id="light-tab"
+					role="tab"
+					type="button"
+			>Light
+			</button>
+		</li>
+		<li class="nav-item" role="presentation">
+			<button aria-controls="all-tab-pane"
+					aria-selected="false"
+					class="nav-link"
+					data-bs-target="#all-tab-pane"
+					data-bs-toggle="tab"
+					id="all-tab"
+					role="tab"
+					type="button"
+			>All
+			</button>
+		</li>
+	</ul>
+
+	<div class="tab-content"
+		 id="sensor-type-tab-content"
+		 th:attr="data-brain-type=${eireneSession.getType().getCapitalizedName()}, data-brain=${sensorToData.get('BRAINWAVE')}, data-light=${sensorToData.get('PHOTOTRANSISTOR')}, data-sound=${sensorToData.get('SOUND')}, data-humidity=${sensorToData.get('HUMIDITY')}, data-temperature=${sensorToData.get('TEMPERATURE')}, data-heart=${sensorToData.get('HR')}"
+	>
+		<div aria-labelledby="heart-tab"
+			 class="tab-pane fade show active"
+			 id="heart-tab-pane"
+			 role="tabpanel"
+			 tabindex="0"
+		>
+			<canvas id="heart-chart" th:attr="data-title='Heart rate'"></canvas>
+		</div>
+		<div aria-labelledby="temperature-tab"
+			 class="tab-pane fade"
+			 id="temperature-tab-pane"
+			 role="tabpanel"
+			 tabindex="1"
+		>
+			<canvas id="temperature-chart" th:attr="data-title='Temperature'"></canvas>
+		</div>
+		<div aria-labelledby="humidity-tab" class="tab-pane fade" id="humidity-tab-pane" role="tabpanel" tabindex="2">
+			<canvas id="humidity-chart" th:attr="data-title='Humidity'"></canvas>
+		</div>
+		<div aria-labelledby="sound-tab" class="tab-pane fade" id="sound-tab-pane" role="tabpanel" tabindex="3">
+			<canvas id="sound-chart" th:attr="data-title='Sound'"></canvas>
+		</div>
+		<div aria-labelledby="light-tab" class="tab-pane fade" id="light-tab-pane" role="tabpanel" tabindex="4">
+			<canvas id="light-chart" th:attr="data-title='Light'"></canvas>
+		</div>
+		<div aria-labelledby="all-tab" class="tab-pane fade" id="all-tab-pane" role="tabpanel" tabindex="5">
+			<canvas></canvas>
+		</div>
+	</div>
+
+	<table class="table table-dark table-striped table-hover my-5">
+		<thead>
+		<tr class="table-header">
+			<th>Timestamp</th>
+			<th th:text="${eireneSession.getType()}"></th>
+			<th>Heart rate</th>
+			<th>Humidity</th>
+			<th>Light</th>
+			<th>Sound</th>
+			<th>Temperature</th>
+		</tr>
+		</thead>
+		<tbody class="table-group-divider">
+		<tr th:each="reading: ${eireneSession.getReadings()}">
+			<td th:text="${reading.getTimestamp()}"></td>
+			<td th:text="${reading.getBrainWave().getLevel(eireneSession.getType())}"></td>
+			<td th:text="${reading.getSensorData().getHeartRate()} + ' ' +${T(be.kdg.eirene.model.Unit).BPM}"></td>
+			<td th:text="${reading.getSensorData().getHumidity()} + ' ' +${T(be.kdg.eirene.model.Unit).PERCENT}"></td>
+			<td th:text="${reading.getSensorData().getLight()} + ' ' +${T(be.kdg.eirene.model.Unit).L}"></td>
+			<td th:text="${reading.getSensorData().getSound()} + ' ' +${T(be.kdg.eirene.model.Unit).DB}"></td>
+			<td th:text="${reading.getSensorData().getTemperature()} + ' ' +${T(be.kdg.eirene.model.Unit).C}"></td>
+		</tr>
+		</tbody>
+	</table>
+	<th:block th:insert="~{fragments::footer}"></th:block>
+</main>
+</body>
+</html>

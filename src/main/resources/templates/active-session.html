@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Session</title>
+	<link rel="icon" th:href="@{/images/icon.png}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css} ">
+	<link rel="stylesheet" th:href="@{/css/styles.css}">
+	<script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script defer th:src="@{/js/active-session.js}" type="module"></script>
+</head>
+<body class="bg-dark text-light m-3">
+
+<th:block th:insert="~{fragments::navbar(0)}"></th:block>
+
+<h1 class="text-center my-5" th:text="${type} + ' '+ session "></h1>
+<div aria-live="polite" aria-atomic="true" class="position-relative">
+	<div class="toast-container p-3 top-0 start-50 translate-middle-x">
+		<div class="toast text-bg-warning d-flex fade hide"
+			 id="toast"
+			 role="alert"
+			 aria-live="assertive"
+			 aria-atomic="true"
+		>
+			<div class="toast-body" id="toastText"></div>
+			<button type="button"
+					class="btn-close btn-close-white me-2 m-auto"
+					data-bs-dismiss="toast"
+					aria-label="Close"
+			></button>
+		</div>
+	</div>
+</div>
+<hr class="my-5">
+
+<h3 class="my-2">Duration: <span id="session-timer">0s</span></h3>
+
+<main class="d-flex flex-column flex-md-row">
+	<div class="d-flex border border-warning rounded col-md-3 p-3">
+		<ul class="list-unstyled">
+			<li>Signal:
+				<p id="signal"></p>
+			</li>
+			<li>
+				<a th:text="|${type}:|"></a>
+				<p id="brainwaveStrength"></p>
+			</li>
+			<li>Heart Rate:
+				<p id="heartRate"></p>
+			</li>
+			<li>Environment:
+				<p id="environment"></p>
+			</li>
+			<li>
+				<p class="fs-4" id="generalAdvice">Calibrating...</p>
+			</li>
+		</ul>
+	</div>
+	<div class="col-md-8 flex-grow-1 my-3 my-md-0 mx-md-3">
+		<canvas id="graph" th:attr="data-type=${type}"></canvas>
+	</div>
+</main>
+
+<div class="d-flex justify-content-center my-5">
+	<a class="btn btn-warning fs-2" th:href="@{/newsession/stopsession}">Stop session
+	</a>
+</div>
+<th:block th:insert="~{fragments::footer}"></th:block>
+</body>
+</html>

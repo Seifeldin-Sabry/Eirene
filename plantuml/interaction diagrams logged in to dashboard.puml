@@ -1,0 +1,65 @@
+@startuml log in to profile
+
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+autoactivate on
+'skinparam maxMessageSize 150
+
+participant ":LoginController" as signup <<Controller>>
+participant "cookieService:CookieService" as cookie <<Service>>
+participant "session:HttpSession" as session
+
+[o-> signup: loadLoginForm(session:HttpSession):\nModelAndView
+signup -> cookie: isInvalid = cookieInvalid(\nsession:HttpSession):boolean
+cookie -> session: object = getAttribute(\n"user_id":String):Object
+deactivate
+alt object == null
+    cookie -->> signup: true
+else
+    signup -[#white]> cookie
+    cookie -->> signup: false
+end
+signup -> signup: loggedIn = !isInvalid
+deactivate
+alt loggedIn
+    [<<-- signup: new ModelAndView("redirect:/profile")
+else else
+    [-[#white]> signup
+    [<<-- signup: new ModelAndView("login")
+end
+
+@enduml
+
+
+
+@startuml sign up to profile
+
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+autoactivate on
+'skinparam maxMessageSize 150
+
+participant ":SignUpController" as signup <<Controller>>
+participant "cookieService:CookieService" as cookie <<Service>>
+participant "session:HttpSession" as session
+
+[o-> signup: loadSignUpForm(session:HttpSession):\nModelAndView
+signup -> cookie: isInvalid = cookieInvalid(\nsession:HttpSession):boolean
+cookie -> session: object = getAttribute(\n"user_id":String):Object
+deactivate
+alt object == null
+    cookie -->> signup: true
+else
+    signup -[#white]> cookie
+    cookie -->> signup: false
+end
+signup -> signup: loggedIn = !isInvalid
+deactivate
+alt loggedIn
+    [<<-- signup: new ModelAndView("redirect:/profile")
+else else
+    [-[#white]> signup
+    [<<-- signup: new ModelAndView("signup")
+end
+
+@enduml
